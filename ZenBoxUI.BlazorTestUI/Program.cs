@@ -1,4 +1,4 @@
-using ZenBoxUI.Blazor.Components;
+using ZenBoxUI.BlazorTestUI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
