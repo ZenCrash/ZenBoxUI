@@ -1,0 +1,65 @@
+.zbox {
+  position: fixed !important;
+  margin-right: .5rem !important;
+  margin-left: .5rem !important;
+  padding: .25rem !important;
+}
+.zbox-top {
+  top: 0 !important;
+}
+.zbox-bottom {
+  bottom: 0 !important;
+}
+.zbox-left {
+  left: 0 !important;
+}
+.zbox-middle {
+  left: 50% !important;
+}
+.zbox-right {
+  right: 0 !important;
+}
+
+.zbox-toast {
+  display: flex !important;
+  flex-direction: row !important;
+
+  margin-top: .5rem !important;
+  margin-bottom: .5rem !important;
+  border: 1px solid #D8D8D8;
+  border-radius: 3px;
+
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  background-color: #E7F2E6; /*remove me*/
+}
+  .zbox-toast .zbox-toast-column {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .zbox-toast .zbox-toast-header {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    padding-right: .75rem !important;
+    padding-left: .75rem !important;
+    font-weight: 700 !important;
+    color: #ffffff;
+
+    background-color: #107C10; /*remove me*/
+  }
+
+  .zbox-toast .zbox-toast-body {
+    padding: .75rem !important;
+  }
+
+/*Theme - Half*/
+/*Style - Pastel*/
+.zbox-pastel{
+
+}
+  .zbox-pastel .zbox-header .zbox-success {
+    background-color: #107C10;
+  }
+  .zbox-pastel .zbox-body .zbox-success {
+    background-color: #E7F2E6; 
+  }

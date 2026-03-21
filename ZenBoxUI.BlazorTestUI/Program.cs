@@ -1,3 +1,4 @@
+using ZenBoxUI.Blazor;
 using ZenBoxUI.BlazorTestUI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddScoped<IZBoxToastService, ZBoxToastService>();
 
 var app = builder.Build();
 

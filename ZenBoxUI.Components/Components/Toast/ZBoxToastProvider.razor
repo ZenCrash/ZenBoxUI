@@ -1,0 +1,167 @@
+﻿@namespace ZenBoxUI.Blazor
+
+@using Microsoft.JSInterop
+@using ZenBoxUI.Blazor
+@inject IZBoxToastService ToastService
+@inject IJSRuntime JSRuntime
+@implements IDisposable
+
+@if (!Enabled) return;
+
+<div class="@_cssClass zbox">
+
+  @* Mock Toast 1 *@
+  <div class="zbox-toast" style="@($"min-width: {Width}; max-width: {Width};")">
+    
+    <i class=""/>
+
+    <div class="zbox-toast-header">
+      Test 1 Title xxx
+    </div>
+    <div class="zbox-toast-body">
+      Test Title xxx 1
+    </div>
+  </div>
+
+  @* mock toast 2 *@
+  <div class="zbox-toast" style="@($"min-width: {Width}; max-width: {Width};")">
+    <img src="_content/ZenBoxUI.Blazor/svg/check-circle-fill.svg" alt="MobilePay Logo" width="20" height="20" />
+
+    <div class="zbox-toast-column">
+      <div class="zbox-toast-header">
+        Test 2 Title xxx
+      </div>
+      <div class="zbox-toast-body">
+        Test Title xxx 2 asdddddddddasdassadfgfsdfg sdfghdsfghdfg sfdghdf gdfghgs gf
+      </div>
+    </div>
+  </div>
+
+  @if (Order == ToastOrder.Ascending)
+  {
+    // Loop for ascending order
+    for (int i = 0; i < _toasts.Count && i < MaxToastCount; i++)
+    {
+      @* mock toast 2 *@
+      <img src="_content/ZenBoxUI.Blazor/svg/check-circle-fill.svg" alt="MobilePay Logo" width="20" height="20" />
+
+      <div class="zbox-toast-column">
+        <div class="zbox-toast" style="@($"min-width: {Width}; max-width: {Width};")">
+          <div class="zbox-toast-header">
+            Test 2 Title xxx
+          </div>
+          <div class="zbox-toast-body">
+            Test Title xxx 2 asdddddddddasdassadfgfsdfg sdfghdsfghdfg sfdghdf gdfghgs gf
+          </div>
+        </div>
+      </div>
+
+    }
+  }
+  else
+  {
+    @for (int i = _toasts.Count - 1; i >= 0 && i >= _toasts.Count - MaxToastCount; i--)
+    {
+      @* mock toast 2 *@
+      <div class="zbox-toast" style="@($"min-width: {Width}; max-width: {Width};")">
+        <div class="zbox-toast-header">
+          Test 2 Title xxx
+        </div>
+        <div class="zbox-toast-body">
+          Test Title xxx 2 asdddddddddasdassadfgfsdfg sdfghdsfghdfg sfdghdf gdfghgs gf
+        </div>
+      </div>
+    }
+  }
+</div>
+
+@code {
+  [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString();
+  [Parameter] public bool Enabled { get; set; } = true;
+  [Parameter] public ToastRenderStyle? RenderStyle { get; set; }
+  [Parameter] public bool ShowIcon { get; set; } = true;
+  [Parameter] public bool ShowCloseButton { get; set; } = true;
+  [Parameter] public string Width { get; set; } = "300px";
+  [Parameter] public int MaxToastCount { get; set; } = 5;
+  [Parameter] public int DisplayTime { get; set; } = 5000;
+  [Parameter] public ToastOrder Order { get; set; } = ToastOrder.Ascending;
+  // [Parameter] public ToastAnimation Animation { get; set; } = ToastAnimeation.Slide;
+  [Parameter] public ToastAlignment Alignment { get; set; } = ToastAlignment.BottomRight;
+  [Parameter] public string? MaxHeight { get; set; }
+  private string _cssClass { get; set; } = string.Empty;
+
+  private List<ToastOptions> _toasts = new();
+  private List<ToastOptions> _visibleToasts = new();
+
+  //-----------------------------//
+  /* Main                        */
+  //-----------------------------//
+
+  protected override void OnInitialized()
+  {
+    _cssClass = GetToastContainerPositionCssClasses(Alignment);
+
+    ToastService.OnToastAdded += AddToast;
+    ToastService.OnToastRemoved += RemoveToast;
+  }
+
+  private void AddToast(ToastOptions toast)
+  {
+    _toasts.Add(toast);
+    InvokeAsync(StateHasChanged);
+
+    if (toast.DisplayTime.HasValue)
+    {
+      _ = Task.Delay(toast.DisplayTime.Value)
+          .ContinueWith(_ => RemoveToast(toast.Id));
+    }
+  }
+
+  private void RemoveToast(string id)
+  {
+    var toast = _toasts.FirstOrDefault(t => t.Id == id);
+    if (toast != null)
+    {
+      _toasts.Remove(toast);
+
+      InvokeAsync(StateHasChanged);
+    }
+  }
+
+  public void Dispose()
+  {
+    ToastService.OnToastAdded -= AddToast;
+    ToastService.OnToastRemoved -= RemoveToast;
+  }
+
+  //-----------------------------//
+  /* Styleing                    */
+  //-----------------------------//
+
+  //Position confirmation - css support classes
+  private string GetToastContainerPositionCssClasses(ToastAlignment alignment) => alignment switch
+  {
+    ToastAlignment.TopLeft => "zbox-top zbox-left",
+    ToastAlignment.TopCenter => "zbox-top zbox-center",
+    ToastAlignment.TopRight => "zbox-top zbox-right",
+    ToastAlignment.MiddleLeft => "zbox-middle zbox-left",
+    ToastAlignment.MiddleCenter => "zbox-middle zbox-center",
+    ToastAlignment.MiddleRight => "zbox-middle zbox-right",
+    ToastAlignment.BottomLeft => "zbox-bottom zbox-left",
+    ToastAlignment.BottomCenter => "zbox-bottom zbox-center",
+    ToastAlignment.BottomRight => "zbox-bottom zbox-right",
+    _ => "zbox-bottom zbox-right"
+  };
+
+  private string GetRenderStyle(ToastRenderStyle renderStyle) => renderStyle switch
+  {
+    ToastRenderStyle.Primary => "",
+    ToastRenderStyle.Secondary => "",
+    ToastRenderStyle.Success => "",
+    ToastRenderStyle.Danger => "",
+    ToastRenderStyle.Warning => "",
+    ToastRenderStyle.Info => "",
+    ToastRenderStyle.Light => "",
+    ToastRenderStyle.Dark => "",
+  };
+}

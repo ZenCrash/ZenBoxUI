@@ -1,7 +1,62 @@
-﻿@page "/"
+﻿@inject IZBoxToastService ToastService
+
+@rendermode @(new InteractiveServerRenderMode(prerender:false))
+@page "/"
+
 
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text</h1>
+<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
+<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
+<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
+<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
+
+
+<button class="btn btn-primary" @onclick="ShowToast">
+  Show Toast
+</button>
+
+<ZBoxToastProvider
+    MaxToastCount="5" 
+    Alignment="ToastAlignment.BottomRight" 
+    Width="300px"
+    MaxHeight="300px"
+    ShowCloseButton="true"
+/>
+
+@code{
+  private ZBoxToastProvider? _toastProvider;
+
+  private void ShowToast()
+  {
+    // Safe to call anytime after the component renders
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Hello " + Guid.NewGuid().ToString(),
+      Text = "This toast appears only on this page",
+      RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = TimeSpan.FromSeconds(3)
+    });
+  }
+
+  protected override void OnAfterRender(bool firstRender)
+  {
+
+  }
+
+}
