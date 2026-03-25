@@ -1,0 +1,33 @@
+﻿@using ZenBoxUI.Blazor
+@namespace ZenBoxUI.Blazor.Toast.Themes
+
+<div class="zbox-toast" style="@CssStyle">
+  <div class="zbox-toast-header">
+    <img src="_content/ZenBoxUI.Blazor/svg/check-circle-fill-white.svg" width="18" />
+    <span class="zbox-toast-title">@ToastOptions.Title</span>
+  </div>
+  <div class="zbox-toast-body">
+    @ToastOptions.Text
+  </div>
+</div>
+
+@code {
+    [Parameter] public EventCallback<string> RemoveToast { get; set; }
+    [Parameter] public ToastOptions ToastOptions { get; set; } = null!;
+    [Parameter] public string MaxWidth { get; set; } = null!;
+  private string CssStyle { get; set; } = string.Empty;
+
+  protected override void OnInitialized()
+  {
+    CssStyle = ToastStyleBuilder.GetToastStyles(MaxWidth, ToastOptions.RenderStyle, ToastOptions.Width);
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    if (firstRender && ToastOptions.DisplayTime.HasValue)
+    {
+      await Task.Delay(ToastOptions.DisplayTime.Value);
+      await RemoveToast.InvokeAsync(ToastOptions.Id);
+    }
+  }
+}

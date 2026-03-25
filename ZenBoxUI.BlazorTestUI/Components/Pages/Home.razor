@@ -34,7 +34,7 @@
 <ZBoxToastProvider
     MaxToastCount="5" 
     Alignment="ToastAlignment.BottomRight" 
-    Width="300px"
+    MaxWidth="300px"
     MaxHeight="300px"
     ShowCloseButton="true"
 />
@@ -44,19 +44,23 @@
 
   private void ShowToast()
   {
-    // Safe to call anytime after the component renders
     ToastService.ShowToast(new ToastOptions
     {
-      Title = "Hello " + Guid.NewGuid().ToString(),
+      Title = "Hello " + Guid.NewGuid().ToString() + "Long Name Long Name",
       Text = "This toast appears only on this page",
-      RenderStyle = ToastRenderStyle.Info,
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Success,
       DisplayTime = TimeSpan.FromSeconds(3)
     });
-  }
-
-  protected override void OnAfterRender(bool firstRender)
-  {
-
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Hello " + Guid.NewGuid().ToString() + "Long Name Long Name",
+      Text = "This toast appears only on this page",
+      Width = "500px",
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Success,
+      DisplayTime = TimeSpan.FromSeconds(3)
+    });
   }
 
 }

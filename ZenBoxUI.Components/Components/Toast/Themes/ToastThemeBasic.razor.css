@@ -1,0 +1,41 @@
+.zbox-toast {
+  margin-top: .5rem !important;
+  margin-bottom: .5rem !important;
+  border: 1px solid #D8D8D8 !important;
+  border-radius: 3px !important;
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15) !important;
+
+  color: var(--zbox-text) !important;
+  background-color: var(--zbox-secondary) !important;
+  width: var(--zbox-width) !important;
+}
+
+  .zbox-toast .zbox-toast-header {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: .5rem !important;
+
+    padding: .5rem .5rem .5rem .75rem !important;
+    border-top-left-radius: 3px !important;
+    border-top-right-radius: 3px !important;
+    font-weight: 700 !important;
+
+    color: var(--zbox-title) !important;
+    background-color: var(--zbox-primary) !important;
+  }
+
+.zbox-toast-header .zbox-toast-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: calc(var(--zbox-width) - 1.25rem - 18px) !important;
+}
+
+  .zbox-toast .zbox-toast-body {
+    padding-top: .75rem !important;
+    padding-bottom: .75rem !important;
+    padding-right: .75rem !important;
+    padding-left: 2.375rem !important;
+  }

@@ -28,6 +28,8 @@ namespace ZenBoxUI.Blazor
     [DefaultValue(null)]
     public string? Text { get; set; }
 
+
+
     /// <summary>
     /// specifies CSS classes to apply to the toast.
     /// </summary>
@@ -47,6 +49,12 @@ namespace ZenBoxUI.Blazor
     public string? MaxHeight { get; set; }
 
     /// <summary>
+    /// width of the toast.
+    /// </summary>
+    [DefaultValue("300px")]
+    public string Width { get; set; } = "300px";
+
+    /// <summary>
     /// Ahows a close button on the toast, allowing users to manually dismiss it.
     /// </summary>
     [DefaultValue(true)]
@@ -55,7 +63,13 @@ namespace ZenBoxUI.Blazor
     /// <summary>
     /// Sets the visual style to use when rendering the toast notification.
     /// </summary>
-    [DefaultValue(null)]
-    public ToastRenderStyle? RenderStyle { get; set; }
+    [DefaultValue(ToastRenderTheme.Basic)]
+    public ToastRenderTheme RenderTheme { get; set; } = ToastRenderTheme.Basic;
+
+    /// <summary>
+    /// Sets the visual style to use when rendering the toast notification.
+    /// </summary>
+    [DefaultValue(ToastRenderStyle.Primary)]
+    public ToastRenderStyle RenderStyle { get; set; } = ToastRenderStyle.Primary;
   }
 }
