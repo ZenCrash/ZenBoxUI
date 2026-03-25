@@ -8,7 +8,7 @@
 @inject IJSRuntime JSRuntime
 @implements IDisposable
 
-@if (!Enabled || _toasts.Count == 0) return;
+@if (!Enabled) return;
 
 <CascadingValue Value="this">
 
@@ -21,7 +21,7 @@
       @switch (_toasts[i].RenderTheme)
       {
         case ToastRenderTheme.Basic:
-          <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
+            <ToastThemeBasic @key="_toasts[i].Id" ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
           break;
       }
     }
@@ -33,7 +33,7 @@
       @switch (_toasts[i].RenderTheme)
       {
         case ToastRenderTheme.Basic:
-          <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
+            <ToastThemeBasic @key="_toasts[i].Id" ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
           break;
       }
     }

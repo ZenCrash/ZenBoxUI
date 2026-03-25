@@ -27,10 +27,14 @@
 <h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
 
 
-<button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Primary)">Show Success Toast</button>
-<button class="btn btn-primary" @onclick="() => ShowToast">Show Success Toast</button>
-<button class="btn btn-primary" @onclick="() => ShowToast">Show Success Toast</button>
-<button class="btn btn-primary" @onclick="() => ShowToast">Show Success Toast</button>
+<button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Primary)">Show Primary Toast</button>
+<button class="btn btn-secondary" @onclick="() => ShowToast(ToastRenderStyle.Secondary)">Show Secondary Toast</button>
+<button class="btn btn-success" @onclick="() => ShowToast(ToastRenderStyle.Success)">Show Success Toast</button>
+<button class="btn btn-danger" @onclick="() => ShowToast(ToastRenderStyle.Danger)">Show Danger Toast</button>
+<button class="btn btn-warning" @onclick="() => ShowToast(ToastRenderStyle.Warning)">Show Warning Toast</button>
+<button class="btn btn-info" @onclick="() => ShowToast(ToastRenderStyle.Info)">Show Info Toast</button>
+<button class="btn btn-light" @onclick="() => ShowToast(ToastRenderStyle.Light)">Show Light Toast</button>
+<button class="btn btn-dark" @onclick="() => ShowToast(ToastRenderStyle.Dark)">Show Dark Toast</button>
 
 <ZBoxToastProvider
     MaxToastCount="5" 
@@ -45,12 +49,12 @@
 
   private void ShowToast(ToastRenderStyle toastStyle)
   {
-    // Generate the toast options based on the style
-    ToastOptions CreateToast() => toastStyle switch
+    // Create toast immediately
+    var toast = toastStyle switch
     {
       ToastRenderStyle.Primary => new ToastOptions
       {
-        Title = "Iam  'Basic, Primary' Toast" + Guid.NewGuid(),
+        Title = "Primary Toast " + Guid.NewGuid(),
         Text = "This toast appears only on this page",
         RenderTheme = ToastRenderTheme.Basic,
         RenderStyle = ToastRenderStyle.Primary,
@@ -58,21 +62,72 @@
       },
       ToastRenderStyle.Secondary => new ToastOptions
       {
-        Title = "Iam  'Basic, Secondary' Toast" + Guid.NewGuid(),
+        Title = "Secondary Toast " + Guid.NewGuid(),
         Text = "This toast appears only on this page",
         RenderTheme = ToastRenderTheme.Basic,
         RenderStyle = ToastRenderStyle.Secondary,
         DisplayTime = 3000,
       },
+      ToastRenderStyle.Success => new ToastOptions
+      {
+        Title = "Success Toast " + Guid.NewGuid(),
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Success,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Danger => new ToastOptions
+      {
+        Title = "Danger Toast " + Guid.NewGuid(),
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Danger,
+        DisplayTime = 3000,
+      },
       ToastRenderStyle.Warning => new ToastOptions
       {
-        Title = "Iam  'Basic, Primary' Toast" + Guid.NewGuid(),
+        Title = "Warning Toast " + Guid.NewGuid(),
         Text = "This toast appears only on this page",
         RenderTheme = ToastRenderTheme.Basic,
         RenderStyle = ToastRenderStyle.Warning,
         DisplayTime = 3000,
       },
+      ToastRenderStyle.Info => new ToastOptions
+      {
+        Title = "Info Toast " + Guid.NewGuid(),
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Info,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Light => new ToastOptions
+      {
+        Title = "Light Toast " + Guid.NewGuid(),
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Light,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Dark => new ToastOptions
+      {
+        Title = "Dark Toast " + Guid.NewGuid(),
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Dark,
+        DisplayTime = 3000,
+      },
+      _ => new ToastOptions
+      {
+        Title = "Primary Toast " + Guid.NewGuid(),
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Primary,
+        DisplayTime = 3000,
+      }
     };
+
+    // Add toast immediately
+    ToastService.ShowToast(toast);
   }
 
 }
