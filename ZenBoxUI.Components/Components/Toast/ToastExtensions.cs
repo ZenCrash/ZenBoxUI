@@ -8,7 +8,7 @@
       return options;
     }
 
-    public static ToastOptions WithDisplayTime(this ToastOptions options, TimeSpan displayTime)
+    public static ToastOptions WithDisplayTime(this ToastOptions options, int displayTime)
     {
       options.DisplayTime = displayTime;
       return options;

@@ -15,42 +15,42 @@
     public ToastOptions Primary => new()
     {
       RenderStyle = ToastRenderStyle.Primary,
-      DisplayTime = TimeSpan.FromSeconds(5),
+      DisplayTime = 5000,
       ShowCloseButton = true,
     };
 
     public ToastOptions Secondary => new()
     {
       RenderStyle = ToastRenderStyle.Secondary,
-      DisplayTime = TimeSpan.FromSeconds(5),
+      DisplayTime = 5000,
       ShowCloseButton = true,
     };
 
     public ToastOptions Success => new()
     {
       RenderStyle = ToastRenderStyle.Success,
-      DisplayTime = TimeSpan.FromSeconds(5),
+      DisplayTime = 5000,
       ShowCloseButton = true,
     };
 
     public ToastOptions Danger => new()
     {
       RenderStyle = ToastRenderStyle.Danger,
-      DisplayTime = TimeSpan.Zero,
+      DisplayTime = 0,
       ShowCloseButton = true,
     };
 
     public ToastOptions Warning => new()
     {
       RenderStyle = ToastRenderStyle.Warning,
-      DisplayTime = TimeSpan.Zero,
+      DisplayTime = 0,
       ShowCloseButton = true,
     };
 
     public ToastOptions Info => new()
     {
       RenderStyle = ToastRenderStyle.Info,
-      DisplayTime = TimeSpan.FromSeconds(5),
+      DisplayTime = 5000,
       ShowCloseButton = true,
     };
   }

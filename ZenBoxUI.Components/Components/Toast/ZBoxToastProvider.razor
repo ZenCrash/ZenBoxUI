@@ -10,6 +10,8 @@
 
 @if (!Enabled || _toasts.Count == 0) return;
 
+<CascadingValue Value="this">
+
 <div class="@_cssClass zbox" style="z-index: @Zindex;">
   @if (Order == ToastOrder.Ascending)
   {
@@ -19,7 +21,7 @@
       @switch (_toasts[i].RenderTheme)
       {
         case ToastRenderTheme.Basic:
-          <ToastThemeBasic ToastOptions="@_toasts[i]" MaxWidth="@MaxWidth" />
+          <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" RemoveToast="@RemoveToast" />
           break;
           @*        case ToastRenderTheme.Split:
               <ToastThemeSplit ToastOptions="@_toasts[i]" MaxWidth="@MaxWidth" />
@@ -36,11 +38,12 @@
     {
       if (_toasts[i].RenderTheme == ToastRenderTheme.Basic)
       {
-        <ToastThemeBasic ToastOptions="@_toasts[i]" MaxWidth="@MaxWidth" RemoveToast="@RemoveToast" />
+        <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" RemoveToast="@RemoveToast" />
       }
     }
   }
 </div>
+</CascadingValue>
 
 @code {
   [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString();
@@ -70,6 +73,7 @@
     _cssClass = ToastStyleBuilder.GetToastContainerStyles(Alignment);
 
     ToastService.OnToastAdded += AddToast;
+    ToastService.OnToastRemoved += RemoveToast;
   }
 
   private void AddToast(ToastOptions toast)
@@ -78,13 +82,12 @@
     InvokeAsync(StateHasChanged);
   }
 
-  private void RemoveToast(string id)
+  internal void RemoveToast(string id)
   {
     var toast = _toasts.FirstOrDefault(t => t.Id == id);
     if (toast != null)
     {
       _toasts.Remove(toast);
-
       InvokeAsync(StateHasChanged);
     }
   }
@@ -92,5 +95,6 @@
   public void Dispose()
   {
     ToastService.OnToastAdded -= AddToast;
+    ToastService.OnToastRemoved -= RemoveToast;
   }
 }

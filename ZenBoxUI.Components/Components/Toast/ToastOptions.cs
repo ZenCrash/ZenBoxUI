@@ -14,7 +14,7 @@ namespace ZenBoxUI.Blazor
     /// Speceifies the duration for which the toast should be displayed before automatically disappearing.
     /// </summary>
     [DefaultValue(null)]
-    public TimeSpan? DisplayTime { get; set; }
+    public int? DisplayTime { get; set; }
 
     /// <summary>
     /// Specifies the title of the toast.
