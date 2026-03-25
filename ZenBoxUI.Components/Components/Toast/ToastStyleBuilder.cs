@@ -80,8 +80,8 @@ namespace ZenBoxUI.Blazor
     ToastRenderStyle.Danger => "_content/ZenBoxUI.Blazor/svg/x-circle-fill.svg",
     ToastRenderStyle.Warning => "_content/ZenBoxUI.Blazor/svg/exclamation-triangle-fill.svg",
     ToastRenderStyle.Info => "_content/ZenBoxUI.Blazor/svg/info-circle-fill.svg",
-    ToastRenderStyle.Light => "_content/ZenBoxUI.Blazor/svg/info-circle-fill.svg",
-    ToastRenderStyle.Dark => "_content/ZenBoxUI.Blazor/svg/info-circle-fill.svg",
+    ToastRenderStyle.Light => "_content/ZenBoxUI.Blazor/svg/blank.svg",
+    ToastRenderStyle.Dark => "_content/ZenBoxUI.Blazor/svg/blank.svg",
     _ => "_content/ZenBoxUI.Blazor/svg/info-circle-fill.svg"
   };
 }
