@@ -12,8 +12,6 @@
 </div>
 
 @code {
-  [CascadingParameter] ZBoxToastProvider? Parent { get; set; }
-  [Parameter] public EventCallback<string> RemoveToast { get; set; }
   [Parameter] public ToastOptions ToastOptions { get; set; } = null!;
   [Parameter] public string MaxWidth { get; set; } = null!;
   [Parameter] public int? DisplayTime { get; set; }
@@ -23,26 +21,5 @@
   protected override void OnInitialized()
   {
     CssStyle = ToastStyleBuilder.GetToastStyles(MaxWidth, ToastOptions.RenderStyle, ToastOptions.Width);
-  }
-
-  protected override async Task OnAfterRenderAsync(bool firstRender)
-  {
-    if (firstRender && (ToastOptions.DisplayTime != null || DisplayTime.HasValue != null))
-    {
-      TimeSpan displayTime = TimeSpan.Zero;
-
-      if (ToastOptions.DisplayTime is not null)
-      {
-        displayTime = (ToastOptions.DisplayTime != 0) ? TimeSpan.FromMilliseconds((double)ToastOptions.DisplayTime) : TimeSpan.Zero;
-      }
-      else
-      {
-        displayTime = (DisplayTime != 0) ? TimeSpan.FromMilliseconds((double)DisplayTime) : TimeSpan.Zero;
-      }
-
-      // await Task.Delay(displayTime).ContinueWith(_ => RemoveToast.InvokeAsync(ToastOptions.Id));
-      await Task.Delay(displayTime).ContinueWith(_ => Parent.RemoveToast(ToastOptions.Id));
-
-    }
   }
 }

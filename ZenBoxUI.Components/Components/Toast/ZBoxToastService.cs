@@ -6,7 +6,6 @@
     event Action<string>? OnToastRemoved;
 
     void ShowToast(ToastOptions options);
-    void RemoveToast(string id);
   }
 
   public class ZBoxToastService : IZBoxToastService
@@ -17,11 +16,6 @@
     public void ShowToast(ToastOptions options)
     {
       OnToastAdded?.Invoke(options);
-    }
-
-    public void RemoveToast(string id)
-    {
-      OnToastRemoved?.Invoke(id);
     }
   }
 }

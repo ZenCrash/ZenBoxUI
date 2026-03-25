@@ -21,14 +21,8 @@
       @switch (_toasts[i].RenderTheme)
       {
         case ToastRenderTheme.Basic:
-          <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" RemoveToast="@RemoveToast" />
+          <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
           break;
-          @*        case ToastRenderTheme.Split:
-              <ToastThemeSplit ToastOptions="@_toasts[i]" MaxWidth="@MaxWidth" />
-              break;
-          case ToastRenderTheme.Full:
-              <ToastThemeFull ToastOptions="@_toasts[i]" MaxWidth="@MaxWidth" />
-              break; *@
       }
     }
   }
@@ -36,9 +30,11 @@
   {
     @for (int i = _toasts.Count - 1; i >= 0 && i >= _toasts.Count - MaxToastCount; i--)
     {
-      if (_toasts[i].RenderTheme == ToastRenderTheme.Basic)
+      @switch (_toasts[i].RenderTheme)
       {
-        <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" RemoveToast="@RemoveToast" />
+        case ToastRenderTheme.Basic:
+          <ToastThemeBasic ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
+          break;
       }
     }
   }
@@ -63,6 +59,7 @@
 
   private string _cssClass { get; set; } = string.Empty;
   private List<ToastOptions> _toasts = new();
+  private HashSet<string> _startedTimers = new();
 
   //-----------------------------//
   /* Main                        */
@@ -71,9 +68,47 @@
   protected override void OnInitialized()
   {
     _cssClass = ToastStyleBuilder.GetToastContainerStyles(Alignment);
-
     ToastService.OnToastAdded += AddToast;
-    ToastService.OnToastRemoved += RemoveToast;
+  }
+
+  protected override async Task OnAfterRenderAsync(bool firstRender)
+  {
+    var visibleToasts = GetVisibleToasts();
+
+    foreach (var toast in visibleToasts)
+    {
+      if (_startedTimers.Contains(toast.Id))
+        continue;
+
+      _startedTimers.Add(toast.Id);
+
+      var delay = toast.DisplayTime ?? DisplayTime;
+
+      if (delay > 0)
+      {
+        _ = RemoveToastAfterDelay(toast.Id, delay);
+      }
+    }
+  }
+
+  private IEnumerable<ToastOptions> GetVisibleToasts()
+  {
+    if (Order == ToastOrder.Ascending)
+    {
+      return _toasts.Take(MaxToastCount);
+    }
+    else
+    {
+      return _toasts
+          .Skip(Math.Max(0, _toasts.Count - MaxToastCount))
+          .Take(MaxToastCount);
+    }
+  }
+
+  private async Task RemoveToastAfterDelay(string id, int delayMs)
+  {
+    await Task.Delay(delayMs);
+    await InvokeAsync(() => RemoveToast(id));
   }
 
   private void AddToast(ToastOptions toast)
@@ -85,16 +120,16 @@
   internal void RemoveToast(string id)
   {
     var toast = _toasts.FirstOrDefault(t => t.Id == id);
-    if (toast != null)
-    {
-      _toasts.Remove(toast);
-      InvokeAsync(StateHasChanged);
-    }
+    if (toast == null) return;
+
+    _toasts.Remove(toast);
+    _startedTimers.Remove(id);
+
+    InvokeAsync(StateHasChanged);
   }
 
   public void Dispose()
   {
     ToastService.OnToastAdded -= AddToast;
-    ToastService.OnToastRemoved -= RemoveToast;
   }
 }
