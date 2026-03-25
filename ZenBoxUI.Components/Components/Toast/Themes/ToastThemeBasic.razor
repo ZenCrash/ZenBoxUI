@@ -12,7 +12,10 @@
       <i class="@ToastOptions.IconCssClass" />
     }
     <span class="zbox-toast-title">@ToastOptions.Title</span>
-    <img src="_content/ZenBoxUI.Blazor/svg/x-lg.svg" class="zbox-toast-icon zbox-toast-close" width="18" @onclick="@CloseToastBtn" />
+    @if (ToastOptions.ShowCloseButton)
+    {
+      <img src="_content/ZenBoxUI.Blazor/svg/x-lg.svg" class="zbox-toast-icon zbox-toast-close" width="18" @onclick="@CloseToastBtn" />
+    }
   </div>
   <div class="zbox-toast-body">
     <p class="zbox-toast-text">@ToastOptions.Text</p>

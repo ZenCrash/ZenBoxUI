@@ -18,6 +18,7 @@
 <p></p>
 <h5>Toast Scenarios</h5>
 
+<button class="btn btn-primary" @onclick="ShowToastWithoutCloseButton">Show Toast Missing Close Button</button>
 <button class="btn btn-primary" @onclick="ShowOverflowToast">Show Overflow Toast</button>
 <button class="btn btn-primary" @onclick="ShowToastWithCustomContent">Show Toast With Custom Content</button>
 
@@ -41,6 +42,19 @@
       RenderTheme = ToastRenderTheme.Basic,
       RenderStyle = ToastRenderStyle.Info,
       DisplayTime = 0,
+    });
+  }
+
+  private void ShowToastWithoutCloseButton()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Missing Close Btn " + Guid.NewGuid(),
+      Text = "Iam a toast with a really long text" + String.Concat(Enumerable.Repeat(Guid.NewGuid(), 15)),
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = 5000,
+      ShowCloseButton = false,
     });
   }
 
