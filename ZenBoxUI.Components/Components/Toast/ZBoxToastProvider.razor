@@ -8,8 +8,6 @@
 
 @if (!Enabled) return;
 
-<CascadingValue Value="this">
-
 <div class="@_cssClass zbox" style="z-index: @Zindex;">
   @if (Order == ToastOrder.Ascending)
   {
@@ -37,7 +35,6 @@
     }
   }
 </div>
-</CascadingValue>
 
 @code {
   [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString();

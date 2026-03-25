@@ -2,8 +2,6 @@
 {
   public interface IZBoxToastOptions
   {
-    public ToastOptions Primary { get; }
-    public ToastOptions Secondary { get; }
     public ToastOptions Success { get; }
     public ToastOptions Danger { get; }
     public ToastOptions Warning { get; }
@@ -12,20 +10,6 @@
 
   public class ZBoxToastOptions : IZBoxToastOptions
   {
-    public ToastOptions Primary => new()
-    {
-      RenderStyle = ToastRenderStyle.Primary,
-      DisplayTime = 5000,
-      ShowCloseButton = true,
-    };
-
-    public ToastOptions Secondary => new()
-    {
-      RenderStyle = ToastRenderStyle.Secondary,
-      DisplayTime = 5000,
-      ShowCloseButton = true,
-    };
-
     public ToastOptions Success => new()
     {
       RenderStyle = ToastRenderStyle.Success,

@@ -9,8 +9,6 @@
 <h1>Hello, world!</h1>
 <h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
 
-<button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Primary)">Show Primary Toast</button>
-<button class="btn btn-secondary" @onclick="() => ShowToast(ToastRenderStyle.Secondary)">Show Secondary Toast</button>
 <button class="btn btn-success" @onclick="() => ShowToast(ToastRenderStyle.Success)">Show Success Toast</button>
 <button class="btn btn-danger" @onclick="() => ShowToast(ToastRenderStyle.Danger)">Show Danger Toast</button>
 <button class="btn btn-warning" @onclick="() => ShowToast(ToastRenderStyle.Warning)">Show Warning Toast</button>
@@ -40,11 +38,11 @@
       Title = "Long Toast " + Guid.NewGuid(),
       Text = "Iam a toast with a really long text" + String.Concat(Enumerable.Repeat(Guid.NewGuid(), 15)),
       RenderTheme = ToastRenderTheme.Basic,
-      RenderStyle = ToastRenderStyle.Primary,
+      RenderStyle = ToastRenderStyle.Info,
       DisplayTime = 0,
       CustomContent = 
       @<div>
-        <button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Primary)">Show Primary Toast</button>
+        <button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Info)">Show Info Toast</button>
       </div>
     });
   }
@@ -55,22 +53,6 @@
     // Create toast immediately
     var toast = toastStyle switch
     {
-      ToastRenderStyle.Primary => new ToastOptions
-      {
-        Title = "Primary Toast " + Guid.NewGuid(),
-        Text = "This toast appears only on this page",
-        RenderTheme = ToastRenderTheme.Basic,
-        RenderStyle = ToastRenderStyle.Primary,
-        DisplayTime = 3000,
-      },
-      ToastRenderStyle.Secondary => new ToastOptions
-      {
-        Title = "Secondary Toast " + Guid.NewGuid(),
-        Text = "This toast appears only on this page",
-        RenderTheme = ToastRenderTheme.Basic,
-        RenderStyle = ToastRenderStyle.Secondary,
-        DisplayTime = 3000,
-      },
       ToastRenderStyle.Success => new ToastOptions
       {
         Title = "Success Toast " + Guid.NewGuid(),
@@ -119,14 +101,7 @@
         RenderStyle = ToastRenderStyle.Dark,
         DisplayTime = 3000,
       },
-      _ => new ToastOptions
-      {
-        Title = "Primary Toast " + Guid.NewGuid(),
-        Text = "This toast appears only on this page",
-        RenderTheme = ToastRenderTheme.Basic,
-        RenderStyle = ToastRenderStyle.Primary,
-        DisplayTime = 3000,
-      }
+      _ => throw new ArgumentOutOfRangeException(nameof(toastStyle), "Invalid toast style")
     };
 
     // Add toast immediately

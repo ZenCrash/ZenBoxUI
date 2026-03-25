@@ -68,8 +68,8 @@ namespace ZenBoxUI.Blazor
     /// <summary>
     /// Sets the visual style to use when rendering the toast notification.
     /// </summary>
-    [DefaultValue(ToastRenderStyle.Primary)]
-    public ToastRenderStyle RenderStyle { get; set; } = ToastRenderStyle.Primary;
+    [DefaultValue(ToastRenderStyle.Info)]
+    public ToastRenderStyle RenderStyle { get; set; } = ToastRenderStyle.Info;
 
     /// <summary>
     /// Adds a custom content to the toast body.

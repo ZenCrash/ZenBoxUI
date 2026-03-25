@@ -3,9 +3,9 @@
 
 <div class="zbox-toast" style="@CssStyle">
   <div class="zbox-toast-header">
-    @if (ToastRenderStyle.Custom != ToastOptions.RenderStyle || ToastOptions.IconCssClass is null)
+    @if (ToastOptions.IconCssClass is null)
     {
-      <img src="_content/ZenBoxUI.Blazor/svg/check-circle-fill.svg" class="zbox-toast-icon" width="18" />
+      <img src="@IconPath" class="zbox-toast-icon" width="18" />
     }
     else
     {
@@ -27,10 +27,12 @@
   [Parameter] public int? DisplayTime { get; set; }
 
   private string CssStyle { get; set; } = string.Empty;
+  private string IconPath { get; set; } = string.Empty;
 
   protected override void OnInitialized()
   {
     CssStyle = ToastStyleBuilder.GetToastStyles(MaxWidth, ToastOptions.RenderStyle, ToastOptions.Width, ToastOptions.MaxLineHeight!);
+    IconPath = ToastStyleBuilder.GetIconPath(ToastOptions.RenderStyle);
   }
 
   private void CloseToastBtn()

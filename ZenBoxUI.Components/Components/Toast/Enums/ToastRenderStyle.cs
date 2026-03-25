@@ -2,8 +2,6 @@
 {
   public enum ToastRenderStyle
   {
-    Primary,
-    Secondary,
     Success,
     Danger,
     Warning,
