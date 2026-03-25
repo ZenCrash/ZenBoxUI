@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-
-namespace ZenBoxUI.Blazor.Toast
+﻿namespace ZenBoxUI.Blazor
 {
   internal static class ToastStyleBuilder
   {
@@ -22,20 +17,21 @@ namespace ZenBoxUI.Blazor.Toast
       //styles.Add(GetToastPositionAndAlignmentCss(alignment));
       //return string.Join(" ", styles);
 
-      return GetToastPositionAndAlignmentCss(alignment);
+      return GetPositionAndAlignmentCss(alignment);
     }
-    internal static string GetToastStyles(string? maxWidth, ToastRenderStyle renderStyle, string width)
+    internal static string GetToastStyles(string? maxWidth, ToastRenderStyle renderStyle, string width, int lineHeight)
     {
       var styles = new List<string>();
       styles.Add($"--zbox-width: {width};");
       styles.Add($"--zbox-max-width: {maxWidth ?? width};");
       styles.Add(GetRenderStyleCss(renderStyle));
+      styles.Add($"--toast-line-height: {lineHeight};");
       return string.Join(" ", styles);
     }
 
-    private static string GetToastPositionAndAlignmentCss(ToastAlignment alignment) => alignment switch
+    private static string GetPositionAndAlignmentCss(ToastAlignment alignment) => alignment switch
     {
-      ToastAlignment.TopLeft => "zbox-top zbox-left ",
+      ToastAlignment.TopLeft => "zbox-top zbox-left",
       ToastAlignment.TopCenter => "zbox-top zbox-center",
       ToastAlignment.TopRight => "zbox-top zbox-right",
       ToastAlignment.MiddleLeft => "zbox-middle zbox-left",
@@ -47,17 +43,19 @@ namespace ZenBoxUI.Blazor.Toast
       _ => "zbox-bottom zbox-right"
     };
 
+
+
     internal static string GetRenderStyleCss(ToastRenderStyle renderStyle) => renderStyle switch
     {
-      ToastRenderStyle.Primary => $"--zbox-primary: {PrimaryStyleColors[0]};" + $"--zbox-secondary: {PrimaryStyleColors[1]};" + $"--zbox-title: {GetContrastColor(PrimaryStyleColors[0])};" + $"--zbox-text: {GetContrastColor(PrimaryStyleColors[1])};",
-      ToastRenderStyle.Secondary => $"--zbox-primary: {SecondaryStyleColors[0]};" + $"--zbox-secondary: {SecondaryStyleColors[1]};" + $"--zbox-title: {GetContrastColor(SecondaryStyleColors[0])};" + $"--zbox-text: {GetContrastColor(SecondaryStyleColors[1])};",
-      ToastRenderStyle.Success => $"--zbox-primary: {SuccessStyleColors[0]};" + $"--zbox-secondary: {SuccessStyleColors[1]};" + $"--zbox-title: {GetContrastColor(SuccessStyleColors[0])};" + $"--zbox-text: {GetContrastColor(SuccessStyleColors[1])};",
-      ToastRenderStyle.Danger => $"--zbox-primary: {DangerStyleColors[0]};" + $"--zbox-secondary: {DangerStyleColors[1]};" + $"--zbox-title: {GetContrastColor(DangerStyleColors[0])};" + $"--zbox-text: {GetContrastColor(DangerStyleColors[1])};",
-      ToastRenderStyle.Warning => $"--zbox-primary: {WarningStyleColors[0]};" + $"--zbox-secondary: {WarningStyleColors[1]};" + $"--zbox-title: {GetContrastColor(WarningStyleColors[0])};" + $"--zbox-text: {GetContrastColor(WarningStyleColors[1])};",
-      ToastRenderStyle.Info => $"--zbox-primary: {InfoStyleColors[0]};" + $"--zbox-secondary: {InfoStyleColors[1]};" + $"--zbox-title: {GetContrastColor(InfoStyleColors[0])};" + $"--zbox-text: {GetContrastColor(InfoStyleColors[1])};",
-      ToastRenderStyle.Light => $"--zbox-primary: {LightStyleColors[0]};" + $"--zbox-secondary: {LightStyleColors[1]};" + $"--zbox-title: {GetContrastColor(LightStyleColors[0])};" + $"--zbox-text: {GetContrastColor(LightStyleColors[1])};",
-      ToastRenderStyle.Dark => $"--zbox-primary: {DarkStyleColors[0]};" + $"--zbox-secondary: {DarkStyleColors[1]};" + $"--zbox-title: {GetContrastColor(DarkStyleColors[0])};" + $"--zbox-text: {GetContrastColor(DarkStyleColors[1])};",
-      _ => $"--zbox-primary: {PrimaryStyleColors[0]};" + $"--zbox-secondary: {PrimaryStyleColors[1]};" + $"--zbox-title: {GetContrastColor(PrimaryStyleColors[0])};" + $"--zbox-text: {GetContrastColor(PrimaryStyleColors[1])};",
+      ToastRenderStyle.Primary => $"--zbox-primary: {PrimaryStyleColors[0]};" + $"--zbox-secondary: {PrimaryStyleColors[1]};" + $"--zbox-title: {GetContrastColor(PrimaryStyleColors[0])};" + $"--zbox-text: {GetContrastColor(PrimaryStyleColors[1])};" + $"--zbox-toast-icon-filter: 100%;",
+      ToastRenderStyle.Secondary => $"--zbox-primary: {SecondaryStyleColors[0]};" + $"--zbox-secondary: {SecondaryStyleColors[1]};" + $"--zbox-title: {GetContrastColor(SecondaryStyleColors[0])};" + $"--zbox-text: {GetContrastColor(SecondaryStyleColors[1])};" + $"--zbox-toast-icon-filter: 100%;",
+      ToastRenderStyle.Success => $"--zbox-primary: {SuccessStyleColors[0]};" + $"--zbox-secondary: {SuccessStyleColors[1]};" + $"--zbox-title: {GetContrastColor(SuccessStyleColors[0])};" + $"--zbox-text: {GetContrastColor(SuccessStyleColors[1])};" + $"--zbox-toast-icon-filter: 100%;",
+      ToastRenderStyle.Danger => $"--zbox-primary: {DangerStyleColors[0]};" + $"--zbox-secondary: {DangerStyleColors[1]};" + $"--zbox-title: {GetContrastColor(DangerStyleColors[0])};" + $"--zbox-text: {GetContrastColor(DangerStyleColors[1])};" + $"--zbox-toast-icon-filter: 100%;",
+      ToastRenderStyle.Warning => $"--zbox-primary: {WarningStyleColors[0]};" + $"--zbox-secondary: {WarningStyleColors[1]};" + $"--zbox-title: {GetContrastColor(WarningStyleColors[0])};" + $"--zbox-text: {GetContrastColor(WarningStyleColors[1])};" + $"--zbox-toast-icon-filter: 0%;",
+      ToastRenderStyle.Info => $"--zbox-primary: {InfoStyleColors[0]};" + $"--zbox-secondary: {InfoStyleColors[1]};" + $"--zbox-title: {GetContrastColor(InfoStyleColors[0])};" + $"--zbox-text: {GetContrastColor(InfoStyleColors[1])};" + $"--zbox-toast-icon-filter: 0%;",
+      ToastRenderStyle.Light => $"--zbox-primary: {LightStyleColors[0]};" + $"--zbox-secondary: {LightStyleColors[1]};" + $"--zbox-title: {GetContrastColor(LightStyleColors[0])};" + $"--zbox-text: {GetContrastColor(LightStyleColors[1])};" + $"--zbox-toast-icon-filter: 0%;",
+      ToastRenderStyle.Dark => $"--zbox-primary: {DarkStyleColors[0]};" + $"--zbox-secondary: {DarkStyleColors[1]};" + $"--zbox-title: {GetContrastColor(DarkStyleColors[0])};" + $"--zbox-text: {GetContrastColor(DarkStyleColors[1])};" + $"--zbox-toast-icon-filter: 100%;",
+      _ => $"--zbox-primary: {PrimaryStyleColors[0]};" + $"--zbox-secondary: {PrimaryStyleColors[1]};" + $"--zbox-title: {GetContrastColor(PrimaryStyleColors[0])};" + $"--zbox-text: {GetContrastColor(PrimaryStyleColors[1])};" + $"--zbox-toast-icon-filter: 100%;",
     };
 
     private static string GetContrastColor(string hexColor)

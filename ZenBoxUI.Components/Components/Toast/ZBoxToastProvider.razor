@@ -1,9 +1,7 @@
 ﻿@namespace ZenBoxUI.Blazor
-@using ZenBoxUI.Blazor.Toast
 
 @using Microsoft.JSInterop
 @using ZenBoxUI.Blazor
-@using ZenBoxUI.Blazor.Toast.Themes
 @inject IZBoxToastService ToastService
 @inject IJSRuntime JSRuntime
 @implements IDisposable
@@ -21,7 +19,7 @@
       @switch (_toasts[i].RenderTheme)
       {
         case ToastRenderTheme.Basic:
-            <ToastThemeBasic @key="_toasts[i].Id" ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" />
+            <ToastThemeBasic @key="_toasts[i].Id" ToastOptions="@_toasts[i]" DisplayTime="@DisplayTime" MaxWidth="@MaxWidth" CloseToast="@RemoveToast" />
           break;
       }
     }
@@ -55,7 +53,6 @@
   [Parameter] public int Zindex { get; set; } = 3;
   // [Parameter] public ToastAnimation Animation { get; set; } = ToastAnimeation.Slide;
   [Parameter] public ToastAlignment Alignment { get; set; } = ToastAlignment.BottomRight;
-  [Parameter] public string? MaxHeight { get; set; }
 
   private string _cssClass { get; set; } = string.Empty;
   private List<ToastOptions> _toasts = new();

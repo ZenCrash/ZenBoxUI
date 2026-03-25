@@ -38,9 +38,9 @@
       return options;
     }
 
-    public static ToastOptions WithMaxHeight(this ToastOptions options, string maxHeight)
+    public static ToastOptions WithMaxHeight(this ToastOptions options, int maxLineHeight)
     {
-      options.MaxHeight = maxHeight;
+      options.MaxLineHeight = maxLineHeight;
       return options;
     }
 

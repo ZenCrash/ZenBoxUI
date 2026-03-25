@@ -30,12 +30,40 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: calc(var(--zbox-width) - 1.25rem - 18px) !important;
+  max-width: 100% !important;
 }
 
-  .zbox-toast .zbox-toast-body {
-    padding-top: .75rem !important;
-    padding-bottom: .75rem !important;
-    padding-right: .75rem !important;
-    padding-left: 2.375rem !important;
+.zbox-toast-icon.zbox-toast-close {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+  .zbox-toast-icon.zbox-toast-close:hover {
+    transform: scale(1.2);
   }
+
+
+.zbox-toast-header .zbox-toast-icon {
+  filter: invert(var(--zbox-toast-icon-filter, 0%)) 
+          saturate(0%) 
+          brightness(var(--zbox-toast-icon-filter, 0%)) 
+          contrast(100%);
+}
+
+.zbox-toast .zbox-toast-body {
+  padding-top: .75rem !important;
+  padding-bottom: .75rem !important;
+  padding-right: .75rem !important;
+  padding-left: 2.375rem !important;
+
+  overflow-y: auto;
+    display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.zbox-toast-body .zbox-toast-text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: var(--toast-line-height);
+}

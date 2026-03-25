@@ -1,17 +1,27 @@
 ﻿@using ZenBoxUI.Blazor
-@namespace ZenBoxUI.Blazor.Toast.Themes
+@namespace ZenBoxUI.Blazor
 
 <div class="zbox-toast" style="@CssStyle">
   <div class="zbox-toast-header">
-    <img src="_content/ZenBoxUI.Blazor/svg/check-circle-fill-white.svg" width="18" />
+    @if (ToastRenderStyle.Custom != ToastOptions.RenderStyle || ToastOptions.IconCssClass is null)
+    {
+      <img src="_content/ZenBoxUI.Blazor/svg/check-circle-fill.svg" class="zbox-toast-icon" width="18" />
+    }
+    else
+    {
+      <i class="@ToastOptions.IconCssClass" />
+    }
     <span class="zbox-toast-title">@ToastOptions.Title</span>
+    <img src="_content/ZenBoxUI.Blazor/svg/x-lg.svg" class="zbox-toast-icon zbox-toast-close" width="18" @onclick="@CloseToastBtn" />
   </div>
   <div class="zbox-toast-body">
-    @ToastOptions.Text
+    <p class="zbox-toast-text">@ToastOptions.Text</p>
+    @ToastOptions.CustomContent
   </div>
 </div>
 
 @code {
+  [Parameter] public EventCallback<string> CloseToast { get; set; }
   [Parameter] public ToastOptions ToastOptions { get; set; } = null!;
   [Parameter] public string MaxWidth { get; set; } = null!;
   [Parameter] public int? DisplayTime { get; set; }
@@ -20,6 +30,11 @@
 
   protected override void OnInitialized()
   {
-    CssStyle = ToastStyleBuilder.GetToastStyles(MaxWidth, ToastOptions.RenderStyle, ToastOptions.Width);
+    CssStyle = ToastStyleBuilder.GetToastStyles(MaxWidth, ToastOptions.RenderStyle, ToastOptions.Width, ToastOptions.MaxLineHeight!);
+  }
+
+  private void CloseToastBtn()
+  {
+    CloseToast.InvokeAsync(ToastOptions.Id);
   }
 }

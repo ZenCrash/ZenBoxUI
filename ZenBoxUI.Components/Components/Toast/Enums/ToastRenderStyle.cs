@@ -10,5 +10,6 @@
     Info,
     Light,
     Dark,
+    Custom,
   }
 }

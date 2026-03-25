@@ -7,25 +7,7 @@
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
-
-
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
-<h1>Iam example Text</h1>
 <h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
-<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
-<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
-<h1>Iam example Text Iam example Text Iam example Text Iam example Text</h1>
-
 
 <button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Primary)">Show Primary Toast</button>
 <button class="btn btn-secondary" @onclick="() => ShowToast(ToastRenderStyle.Secondary)">Show Secondary Toast</button>
@@ -36,16 +18,37 @@
 <button class="btn btn-light" @onclick="() => ShowToast(ToastRenderStyle.Light)">Show Light Toast</button>
 <button class="btn btn-dark" @onclick="() => ShowToast(ToastRenderStyle.Dark)">Show Dark Toast</button>
 
+<span></span>
+
+<button class="btn btn-primary" @onclick="ShowLongToast">Show Long Toast</button>
+
+
 <ZBoxToastProvider
     MaxToastCount="5" 
     Alignment="ToastAlignment.BottomRight" 
     MaxWidth="300px"
-    MaxHeight="300px"
     ShowCloseButton="true"
 />
 
 @code{
   private ZBoxToastProvider? _toastProvider;
+
+  private void ShowLongToast()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Long Toast " + Guid.NewGuid(),
+      Text = "Iam a toast with a really long text" + String.Concat(Enumerable.Repeat(Guid.NewGuid(), 15)),
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Primary,
+      DisplayTime = 0,
+      CustomContent = 
+      @<div>
+        <button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Primary)">Show Primary Toast</button>
+      </div>
+    });
+  }
+
 
   private void ShowToast(ToastRenderStyle toastStyle)
   {

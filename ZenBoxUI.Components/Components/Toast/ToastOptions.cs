@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Components;
+using System.ComponentModel;
 
 namespace ZenBoxUI.Blazor
 {
@@ -28,8 +29,6 @@ namespace ZenBoxUI.Blazor
     [DefaultValue(null)]
     public string? Text { get; set; }
 
-
-
     /// <summary>
     /// specifies CSS classes to apply to the toast.
     /// </summary>
@@ -43,10 +42,10 @@ namespace ZenBoxUI.Blazor
     public string? IconCssClass { get; set; }
 
     /// <summary>
-    /// Specifies the maximum height of the toast.
+    /// Specifies the maximum lines of text in the body of the toast.
     /// </summary>
     [DefaultValue(null)]
-    public string? MaxHeight { get; set; }
+    public int MaxLineHeight { get; set; } = 3;
 
     /// <summary>
     /// width of the toast.
@@ -71,5 +70,11 @@ namespace ZenBoxUI.Blazor
     /// </summary>
     [DefaultValue(ToastRenderStyle.Primary)]
     public ToastRenderStyle RenderStyle { get; set; } = ToastRenderStyle.Primary;
+
+    /// <summary>
+    /// Adds a custom content to the toast body.
+    /// </summary>
+    [DefaultValue(null)]
+    public RenderFragment? CustomContent { get; set; } = null;
   }
 }
