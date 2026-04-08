@@ -1,12 +1,43 @@
-﻿@rendermode @(new InteractiveServerRenderMode(prerender:false))
+﻿@inject IZBoxToastService ToastService
+
+
+@rendermode @(new InteractiveServerRenderMode(prerender:false))
 @page "/InputText"
 
 <h3>InputText</h3>
 
-<ZbTextInput Enabled="@_enabled"></ZbTextInput>
+<ZbTextInput Enabled="@_enabled"
+             Password="@_password"
+             OnInput="@TriggerOnInput"/>
+
 <button class="btn btn-primary" @onclick="() => _enabled = !_enabled">Enable toggle</button>
+<button class="btn btn-primary" @onclick="() => _password = !_password">Password toggle</button>
+
 <p>Enabled value: @_enabled.ToString()</p>
+<p>Password value: @_password.ToString()</p>
+
+
+<ZBoxToastProvider
+  MaxToastCount="5" 
+  Alignment="ToastAlignment.BottomRight" 
+  MaxWidth="300px"
+  ShowCloseButton="true"
+/>
+
 
 @code {
+  private ZBoxToastProvider? _toastProvider;
   private bool _enabled = true;
+  private bool _password = false;
+
+  private void TriggerOnInput()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Text - OnInput" + " " + Guid.NewGuid(),
+      Text = "I got trigger On Input",
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = 2000});
+  }
 }

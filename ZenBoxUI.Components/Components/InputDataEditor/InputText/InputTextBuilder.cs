@@ -11,65 +11,31 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     public void BuildRenderTree(RenderTreeBuilder builder)
     {
-      var model = BuildModel();
-
       builder.OpenElement(0, "div");
-      builder.AddAttribute(1, "class", model.CssClass);
+      builder.AddAttribute(1, "class", component.CssClass);
 
-      BuildInput(builder, model);
-      BuildClearButton(builder, model);
+      BuildInput(builder, component);
+      BuildClearButton(builder, component);
 
       builder.CloseElement();
     }
 
     // =====================================================
-    // MODEL CREATION
-    // =====================================================
-    private InputTextModel BuildModel()
-    {
-      return new InputTextModel
-      {
-        Value = component.Text,
-        InputType = component.Password ? "password" : "text",
-
-        Id = component.Id,
-        InputId = component.InputId,
-
-        NullText = component.NullText,
-
-        CssClass = BuildWrapperClass(),
-        InputCssClass = BuildInputClass(),
-
-        Enabled = component.Enabled,
-        ReadOnly = component.ReadOnly,
-
-        ShowClearButton = component.ClearButton && !string.IsNullOrEmpty(component.Text),
-
-        InputDelay = component.InputDelay,
-
-        Attributes = BuildAttributes()
-      };
-    }
-
-    // =====================================================
     // INPUT RENDERING
     // =====================================================
-    private void BuildInput(RenderTreeBuilder builder, InputTextModel model)
+    private void BuildInput(RenderTreeBuilder builder, ZbTextInput component)
     {
       builder.OpenElement(10, "input");
 
-      builder.AddMultipleAttributes(11, model.Attributes);
+      builder.AddMultipleAttributes(11, component.Attributes);
 
-      builder.AddAttribute(12, "class", model.InputCssClass);
-      builder.AddAttribute(13, "value", model.Value ?? string.Empty);
-      builder.AddAttribute(14, "type", model.InputType);
-      builder.AddAttribute(15, "placeholder", model.NullText);
+      builder.AddAttribute(12, "class", component.InputCssClass);
+      builder.AddAttribute(13, "value", component.Text ?? string.Empty);
+      builder.AddAttribute(14, "type", !component.Password ? "text" : "password");
+      builder.AddAttribute(15, "placeholder", component.NullText);
 
-      if (!model.Enabled)
+      if (!component.Enabled)
         builder.AddAttribute(16, "disabled", !component.Enabled);
-
-      if (model.ReadOnly)
-        builder.AddAttribute(17, "readonly", "readonly");
 
       // EVENTS
       builder.AddAttribute(20, "oninput",
@@ -96,9 +62,9 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     // CLEAR BUTTON
     // =====================================================
-    private void BuildClearButton(RenderTreeBuilder builder, InputTextModel model)
+    private void BuildClearButton(RenderTreeBuilder builder, ZbTextInput component)
     {
-      if (!model.ShowClearButton || !model.Enabled)
+      if (!component.ClearButton || !component.Enabled)
         return;
 
       builder.OpenElement(30, "button");
@@ -110,7 +76,6 @@ namespace ZenBoxUI.Blazor.Common
           EventCallback.Factory.Create(component, async () =>
           {
             component.Text = string.Empty;
-            await component.TextChanged.InvokeAsync(component.Text);
 
             await component.OnInput.InvokeAsync();
             await component.OnChange.InvokeAsync();
@@ -129,9 +94,6 @@ namespace ZenBoxUI.Blazor.Common
       var classes = new List<string> { "zb-input" };
 
       classes.Add(component.Enabled ? "" : "zb-disabled");
-
-      if (component.ReadOnly)
-        classes.Add("zb-readonly");
 
       if (!string.IsNullOrWhiteSpace(component.CssClass))
         classes.Add(component.CssClass);
