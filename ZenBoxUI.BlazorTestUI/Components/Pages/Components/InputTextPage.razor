@@ -1,0 +1,12 @@
+﻿@rendermode @(new InteractiveServerRenderMode(prerender:false))
+@page "/InputText"
+
+<h3>InputText</h3>
+
+<ZbTextInput Enabled="@_enabled"></ZbTextInput>
+<button class="btn btn-primary" @onclick="() => _enabled = !_enabled">Enable toggle</button>
+<p>Enabled value: @_enabled.ToString()</p>
+
+@code {
+  private bool _enabled = true;
+}

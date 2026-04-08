@@ -1,0 +1,136 @@
+﻿@rendermode @(new InteractiveServerRenderMode(prerender:false))
+@page "/Toast"
+@inject IZBoxToastService ToastService
+
+<PageTitle>Home</PageTitle>
+
+<p></p>
+<h1>Toast Examples</h1>
+
+<button class="btn btn-success" @onclick="() => ShowToast(ToastRenderStyle.Success)">Show Success Toast</button>
+<button class="btn btn-danger" @onclick="() => ShowToast(ToastRenderStyle.Danger)">Show Danger Toast</button>
+<button class="btn btn-warning" @onclick="() => ShowToast(ToastRenderStyle.Warning)">Show Warning Toast</button>
+<button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Info)">Show Info Toast</button>
+<button class="btn btn-light" @onclick="() => ShowToast(ToastRenderStyle.Light)">Show Light Toast</button>
+<button class="btn btn-dark" @onclick="() => ShowToast(ToastRenderStyle.Dark)">Show Dark Toast</button>
+
+<p></p>
+<h5>Toast Scenarios</h5>
+
+<button class="btn btn-primary" @onclick="ShowToastWithoutCloseButton">Show Toast Missing Close Button</button>
+<button class="btn btn-primary" @onclick="ShowOverflowToast">Show Overflow Toast</button>
+<button class="btn btn-primary" @onclick="ShowToastWithCustomContent">Show Toast With Custom Content</button>
+
+
+<ZBoxToastProvider
+    MaxToastCount="5" 
+    Alignment="ToastAlignment.BottomRight" 
+    MaxWidth="300px"
+    ShowCloseButton="true"
+/>
+
+@code{
+  private ZBoxToastProvider? _toastProvider;
+
+  private void ShowOverflowToast()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Long Toast " + Guid.NewGuid(),
+      Text = "Iam a toast with a really long text" + String.Concat(Enumerable.Repeat(Guid.NewGuid(), 15)),
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = 0,
+    });
+  }
+
+  private void ShowToastWithoutCloseButton()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Missing Close Btn " + Guid.NewGuid(),
+      Text = "Iam a toast with a really long text" + String.Concat(Enumerable.Repeat(Guid.NewGuid(), 15)),
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = 5000,
+      ShowCloseButton = false,
+    });
+  }
+
+  private void ShowToastWithCustomContent()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Toast With Custom Content",
+      Text = "Iam a toast with a really long text" + String.Concat(Enumerable.Repeat(Guid.NewGuid(), 15)),
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = 0,
+      CustomContent =
+      @<div>
+        <button class="btn btn-primary" @onclick="() => ShowToast(ToastRenderStyle.Info)">Show Info Toast</button>
+      </div>
+    });
+  }
+
+
+  private void ShowToast(ToastRenderStyle toastStyle)
+  {
+    // Create toast immediately
+    var toast = toastStyle switch
+    {
+      ToastRenderStyle.Success => new ToastOptions
+      {
+        Title = "Success Toast",
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Success,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Danger => new ToastOptions
+      {
+        Title = "Danger Toast",
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Danger,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Warning => new ToastOptions
+      {
+        Title = "Warning Toast",
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Warning,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Info => new ToastOptions
+      {
+        Title = "Info Toast",
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Info,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Light => new ToastOptions
+      {
+        Title = "Light Toast",
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Light,
+        DisplayTime = 3000,
+      },
+      ToastRenderStyle.Dark => new ToastOptions
+      {
+        Title = "Dark Toast",
+        Text = "This toast appears only on this page",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Dark,
+        DisplayTime = 3000,
+      },
+      _ => throw new ArgumentOutOfRangeException(nameof(toastStyle), "Invalid toast style")
+    };
+
+    // Add toast immediately
+    ToastService.ShowToast(toast);
+  }
+}
