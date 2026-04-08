@@ -12,7 +12,8 @@ namespace ZenBoxUI.Blazor.Common
     public void BuildRenderTree(RenderTreeBuilder builder)
     {
       builder.OpenElement(0, "div");
-      builder.AddAttribute(1, "class", component.CssClass);
+      builder.AddAttribute(1, "id", component.Id);
+      builder.AddAttribute(2, "class", BuildWrapperClass());
 
       BuildInput(builder, component);
       BuildClearButton(builder, component);
@@ -26,16 +27,16 @@ namespace ZenBoxUI.Blazor.Common
     private void BuildInput(RenderTreeBuilder builder, ZbTextInput component)
     {
       builder.OpenElement(10, "input");
-
       builder.AddMultipleAttributes(11, component.Attributes);
 
-      builder.AddAttribute(12, "class", component.InputCssClass);
-      builder.AddAttribute(13, "value", component.Text ?? string.Empty);
-      builder.AddAttribute(14, "type", !component.Password ? "text" : "password");
-      builder.AddAttribute(15, "placeholder", component.NullText);
+      builder.AddAttribute(12, "id", component.InputId);
+      builder.AddAttribute(13, "class", BuildInputClass());
+      builder.AddAttribute(14, "value", component.Text ?? string.Empty);
+      builder.AddAttribute(15, "type", !component.Password ? "text" : "password");
+      builder.AddAttribute(16, "placeholder", component.NullText);
 
-      if (!component.Enabled)
-        builder.AddAttribute(16, "disabled", !component.Enabled);
+      if (component.Disabled)
+        builder.AddAttribute(17, "disabled", component.Disabled);
 
       // EVENTS
       builder.AddAttribute(20, "oninput",
@@ -64,7 +65,7 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     private void BuildClearButton(RenderTreeBuilder builder, ZbTextInput component)
     {
-      if (!component.ClearButton || !component.Enabled)
+      if (!component.ClearButton || component.Disabled)
         return;
 
       builder.OpenElement(30, "button");
@@ -91,9 +92,7 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     private string BuildWrapperClass()
     {
-      var classes = new List<string> { "zb-input" };
-
-      classes.Add(component.Enabled ? "" : "zb-disabled");
+      var classes = new List<string> { "zb-input", !component.Disabled ? "" : "zb-disabled" };
 
       if (!string.IsNullOrWhiteSpace(component.CssClass))
         classes.Add(component.CssClass);

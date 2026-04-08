@@ -6,15 +6,28 @@
 
 <h3>InputText</h3>
 
-<ZbTextInput Enabled="@_enabled"
-             Password="@_password"
-             OnInput="@TriggerOnInput"/>
+<div class="card shadow-sm p-2 d-flex gap-2">
+  <ZbTextInput Id="TestId"
+               InputId="InputTestId"
+               NullText="Null Text Test"
+               Disabled="@_disabled"
+               Password="@_password"
+               OnInput="@TriggerOnInput"
+               OnChange="@TriggerOnChange"
+               OnBlur="@TriggerOnBlur"
+               OnFocus="@TriggerOnFocus"
+               @bind-/>
+  <p>Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
 
-<button class="btn btn-primary" @onclick="() => _enabled = !_enabled">Enable toggle</button>
-<button class="btn btn-primary" @onclick="() => _password = !_password">Password toggle</button>
+  <div>
+    <button class="btn btn-primary" @onclick="@(() => _disabled = !_disabled)">Enable: (@_disabled)</button>
+    <button class="btn btn-primary" @onclick="@(() => _password = !_password)">Password: (@_password)</button>
+  </div>
 
-<p>Enabled value: @_enabled.ToString()</p>
-<p>Password value: @_password.ToString()</p>
+</div>
+
+
+
 
 
 <ZBoxToastProvider
@@ -27,7 +40,8 @@
 
 @code {
   private ZBoxToastProvider? _toastProvider;
-  private bool _enabled = true;
+  private string _text { get; set; }
+  private bool _disabled = false;
   private bool _password = false;
 
   private void TriggerOnInput()
@@ -38,6 +52,39 @@
       Text = "I got trigger On Input",
       RenderTheme = ToastRenderTheme.Basic,
       RenderStyle = ToastRenderStyle.Info,
+      DisplayTime = 2000});
+  }
+  private void TriggerOnChange()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Text - OnChange" + " " + Guid.NewGuid(),
+      Text = "I got trigger On Change",
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Warning,
+      DisplayTime = 2000
+    });
+  }
+
+
+  private void TriggerOnFocus()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Text - OnFocus" + " " + Guid.NewGuid(),
+      Text = "I got trigger On Focus",
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Success,
+      DisplayTime = 2000});
+  }
+  private void TriggerOnBlur()
+  {
+    ToastService.ShowToast(new ToastOptions
+    {
+      Title = "Text - OnBlur" + " " + Guid.NewGuid(),
+      Text = "I got trigger On Blur (Deselect)",
+      RenderTheme = ToastRenderTheme.Basic,
+      RenderStyle = ToastRenderStyle.Danger,
       DisplayTime = 2000});
   }
 }

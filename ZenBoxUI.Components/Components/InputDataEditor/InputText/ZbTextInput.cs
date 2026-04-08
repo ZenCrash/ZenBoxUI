@@ -31,7 +31,50 @@ namespace ZenBoxUI.Blazor
 
     //[Parameter] public int? InputDelay { get; set; }
 
+    /// <summary>
+    /// Should field be a password field.
+    /// </summary>
+    
     [Parameter] public bool Password { get; set; }
+
+    public async Task HandleInput(ChangeEventArgs e)
+    {
+      Text = e.Value?.ToString();
+      await TextChanged.InvokeAsync(Text);
+
+      if (OnInput.HasDelegate)
+        await OnInput.InvokeAsync();
+    }
+
+    public async Task HandleChange(ChangeEventArgs e)
+    {
+      if (OnChange.HasDelegate)
+        await OnChange.InvokeAsync();
+    }
+
+    public async Task HandleFocus(FocusEventArgs e)
+    {
+      if (OnFocus.HasDelegate)
+        await OnFocus.InvokeAsync();
+    }
+
+    public async Task HandleBlur(FocusEventArgs e)
+    {
+      if (OnBlur.HasDelegate)
+        await OnBlur.InvokeAsync();
+    }
+
+    public async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+      if (OnKeyDown.HasDelegate)
+        await OnKeyDown.InvokeAsync();
+    }
+
+    public async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+      if (OnKeyUp.HasDelegate)
+        await OnKeyUp.InvokeAsync();
+    }
 
     //======================================//
     // Component Builder                    //
