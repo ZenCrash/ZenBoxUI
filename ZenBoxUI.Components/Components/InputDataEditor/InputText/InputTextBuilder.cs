@@ -46,10 +46,6 @@ namespace ZenBoxUI.Blazor.Common
           EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleFocus));
       builder.AddAttribute(23, "onblur",
           EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleBlur));
-      builder.AddAttribute(24, "onkeydown",
-          EventCallback.Factory.Create<KeyboardEventArgs>(component, component.HandleKeyDown));
-      builder.AddAttribute(25, "onkeyup",
-          EventCallback.Factory.Create<KeyboardEventArgs>(component, component.HandleKeyUp));
 
       builder.CloseElement();
     }

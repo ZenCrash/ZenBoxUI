@@ -64,18 +64,6 @@ namespace ZenBoxUI.Blazor
         await OnBlur.InvokeAsync();
     }
 
-    public async Task HandleKeyDown(KeyboardEventArgs e)
-    {
-      if (OnKeyDown.HasDelegate)
-        await OnKeyDown.InvokeAsync();
-    }
-
-    public async Task HandleKeyUp(KeyboardEventArgs e)
-    {
-      if (OnKeyUp.HasDelegate)
-        await OnKeyUp.InvokeAsync();
-    }
-
     //======================================//
     // Component Builder                    //
     //======================================//

@@ -59,6 +59,7 @@
 
 .zb-snippet-body-code {
   margin: .5rem !important;
+  padding-left: 1rem;
   height: 100%;
   background-color: #E5E5E5;
   overflow: auto !important;

@@ -2,7 +2,6 @@
 
 @rendermode @(new InteractiveServerRenderMode(prerender:false))
 @page "/InputText"
-@using ZenBoxUI.Blazor.Components.Snippet
 @using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Cmp
 
 <ZBoxToastProvider MaxToastCount="5"
@@ -11,9 +10,24 @@
                    ShowCloseButton="true" />
 
 @* Input Triggers *@
-<div class="p-2">
-  <InputTextEventsCp ToastService="@ToastService" />
+<div class="p-2 overflow-y-auto">
+  <h1>Events</h1>
+  <InputTextEventsCp ToastService="@ToastService"/>
+
+  <p class="my-4">
+    The <span class="zb-code">@("<")ZbInputText@(">")</span>, supports a variety of html events. <br />
+    simply bind the desired event to a method and you are good to go. <br/>
+  </p>
+  
+  <ul>
+    <li><span class="zb-code">OnFocus</span> - Triggers when field is selected</li>
+    <li><span class="zb-code">OnBlur</span> - Triggers when field is deselected</li>
+    <li><span class="zb-code">OnInput</span> - Triggers on value change</li>
+    <li><span class="zb-code">OnChange</span> - Triggers when field is deselected and value is a new value</li>
+  </ul>
 </div>
+
+@* Bind Text *@
 
 @code {
   

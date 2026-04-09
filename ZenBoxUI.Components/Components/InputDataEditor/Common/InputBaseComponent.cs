@@ -30,14 +30,6 @@ namespace ZenBoxUI.Blazor.Common
 
     [Parameter] public EventCallback OnBlur { get; set; }
 
-    [Parameter] public EventCallback OnKeyDown { get; set; }
-
-    [Parameter] public EventCallback OnKeyUp { get; set; }
-
-
-    
-
-
     [Parameter(CaptureUnmatchedValues = true)]
     public Dictionary<string, object> Attributes { get; set; } = [];
   }

@@ -3,6 +3,22 @@ html, body {
   margin: 0;
 }
 
+.zb-code {
+  background-color: lightgray;
+  border-radius: 4px;
+  font-family: Consolas, monospace;
+}
+
+.overflow-y-auto {
+  overflow-y: auto !important
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
 p {
   display: block;
   margin-block-start: 0rem;
