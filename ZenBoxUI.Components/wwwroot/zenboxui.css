@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  width: 100%;
+  width: 20rem;
 }
 
   .zb-input input {
@@ -18,3 +18,12 @@
       border-color: #0078d4;
       box-shadow: 0 0 0 1px #0078d4;
     }
+
+.zb-clear-btn {
+  position: absolute;
+  right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #888;
+  display: none;
+}

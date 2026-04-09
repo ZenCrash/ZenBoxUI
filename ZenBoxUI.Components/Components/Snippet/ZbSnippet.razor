@@ -1,0 +1,66 @@
+﻿<div class="zb-snippet card">
+  <div class="zb-snippet-menu-buttons">
+    <button @onclick="@(() => ChangeSource(Source.Example))">Example</button>
+    <button @onclick="@(() => ChangeSource(Source.Code))">Code</button>
+  </div>
+  <hr style="border: 0; height: 1px; background-color: gray; width: 100%;" />
+  @if (_selectedSource == Source.Example)
+  {
+    <div class="zb-snippet-body">
+      @_content
+    </div>
+  }
+  else
+  {
+    <div class="zb-snippet-menu-buttons">
+      @foreach (var item in _items)
+      {
+          <button @onclick="@(() => ChangeActiveFile(item.Id))">@item.Name</button>
+      }
+    </div>
+    <hr style="border: 0; height: 1px; background-color: gray; width: 100%;" />
+    <div class="zb-snippet-body-code">
+      @_items.FirstOrDefault(x => x.Id == _selectedFileId)?.ChildContent
+    </div>
+  }
+</div>
+
+<CascadingValue Value="this">
+  @ChildContent
+</CascadingValue>
+
+@code {
+  [Parameter] public required RenderFragment ChildContent { get; set; }
+  internal enum Source {Example, Code}
+
+  private RenderFragment? _content;
+  private List<ZbSnippetFile> _items { get; set; } = [];
+  private Source _selectedSource { get; set; }
+  private string _selectedFileId { get; set; }
+
+  internal void AddContent(RenderFragment item)
+  {
+    _content = item;
+  }
+  internal void AddItem(ZbSnippetFile item)
+  {
+    if (_items.Count == 0)
+    {
+      _selectedFileId = item.Id;
+      StateHasChanged();
+    }
+    _items.Add(item);
+  }
+
+  internal void ChangeSource(Source source)
+  {
+    if (_selectedSource == source)
+      return;
+    _selectedSource = source;
+    // _selectedFileId = _items.FirstOrDefault().Id;
+  }
+  internal void ChangeActiveFile(string id)
+  {
+    _selectedFileId = id;
+  }
+}

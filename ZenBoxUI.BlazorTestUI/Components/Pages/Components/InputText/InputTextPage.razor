@@ -1,0 +1,20 @@
+﻿@inject IZBoxToastService ToastService
+
+@rendermode @(new InteractiveServerRenderMode(prerender:false))
+@page "/InputText"
+@using ZenBoxUI.Blazor.Components.Snippet
+@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Cmp
+
+<ZBoxToastProvider MaxToastCount="5"
+                   Alignment="ToastAlignment.BottomRight"
+                   MaxWidth="300px"
+                   ShowCloseButton="true" />
+
+@* Input Triggers *@
+<div class="p-2">
+  <InputTextEventsCp ToastService="@ToastService" />
+</div>
+
+@code {
+  
+}

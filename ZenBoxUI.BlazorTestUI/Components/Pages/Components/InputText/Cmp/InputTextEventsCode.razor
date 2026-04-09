@@ -1,0 +1,62 @@
+﻿<pre><code>&lt;ZbTextInput Id="TestId"
+             InputId="InputTestId"
+             OnInput="@@TriggerOnInput"
+             OnChange="@@TriggerOnChange"
+             OnBlur="@@TriggerOnBlur"
+             OnFocus="@@TriggerOnFocus"
+             @@bind-Text="@@_text" /&gt;
+
+  @@code {
+    [inject] public IZBoxToastService ToastService
+    private string? _text { get; set; }
+
+    private void TriggerOnInput()
+    {
+      ToastService.ShowToast(new ToastOptions
+      {
+        Title = "Text - OnInput" + " " + Guid.NewGuid(),
+        Text = "I got trigger On Input",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Info,
+        DisplayTime = 2000
+      });
+    }
+
+    private void TriggerOnChange()
+    {
+      ToastService.ShowToast(new ToastOptions
+      {
+        Title = "Text - OnChange" + " " + Guid.NewGuid(),
+        Text = "I got trigger On Change",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Warning,
+        DisplayTime = 2000
+      });
+    }
+
+    private void TriggerOnFocus()
+    {
+      ToastService.ShowToast(new ToastOptions
+      {
+        Title = "Text - OnFocus" + " " + Guid.NewGuid(),
+        Text = "I got trigger On Focus",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Success,
+        DisplayTime = 2000
+      });
+    }
+
+    private void TriggerOnBlur()
+    {
+      ToastService.ShowToast(new ToastOptions
+      {
+        Title = "Text - OnBlur" + " " + Guid.NewGuid(),
+        Text = "I got trigger On Blur (Deselect)",
+        RenderTheme = ToastRenderTheme.Basic,
+        RenderStyle = ToastRenderStyle.Danger,
+        DisplayTime = 2000
+      });
+    }
+  }
+
+</code></pre>

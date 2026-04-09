@@ -1,0 +1,13 @@
+@code {
+  [CascadingParameter] public ZbSnippet Parent { get; set; } = null!;
+
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  protected override void OnInitialized()
+  {
+    if (Parent == null)
+      throw new ArgumentNullException(nameof(Parent), "ZbSnippetContent must be inside ZbSnippet");
+
+    Parent.AddContent(ChildContent);
+  }
+}

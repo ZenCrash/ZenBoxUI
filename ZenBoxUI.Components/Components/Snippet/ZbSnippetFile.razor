@@ -1,0 +1,17 @@
+﻿@code {
+  [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString();
+  [CascadingParameter] public ZbSnippet Parent { get; set; } = null!;
+  [Parameter, EditorRequired] public required string Name { get; set; }
+  [Parameter] public RenderFragment? ChildContent { get; set; }
+
+  internal string? Content { get; set; }
+
+  protected override void OnInitialized()
+  {
+    //CascadingValue check
+    if (Parent == null)
+      throw new ArgumentNullException(nameof(Parent), @"ZbSnippetItem must exist within a ZbSnippet");
+
+    Parent.AddItem(this);
+  }
+}

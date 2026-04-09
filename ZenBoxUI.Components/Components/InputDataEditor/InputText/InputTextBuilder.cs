@@ -7,7 +7,7 @@ namespace ZenBoxUI.Blazor.Common
   public class InputTextBuilder(ZbTextInput component)
   {
     // =====================================================
-    // PUBLIC ENTRY POINT
+    // PUBLIC ENTRY POINT - <Div>
     // =====================================================
     public void BuildRenderTree(RenderTreeBuilder builder)
     {
@@ -22,7 +22,7 @@ namespace ZenBoxUI.Blazor.Common
     }
 
     // =====================================================
-    // INPUT RENDERING
+    // INPUT RENDERING - <Input>
     // =====================================================
     private void BuildInput(RenderTreeBuilder builder, ZbTextInput component)
     {
@@ -34,26 +34,20 @@ namespace ZenBoxUI.Blazor.Common
       builder.AddAttribute(14, "value", component.Text ?? string.Empty);
       builder.AddAttribute(15, "type", !component.Password ? "text" : "password");
       builder.AddAttribute(16, "placeholder", component.NullText);
-
       if (component.Disabled)
         builder.AddAttribute(17, "disabled", component.Disabled);
 
       // EVENTS
       builder.AddAttribute(20, "oninput",
           EventCallback.Factory.Create<ChangeEventArgs>(component, component.HandleInput));
-
       builder.AddAttribute(21, "onchange",
           EventCallback.Factory.Create<ChangeEventArgs>(component, component.HandleChange));
-
       builder.AddAttribute(22, "onfocus",
           EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleFocus));
-
       builder.AddAttribute(23, "onblur",
           EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleBlur));
-
       builder.AddAttribute(24, "onkeydown",
           EventCallback.Factory.Create<KeyboardEventArgs>(component, component.HandleKeyDown));
-
       builder.AddAttribute(25, "onkeyup",
           EventCallback.Factory.Create<KeyboardEventArgs>(component, component.HandleKeyUp));
 
@@ -93,34 +87,17 @@ namespace ZenBoxUI.Blazor.Common
     private string BuildWrapperClass()
     {
       var classes = new List<string> { "zb-input", !component.Disabled ? "" : "zb-disabled" };
-
       if (!string.IsNullOrWhiteSpace(component.CssClass))
         classes.Add(component.CssClass);
-
       return string.Join(" ", classes);
     }
 
     private string BuildInputClass()
     {
       var classes = new List<string> { "zb-input-element" };
-
       if (!string.IsNullOrWhiteSpace(component.InputCssClass))
         classes.Add(component.InputCssClass);
-
       return string.Join(" ", classes);
-    }
-
-    // =====================================================
-    // ATTRIBUTES
-    // =====================================================
-    private Dictionary<string, object> BuildAttributes()
-    {
-      var attrs = new Dictionary<string, object>(component.Attributes)
-      {
-        ["id"] = component.InputId
-      };
-
-      return attrs;
     }
   }
 }
