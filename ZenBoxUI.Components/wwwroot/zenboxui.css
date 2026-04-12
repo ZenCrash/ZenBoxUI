@@ -9,18 +9,29 @@
   width: 20rem;
 }
 
+  .zb-input.zb-has-clear input {
+    padding-right: 2rem;
+  }
+
   .zb-input input {
     width: 100%;
-    height: 32px;
-    padding: 0 10px;
+    height: 2rem;
+    padding: 0 .5rem;
     font-size: 14px;
     border: 1px solid #d1d1d1;
     border-radius: 4px;
+
+    overflow: hidden;
+    white-space: nowrap;
   }
 
     .zb-input input:focus {
       border-color: #0078d4;
       box-shadow: 0 0 0 1px #0078d4;
+    }
+
+    .zb-input input:not(:focus) {
+      text-overflow: ellipsis;
     }
 
 .zb-clear-btn {
@@ -39,3 +50,25 @@
   padding-inline-end: .25rem;
   font-family: Consolas, monospace;
 }
+
+.zb-clear-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 16px;
+  color: #888;
+  background: transparent;
+  border: none;
+  padding: 0;
+
+}
+
+  .zb-clear-btn:hover {
+    color: #000;
+  }

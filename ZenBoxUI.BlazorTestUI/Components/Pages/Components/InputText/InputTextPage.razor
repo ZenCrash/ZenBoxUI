@@ -3,6 +3,7 @@
 @using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Disabled
 @using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Password
 @using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.NullText
+@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.ClearButton
 @inject IZBoxToastService ToastService
 @rendermode @(new InteractiveServerRenderMode(prerender:false))
 @page "/InputText"
@@ -37,6 +38,10 @@
     <div>
       <h1>Null Text</h1>
       <InputNullTextCp/>
+    </div>
+    <div>
+      <h1>Clear Button</h1>
+      <InputTextClearButtonCp/>
     </div>
   </div>
 </div>

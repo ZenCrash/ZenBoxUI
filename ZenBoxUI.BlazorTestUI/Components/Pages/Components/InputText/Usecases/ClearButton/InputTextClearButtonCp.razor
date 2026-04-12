@@ -1,0 +1,20 @@
+﻿@using ZenBoxUI.Blazor.Components.Snippet
+
+<ZbSnippet>
+  <ZbSnippetContent>
+    <ZbTextInput @bind-Text="@_text" ClearButton="true"/>
+    <p class="pt-1 pb-2">Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
+    
+    <ul>
+      <li><span class="zb-code">ClearButton</span> - Adds a clear button to quickly remove the text</li>
+    </ul>
+  </ZbSnippetContent>
+@*   <ZbSnippetFile Name="Example.razor">
+    <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
+  </ZbSnippetFile> *@
+</ZbSnippet>
+
+@code {
+  private string? _text { get; set; } = "John Doe";
+
+}

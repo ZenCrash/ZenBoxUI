@@ -82,9 +82,17 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     private string BuildWrapperClass()
     {
-      var classes = new List<string> { "zb-input", !component.Disabled ? "" : "zb-disabled" };
+      var classes = new List<string> { "zb-input" };
+
+      if (component.ClearButton)
+        classes.Add("zb-has-clear");
+
+      if (component.Disabled)
+        classes.Add("zb-disabled");
+
       if (!string.IsNullOrWhiteSpace(component.CssClass))
         classes.Add(component.CssClass);
+
       return string.Join(" ", classes);
     }
 
