@@ -1,3 +1,7 @@
+
+
+/* ZenBoxUiClasses */
+
 .zb-input {
   display: flex;
   align-items: center;
@@ -26,4 +30,12 @@
   font-size: 16px;
   color: #888;
   display: none;
+}
+
+.zb-code {
+  background-color: lightgray;
+  border-radius: 4px;
+  padding-inline-start: .25rem;
+  padding-inline-end: .25rem;
+  font-family: Consolas, monospace;
 }

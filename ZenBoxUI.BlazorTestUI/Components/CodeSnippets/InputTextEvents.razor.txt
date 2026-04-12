@@ -1,0 +1,19 @@
+﻿&lt;ZbTextInput OnInput="@ToastCaller.TriggerOnInput"
+             OnChange="@ToastCaller.TriggerOnChange"
+             OnBlur="@ToastCaller.TriggerOnBlur"
+             OnFocus="@ToastCaller.TriggerOnFocus
+             @bind-Text="@_text"/&gt;
+
+&lt;ZBoxToastProvider MaxToastCount="5"
+                   Alignment="ToastAlignment.BottomRight"
+                   MaxWidth="300px"/&gt;
+@code {
+  [inject] IZBoxToastService ToastService { get; set; }
+  private ToastCaller ToastCaller { get; set; }
+  private string? _text { get; set; } = "John Doe";
+
+  protected override void OnInitialized()
+  {
+    ToastCaller = new(ToastService);
+  }
+}

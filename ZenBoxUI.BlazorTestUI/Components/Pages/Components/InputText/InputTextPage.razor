@@ -1,34 +1,42 @@
-﻿@inject IZBoxToastService ToastService
-
+﻿@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Bind
+@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Events
+@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Disabled
+@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Password
+@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.NullText
+@inject IZBoxToastService ToastService
 @rendermode @(new InteractiveServerRenderMode(prerender:false))
 @page "/InputText"
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Cmp
 
 <ZBoxToastProvider MaxToastCount="5"
                    Alignment="ToastAlignment.BottomRight"
                    MaxWidth="300px"
                    ShowCloseButton="true" />
+<div class="d-flex flex-column" style="height:100vh">
+  <div class="p-2" style="background-color:dodgerblue; color: white;">
+    <h1>Inputs > Text</h1>
+  </div>
 
-@* Input Triggers *@
-<div class="p-2 overflow-y-auto">
-  <h1>Events</h1>
-  <InputTextEventsCp ToastService="@ToastService"/>
-
-  <p class="my-4">
-    The <span class="zb-code">@("<")ZbInputText@(">")</span>, supports a variety of html events. <br />
-    simply bind the desired event to a method and you are good to go. <br/>
-  </p>
-  
-  <ul>
-    <li><span class="zb-code">OnFocus</span> - Triggers when field is selected</li>
-    <li><span class="zb-code">OnBlur</span> - Triggers when field is deselected</li>
-    <li><span class="zb-code">OnInput</span> - Triggers on value change</li>
-    <li><span class="zb-code">OnChange</span> - Triggers when field is deselected and value is a new value</li>
-  </ul>
+  @* Input Triggers *@
+  <div class="p-2 pt-4 d-flex flex-column gap-5 overflow-y-auto">
+    <div>
+      <h1>Bind Text</h1>
+      <InputTextBindCp/>
+    </div>
+    <div>
+      <h1>Events</h1>
+      <InputTextEventsCp ToastService="@ToastService"/>
+    </div>
+    <div>
+      <h1>Disabled</h1>
+      <InputTextDisabledCp/>
+    </div>
+    <div>
+      <h1>Password</h1>
+      <InputTextPasswordCp/>
+    </div>
+    <div>
+      <h1>Null Text</h1>
+      <InputNullTextCp/>
+    </div>
+  </div>
 </div>
-
-@* Bind Text *@
-
-@code {
-  
-}

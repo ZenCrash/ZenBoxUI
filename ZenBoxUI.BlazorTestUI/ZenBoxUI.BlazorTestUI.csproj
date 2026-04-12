@@ -8,6 +8,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Components\CodeSnippets\InputNullText.razor.txt" />
+    <Content Include="Components\CodeSnippets\InputTextBind.razor.txt" />
+    <Content Include="Components\CodeSnippets\InputTextDisabled.razor.txt" />
+    <Content Include="Components\CodeSnippets\InputTextEvents.razor.txt" />
+    <Content Include="Components\CodeSnippets\InputTextEventsToasts.cs.txt" />
+    <Content Include="Components\CodeSnippets\InputTextPassword.razor.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="HighlightBlazor" Version="0.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ZenBoxUI.Components\ZenBoxUI.Blazor.csproj" />
   </ItemGroup>
 

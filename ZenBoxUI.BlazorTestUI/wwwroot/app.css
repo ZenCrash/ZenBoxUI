@@ -3,15 +3,11 @@ html, body {
   margin: 0;
 }
 
-.zb-code {
-  background-color: lightgray;
-  border-radius: 4px;
-  font-family: Consolas, monospace;
-}
 
-.overflow-y-auto {
-  overflow-y: auto !important
-}
+
+
+
+/* Default html types */
 
 ul {
   display: flex;
@@ -29,16 +25,10 @@ p {
 }
 
 hr {
-  display: block;
-  margin-block-start: 0.0em;
-  margin-block-end: 0.0em;
-  margin-inline-start: auto;
-  margin-inline-end: auto;
-  color: gray;
-  unicode-bidi: isolate;
-  overflow: hidden;
-  border-style: inset;
-  border-width: 1px;
+  margin: 0;
+  color: inherit;
+  border: 0;
+  opacity: 0.25
 }
 
 button {
@@ -48,6 +38,32 @@ button {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
   unicode-bidi: isolate;
+}
+
+h1 {
+  display: block;
+  font-size: 2em;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+  unicode-bidi: isolate;
+}
+
+pre {
+  display: block;
+  font-family: monospace;
+  unicode-bidi: isolate;
+  white-space: pre;
+  margin-block: 0;
+  margin-inline: 0px;
+}
+
+/*CODE TO BE REPLACED*/
+
+.overflow-y-auto {
+  overflow-y: auto !important
 }
 
 .flex-row {
@@ -71,9 +87,6 @@ button {
 .shadow-lg {
   box-shadow: var(--bs-box-shadow-lg) !important
 }
-
-
-/*CODE TO BE REPLACED*/
 
 .card {
   --bs-border-width: 1px;

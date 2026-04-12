@@ -1,4 +1,6 @@
+using HighlightBlazor;
 using ZenBoxUI.Blazor;
+using ZenBoxUI.BlazorTestUI;
 using ZenBoxUI.BlazorTestUI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+//Code highlighter
+builder.Services.AddHighlight();
 
 // ZenBoxUi
 builder.Services.AddZenBoxUiBlazor();
