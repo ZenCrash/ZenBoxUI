@@ -66,6 +66,9 @@ namespace ZenBoxUI.Blazor.Common
       builder.AddAttribute(33, "onclick",
         EventCallback.Factory.Create(component, async () =>
         {
+          if (component.Disabled)
+            return;
+
           string? newValue =
             component.ClearBehavior == ZbClearButtonValueBehavior.Null
               ? null
