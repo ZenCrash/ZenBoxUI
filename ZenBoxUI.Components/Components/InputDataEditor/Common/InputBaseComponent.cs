@@ -4,7 +4,7 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace ZenBoxUI.Blazor.Common
 {
-  public abstract class InputBaseComponent : ComponentBase
+  public abstract class InputBaseComponent<T> : ComponentBase
   {
     [Parameter] public string Id { get; set; } = Guid.NewGuid().ToString();
 
@@ -17,6 +17,8 @@ namespace ZenBoxUI.Blazor.Common
     [Parameter] public string? CssClass { get; set; }
 
     [Parameter] public bool ClearButton { get; set; }
+
+    [Parameter] public ZbClearButtonValueBehavior ClearBehavior { get; set; } = ZbClearButtonValueBehavior.Default;
 
     [Parameter] public bool? ValidationEnabled { get; set; } = true;
 

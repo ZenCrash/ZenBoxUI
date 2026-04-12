@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ZenBoxUI.Blazor.Common
 {
-  public class InputTextBuilder(ZbTextInput component)
+  public class InputTextBuilder<T>(ZbTextInput component)
   {
     // =====================================================
     // PUBLIC ENTRY POINT - <Div>
@@ -31,7 +31,7 @@ namespace ZenBoxUI.Blazor.Common
 
       builder.AddAttribute(12, "id", component.InputId);
       builder.AddAttribute(13, "class", BuildInputClass());
-      builder.AddAttribute(14, "value", component.Text ?? string.Empty);
+      builder.AddAttribute(14, "value", component.Text?.ToString() ?? string.Empty);
       builder.AddAttribute(15, "type", !component.Password ? "text" : "password");
       builder.AddAttribute(16, "placeholder", component.NullText);
       if (component.Disabled)
@@ -64,13 +64,23 @@ namespace ZenBoxUI.Blazor.Common
       builder.AddAttribute(32, "class", "zb-clear-btn");
 
       builder.AddAttribute(33, "onclick",
-          EventCallback.Factory.Create(component, async () =>
-          {
-            component.Text = string.Empty;
+        EventCallback.Factory.Create(component, async () =>
+        {
+          string? newValue =
+            component.ClearBehavior == ZbClearButtonValueBehavior.Null
+              ? null
+              : string.Empty;
 
+          component.Text = newValue;
+
+          await component.TextChanged.InvokeAsync(newValue);
+
+          if (component.OnInput.HasDelegate)
             await component.OnInput.InvokeAsync();
+
+          if (component.OnChange.HasDelegate)
             await component.OnChange.InvokeAsync();
-          }));
+        }));
 
       builder.AddContent(34, "✖");
 

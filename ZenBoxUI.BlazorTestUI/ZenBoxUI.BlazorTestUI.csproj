@@ -10,6 +10,7 @@
   <ItemGroup>
     <Content Include="Components\CodeSnippets\InputNullText.razor.txt" />
     <Content Include="Components\CodeSnippets\InputTextBind.razor.txt" />
+    <Content Include="Components\CodeSnippets\InputTextClearButton.razor.txt" />
     <Content Include="Components\CodeSnippets\InputTextDisabled.razor.txt" />
     <Content Include="Components\CodeSnippets\InputTextEvents.razor.txt" />
     <Content Include="Components\CodeSnippets\InputTextEventsToasts.cs.txt" />

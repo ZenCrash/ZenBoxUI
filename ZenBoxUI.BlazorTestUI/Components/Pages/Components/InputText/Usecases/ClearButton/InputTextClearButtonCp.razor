@@ -1,20 +1,39 @@
 ﻿@using ZenBoxUI.Blazor.Components.Snippet
 
+<p class="my-4">
+  The Input field can easily be cleared using the Clear Button <br/>
+  Simply set <span class="zb-code">ClearButton</span> to true.
+</p>
+
 <ZbSnippet>
   <ZbSnippetContent>
-    <ZbTextInput @bind-Text="@_text" ClearButton="true"/>
+    <ZbTextInput @bind-Text="@_text" ClearButton="true" ClearBehavior="ZbClearButtonValueBehavior.Default" />
     <p class="pt-1 pb-2">Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
     
     <ul>
       <li><span class="zb-code">ClearButton</span> - Adds a clear button to quickly remove the text</li>
+      <li><span class="zb-code">ClearBehavior</span> - Determines the default value when the Clear Button is clicked</li>
+    </ul>
+    <p>ZbClearButtonValueBehavior Options</p>
+    <ul>
+      <li><span class="zb-code">ZbClearButtonValueBehavior.Null</span> (Default) - Sets value to Null when the Clear Button is clicked</li>
+      <li><span class="zb-code">ZbClearButtonValueBehavior.Default</span> - Sets value to String.Empty when the Clear Button is clicked</li>
     </ul>
   </ZbSnippetContent>
-@*   <ZbSnippetFile Name="Example.razor">
+  <ZbSnippetFile Name="Example.razor">
     <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
-  </ZbSnippetFile> *@
+  </ZbSnippetFile>
 </ZbSnippet>
 
 @code {
   private string? _text { get; set; } = "John Doe";
+  private string _codeExample;
 
+  protected override void OnInitialized()
+  {
+    var path = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextClearButton.razor.txt"
+    );
+    _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
+  }
 }
