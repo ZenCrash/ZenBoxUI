@@ -6,7 +6,7 @@
 
 <ZbSnippet>
   <ZbSnippetContent>
-    <ZbTextInput @bind-Text="@_text" Disabled="@_isDisabled" />
+    <ZbTextInput @bind-Text="@_text" Disabled="@_isDisabled" ClearButton="true" />
     <div class="pt-1 pb-2">
       <button @onclick="() => _isDisabled = !_isDisabled">Disabled toggle: (@_isDisabled)</button>
     </div>

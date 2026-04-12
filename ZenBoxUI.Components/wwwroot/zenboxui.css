@@ -56,7 +56,6 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-
   right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
@@ -67,6 +66,10 @@
   border: none;
   padding: 0;
 
+}
+
+.zb-clear-btn-hidden {
+  display: none !important;
 }
 
   .zb-clear-btn:hover {

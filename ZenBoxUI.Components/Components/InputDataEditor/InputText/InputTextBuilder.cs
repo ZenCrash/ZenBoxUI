@@ -61,8 +61,8 @@ namespace ZenBoxUI.Blazor.Common
       builder.OpenElement(30, "button");
 
       builder.AddAttribute(31, "type", "button");
-      builder.AddAttribute(32, "class", "zb-clear-btn");
-
+      builder.AddAttribute(32, "class",
+        $"zb-clear-btn {(string.IsNullOrEmpty(component.Text) ? "zb-clear-btn-hidden" : "")}");
       builder.AddAttribute(33, "onclick",
         EventCallback.Factory.Create(component, async () =>
         {
@@ -70,8 +70,6 @@ namespace ZenBoxUI.Blazor.Common
             component.ClearBehavior == ZbClearButtonValueBehavior.Null
               ? null
               : string.Empty;
-
-          component.Text = newValue;
 
           await component.TextChanged.InvokeAsync(newValue);
 
