@@ -1,0 +1,47 @@
+﻿@using ZenBoxUI.Blazor.Components.Snippet
+
+<p class="my-4">
+  The <span class="zb-code">@("<")ZbInputText@(">")</span>, supports a variety of events. <br />
+  simply bind the desired event to a method and you are good to go. <br />
+</p>
+
+<ZbSnippet>
+  <ZbSnippetContent>
+    <ZbTextInput OnInput="() => ToastCaller.TriggerOnInput()"
+                 OnChange="() => ToastCaller.TriggerOnChange()"
+                 OnBlur="() => ToastCaller.TriggerOnBlur()"
+                 OnFocus="() => ToastCaller.TriggerOnFocus()"
+                 @bind-Text="@_text" />
+    <p class="pt-1 pb-2">Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
+    
+    <ul>
+      <li><span class="zb-code">@@bind-Text</span> - Binds text to a variable</li>
+    </ul>
+  </ZbSnippetContent>
+  <ZbSnippetFile Name="Example.razor">
+    <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
+  </ZbSnippetFile>
+  <ZbSnippetFile Name="ToastCaller.cs">
+    <CodeHighlight Code="@_codeExampleToast" CodeLanguage="cs" />
+  </ZbSnippetFile>
+</ZbSnippet>
+
+@code {
+  [Parameter] public IZBoxToastService ToastService { get; set; } = null!;
+  private InputTextEventsToasts ToastCaller { get; set; }
+  private string? _text { get; set; } = "John Doe";
+  private string _codeExample;
+  private string _codeExampleToast;
+
+  protected override void OnInitialized()
+  {
+    var path = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextEvents.razor.txt"
+    );
+    var pathToast = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextEventsToasts.cs.txt"
+    );
+    _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
+    _codeExampleToast = File.ReadAllText(pathToast).Replace("\r\n", "\n");
+  }
+}

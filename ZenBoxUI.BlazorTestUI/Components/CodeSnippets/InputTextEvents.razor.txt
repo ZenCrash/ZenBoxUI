@@ -1,7 +1,7 @@
-﻿&lt;ZbTextInput OnInput="@ToastCaller.TriggerOnInput"
-             OnChange="@ToastCaller.TriggerOnChange"
-             OnBlur="@ToastCaller.TriggerOnBlur"
-             OnFocus="@ToastCaller.TriggerOnFocus
+﻿&lt;ZbTextInput OnInput="() => ToastCaller.TriggerOnInput()"
+             OnChange="() => ToastCaller.TriggerOnChange()"
+             OnBlur="() => ToastCaller.TriggerOnBlur()"
+             OnFocus="() => ToastCaller.TriggerOnFocus()"
              @bind-Text="@_text"/&gt;
 
 &lt;ZBoxToastProvider MaxToastCount="5"
