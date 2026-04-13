@@ -35,6 +35,8 @@
 
   protected override void OnInitialized()
   {
+    ToastCaller = new InputTextEventsToasts(ToastService);
+
     var path = Path.Combine(Directory.GetCurrentDirectory(),
       "Components", "CodeSnippets", "InputTextEvents.razor.txt"
     );
