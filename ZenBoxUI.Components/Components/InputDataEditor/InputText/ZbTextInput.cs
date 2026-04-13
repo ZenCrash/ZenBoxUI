@@ -1,7 +1,8 @@
-﻿using System.Linq.Expressions;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
+using System.Linq.Expressions;
 using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor
@@ -28,7 +29,6 @@ namespace ZenBoxUI.Blazor
     /// frameworks.</remarks>
     [Parameter] public Expression<Func<string?>>? TextExpression { get; set; }
 
-
     //[Parameter] public int? InputDelay { get; set; }
 
     /// <summary>
@@ -36,6 +36,18 @@ namespace ZenBoxUI.Blazor
     /// </summary>
     
     [Parameter] public bool Password { get; set; }
+
+    [CascadingParameter] public EditContext? EditContext { get; set; }
+
+    internal FieldIdentifier _fieldIdentifier;
+
+    protected override void OnParametersSet()
+    {
+      if (TextExpression is not null)
+      {
+        _fieldIdentifier = FieldIdentifier.Create(TextExpression);
+      }
+    }
 
     public async Task HandleInput(ChangeEventArgs e)
     {
@@ -48,6 +60,9 @@ namespace ZenBoxUI.Blazor
 
     public async Task HandleChange(ChangeEventArgs e)
     {
+      if (EditContext is not null)
+        EditContext.NotifyFieldChanged(_fieldIdentifier);
+
       if (OnChange.HasDelegate)
         await OnChange.InvokeAsync();
     }

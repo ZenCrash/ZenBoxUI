@@ -3,12 +3,18 @@ html, body {
   margin: 0;
 }
 
-
-
-
+.validation-message {
+  display: list-item;
+  list-style-type: disc;
+  list-style-position: outside;
+  width: 100%;
+  margin-top: 0.25rem;
+  margin-left: 1.25rem;
+  font-size: 0.875rem;
+  color: #DC3545;
+}
 
 /* Default html types */
-
 ul {
   display: flex;
   flex-direction: column;

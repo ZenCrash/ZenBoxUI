@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -76,6 +77,9 @@ namespace ZenBoxUI.Blazor.Common
 
           await component.TextChanged.InvokeAsync(newValue);
 
+          if (component.EditContext is not null)
+            component.EditContext.NotifyFieldChanged(component._fieldIdentifier);
+
           if (component.OnInput.HasDelegate)
             await component.OnInput.InvokeAsync();
 
@@ -110,9 +114,27 @@ namespace ZenBoxUI.Blazor.Common
     private string BuildInputClass()
     {
       var classes = new List<string> { "zb-input-element" };
+
       if (!string.IsNullOrWhiteSpace(component.InputCssClass))
         classes.Add(component.InputCssClass);
+
+      if (IsInvalid())
+        classes.Add("zb-input-invalid");
+
       return string.Join(" ", classes);
+    }
+
+    private bool IsInvalid()
+    {
+      if (component.EditContext is null)
+        return false;
+
+      if (component.TextExpression is null)
+        return false;
+
+      var field = FieldIdentifier.Create(component.TextExpression);
+
+      return component.EditContext.GetValidationMessages(field).Any();
     }
   }
 }
