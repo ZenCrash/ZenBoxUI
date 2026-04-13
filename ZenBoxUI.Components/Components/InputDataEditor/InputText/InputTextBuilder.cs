@@ -95,7 +95,7 @@ namespace ZenBoxUI.Blazor.Common
     {
       var classes = new List<string> { "zb-input" };
 
-      if (component.ClearButton)
+      if (component.ClearButton && !component.Disabled)
         classes.Add("zb-has-clear");
 
       if (component.Disabled)

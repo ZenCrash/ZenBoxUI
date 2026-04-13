@@ -30,8 +30,8 @@
   [Parameter] public IZBoxToastService ToastService { get; set; } = null!;
   private InputTextEventsToasts ToastCaller { get; set; }
   private string? _text { get; set; } = "John Doe";
-  private string _codeExample;
-  private string _codeExampleToast;
+  private string? _codeExample;
+  private string? _codeExampleToast;
 
   protected override void OnInitialized()
   {
