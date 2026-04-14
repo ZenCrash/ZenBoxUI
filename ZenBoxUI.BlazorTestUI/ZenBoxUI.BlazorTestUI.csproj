@@ -15,6 +15,7 @@
     <Content Include="Components\CodeSnippets\InputTextEvents.razor.txt" />
     <Content Include="Components\CodeSnippets\InputTextEventsToasts.cs.txt" />
     <Content Include="Components\CodeSnippets\InputTextPassword.razor.txt" />
+    <Content Include="Components\CodeSnippets\InputTextValidationCp.razor.txt" />
   </ItemGroup>
 
   <ItemGroup>

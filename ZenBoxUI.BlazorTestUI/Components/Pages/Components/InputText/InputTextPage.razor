@@ -1,10 +1,4 @@
-﻿@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Bind
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Events
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Disabled
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Password
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.NullText
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.ClearButton
-@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Validation
+﻿@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases
 @inject IZBoxToastService ToastService
 @rendermode @(new InteractiveServerRenderMode(prerender:false))
 @page "/InputText"
@@ -13,6 +7,7 @@
                    Alignment="ToastAlignment.BottomRight"
                    MaxWidth="300px"
                    ShowCloseButton="true" />
+
 <div class="d-flex flex-column" style="height:100vh">
   <div class="p-2" style="background-color:dodgerblue; color: white;">
     <h1>Inputs > Text</h1>
@@ -20,33 +15,12 @@
 
   @* Input Triggers *@
   <div class="p-2 pt-4 d-flex flex-column gap-5 overflow-y-auto">
-    <div>
-      <h1>Bind Text</h1>
       <InputTextBindCp/>
-    </div>
-    <div>
-      <h1>Events</h1>
       <InputTextEventsCp ToastService="@ToastService"/>
-    </div>
-    <div>
-      <h1>Disabled</h1>
       <InputTextDisabledCp/>
-    </div>
-    <div>
-      <h1>Password</h1>
       <InputTextPasswordCp/>
-    </div>
-    <div>
-      <h1>Null Text</h1>
       <InputNullTextCp/>
-    </div>
-    <div>
-      <h1>Clear Button</h1>
       <InputTextClearButtonCp/>
-    </div>
-    <div>
-      <h1>Validation</h1>
       <InputTextValidationCp/>
-    </div>
   </div>
 </div>

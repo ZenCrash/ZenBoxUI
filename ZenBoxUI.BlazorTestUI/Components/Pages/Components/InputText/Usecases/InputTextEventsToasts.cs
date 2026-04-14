@@ -1,6 +1,6 @@
 ﻿using ZenBoxUI.Blazor;
 
-namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases.Events
+namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases
 {
   public class InputTextEventsToasts(IZBoxToastService ToastService)
   {

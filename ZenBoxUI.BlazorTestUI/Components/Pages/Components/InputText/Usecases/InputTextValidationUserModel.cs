@@ -1,0 +1,13 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases
+{
+  public class InputTextValidationUserModel
+  {
+    [Required(ErrorMessage = "Password is required.")]
+    [MinLength(8, ErrorMessage = "Password must be minimum 8 characters long.")]
+    [MaxLength(20, ErrorMessage = "Password must be maximum 20 characters long.")]
+    [RegularExpression(@".*[\W_].*", ErrorMessage = "Must contain at least 1 special character.")]
+    public string? Password { get; set; } = "Password1!";
+  }
+}
