@@ -13,13 +13,10 @@
       <EditForm Model="@model">
         <DataAnnotationsValidator/>
         <ZbTextInput @bind-Text="@model.Password" ClearButton="true" />
+        <p class="pt-1">Text value: @(model.Password == null ? "Null" : model.Password == string.Empty ? "String.Empty" : model.Password)</p>
         <ValidationMessage For="@(() => model.Password)" />
-        <div class="pt-1 pb-2">
-          <button type="submit">Submit</button>
-        </div>
       </EditForm>
 
-      <p class="pt-1 pb-2">Text value: @(model.Password == null ? "Null" : model.Password == string.Empty ? "String.Empty" : model.Password)</p>
 
       <ul>
         <li><span class="zb-code">@@bind-Text</span> - Binds text to a variable</li>
@@ -28,11 +25,15 @@
     <ZbSnippetFile Name="Example.razor">
       <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
     </ZbSnippetFile>
+    <ZbSnippetFile Name="UserModel.cs">
+      <CodeHighlight Code="@_codeExampleUserModel" CodeLanguage="cs" />
+    </ZbSnippetFile>
   </ZbSnippet>
 </div>
 
 @code {
   private string _codeExample;
+  private string _codeExampleUserModel;
 
   private InputTextValidationUserModel model { get; set; } = new();
 
@@ -42,5 +43,9 @@
       "Components", "CodeSnippets", "InputTextBind.razor.txt"
       );
     _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
+    var pathUserModel = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextValidationUserModel.cs.txt"
+    );
+    _codeExampleUserModel = File.ReadAllText(pathUserModel).Replace("\r\n", "\n");
   }
 }
