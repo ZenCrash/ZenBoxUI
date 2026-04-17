@@ -46,7 +46,7 @@ namespace ZenBoxUI.Blazor
       }
     }
 
-    public async Task HandleInput(ChangeEventArgs e)
+    internal async Task HandleInput(ChangeEventArgs e)
     {
       if (InputBindMode == ZbInputBindMode.OnInput)
       {
@@ -90,7 +90,7 @@ namespace ZenBoxUI.Blazor
         await OnInput.InvokeAsync();
     }
 
-    public async Task HandleChange(ChangeEventArgs e)
+    internal async Task HandleChange(ChangeEventArgs e)
     {
       if (InputBindMode == ZbInputBindMode.OnChange)
       {
@@ -105,20 +105,20 @@ namespace ZenBoxUI.Blazor
         await OnChange.InvokeAsync();
     }
 
-    public async Task HandleFocus(FocusEventArgs e)
+    internal async Task HandleFocus(FocusEventArgs e)
     {
       if (OnFocus.HasDelegate)
         await OnFocus.InvokeAsync();
     }
 
-    public async Task HandleBlur(FocusEventArgs e)
+    internal async Task HandleBlur(FocusEventArgs e)
     {
       if (OnBlur.HasDelegate)
         await OnBlur.InvokeAsync();
     }
 
 
-    public void HandleClearButton()
+    internal void HandleClearButton()
     {
       var newValue = (ClearBehavior == ZbClearButtonValueBehavior.Default) ? string.Empty : null;
       TextChanged.InvokeAsync(newValue);

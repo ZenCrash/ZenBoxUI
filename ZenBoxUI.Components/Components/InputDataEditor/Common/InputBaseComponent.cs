@@ -44,8 +44,7 @@ namespace ZenBoxUI.Blazor.Common
 
     [CascadingParameter] public EditContext? EditContext { get; set; }
 
-    internal FieldIdentifier FieldIdentifier;
-
+    protected FieldIdentifier FieldIdentifier;
     protected CancellationTokenSource? DebounceCts;
     protected string? PendingValue;
 
