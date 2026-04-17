@@ -20,15 +20,17 @@ namespace ZenBoxUI.Blazor.Common
 
     [Parameter] public bool ClearButton { get; set; }
 
+    [Parameter] public bool? ValidationEnabled { get; set; } = true;
+
+    [Parameter] public bool Disabled { get; set; }
+
     [Parameter] public string? Label { get; set; }
+
+    [Parameter] public int? InputDelay { get; set; } = 300;
 
     [Parameter] public ZbInputBindMode InputBindMode { get; set; } = ZbInputBindMode.OnChange;
 
     [Parameter] public ZbClearButtonValueBehavior ClearBehavior { get; set; } = ZbClearButtonValueBehavior.Default;
-
-    [Parameter] public bool? ValidationEnabled { get; set; } = true;
-
-    [Parameter] public bool Disabled { get; set; }
 
     [Parameter] public EventCallback OnInput { get; set; }
 
@@ -44,7 +46,8 @@ namespace ZenBoxUI.Blazor.Common
 
     internal FieldIdentifier FieldIdentifier;
 
-
+    protected CancellationTokenSource? DebounceCts;
+    protected string? PendingValue;
 
   }
 }

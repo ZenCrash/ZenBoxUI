@@ -32,12 +32,10 @@ namespace ZenBoxUI.Blazor
     /// frameworks.</remarks>
     [Parameter] public Expression<Func<string?>>? TextExpression { get; set; }
 
-    //[Parameter] public int? InputDelay { get; set; }
-
     /// <summary>
     /// Should field be a password field.
     /// </summary>
-    
+
     [Parameter] public bool Password { get; set; }
 
     protected override void OnParametersSet()
@@ -57,6 +55,35 @@ namespace ZenBoxUI.Blazor
 
         if (EditContext is not null)
           EditContext.NotifyFieldChanged(FieldIdentifier);
+      }
+      else if (InputBindMode == ZbInputBindMode.InputDelay)
+      {
+        PendingValue = (string?)e.Value;
+
+        DebounceCts?.Cancel();
+        DebounceCts = new CancellationTokenSource();
+        var token = DebounceCts.Token;
+
+        var delay = InputDelay ?? 0;
+
+        try
+        {
+          await Task.Delay(delay, token);
+
+          if (token.IsCancellationRequested)
+            return;
+
+          Text = PendingValue;
+
+          await TextChanged.InvokeAsync(Text);
+
+          if (EditContext is not null)
+            EditContext.NotifyFieldChanged(FieldIdentifier);
+        }
+        catch (TaskCanceledException)
+        {
+
+        }
       }
 
       if (OnInput.HasDelegate)
