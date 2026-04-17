@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using System.Linq.Expressions;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace ZenBoxUI.Blazor.Common
@@ -18,6 +20,8 @@ namespace ZenBoxUI.Blazor.Common
 
     [Parameter] public bool ClearButton { get; set; }
 
+    [Parameter] public string? Label { get; set; }
+
     [Parameter] public ZbClearButtonValueBehavior ClearBehavior { get; set; } = ZbClearButtonValueBehavior.Default;
 
     [Parameter] public bool? ValidationEnabled { get; set; } = true;
@@ -32,7 +36,13 @@ namespace ZenBoxUI.Blazor.Common
 
     [Parameter] public EventCallback OnBlur { get; set; }
 
-    [Parameter(CaptureUnmatchedValues = true)]
-    public Dictionary<string, object> Attributes { get; set; } = [];
+    [Parameter] public Expression<Func<T?>>? ValueExpression { get; set; }
+
+    [CascadingParameter] public EditContext? EditContext { get; set; }
+
+    internal FieldIdentifier FieldIdentifier;
+
+
+
   }
 }

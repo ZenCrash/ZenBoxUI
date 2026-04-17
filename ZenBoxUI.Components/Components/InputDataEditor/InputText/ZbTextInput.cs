@@ -2,13 +2,16 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.Web;
+using System.ComponentModel;
 using System.Linq.Expressions;
+using System.Security.Cryptography.X509Certificates;
 using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor
 {
   public class ZbTextInput : InputBaseComponent<string?>
   {
+
     /// <summary>
     /// Gets or sets the text to display.
     /// </summary>
@@ -37,15 +40,11 @@ namespace ZenBoxUI.Blazor
     
     [Parameter] public bool Password { get; set; }
 
-    [CascadingParameter] public EditContext? EditContext { get; set; }
-
-    internal FieldIdentifier _fieldIdentifier;
-
     protected override void OnParametersSet()
     {
       if (TextExpression is not null)
       {
-        _fieldIdentifier = FieldIdentifier.Create(TextExpression);
+        FieldIdentifier = FieldIdentifier.Create(TextExpression);
       }
     }
 
@@ -61,7 +60,7 @@ namespace ZenBoxUI.Blazor
     public async Task HandleChange(ChangeEventArgs e)
     {
       if (EditContext is not null)
-        EditContext.NotifyFieldChanged(_fieldIdentifier);
+        EditContext.NotifyFieldChanged(FieldIdentifier);
 
       if (OnChange.HasDelegate)
         await OnChange.InvokeAsync();
@@ -79,13 +78,29 @@ namespace ZenBoxUI.Blazor
         await OnBlur.InvokeAsync();
     }
 
+
+    public void HandleClearButton()
+    {
+      var newValue = (ClearBehavior == ZbClearButtonValueBehavior.Default) ? string.Empty : null;
+      TextChanged.InvokeAsync(newValue);
+
+      if (EditContext is not null)
+        EditContext.NotifyFieldChanged(FieldIdentifier);
+
+      if (OnInput.HasDelegate)
+        OnInput.InvokeAsync();
+
+      if (OnChange.HasDelegate)
+        OnChange.InvokeAsync();
+    }
+
     //======================================//
     // Component Builder                    //
     //======================================//
 
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-      new InputTextBuilder<string>(this).BuildRenderTree(builder);
+      new InputTextBuilder(this).BuildRenderTree(builder);
     }
   }
 }
