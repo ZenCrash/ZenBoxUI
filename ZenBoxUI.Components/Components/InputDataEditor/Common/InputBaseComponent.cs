@@ -22,6 +22,8 @@ namespace ZenBoxUI.Blazor.Common
 
     [Parameter] public string? Label { get; set; }
 
+    [Parameter] public ZbInputBindMode InputBindMode { get; set; } = ZbInputBindMode.OnChange;
+
     [Parameter] public ZbClearButtonValueBehavior ClearBehavior { get; set; } = ZbClearButtonValueBehavior.Default;
 
     [Parameter] public bool? ValidationEnabled { get; set; } = true;

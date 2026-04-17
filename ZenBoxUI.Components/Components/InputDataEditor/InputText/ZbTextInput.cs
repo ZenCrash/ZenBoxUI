@@ -50,8 +50,14 @@ namespace ZenBoxUI.Blazor
 
     public async Task HandleInput(ChangeEventArgs e)
     {
-      Text = (string?)e.Value;
-      await TextChanged.InvokeAsync(Text);
+      if (InputBindMode == ZbInputBindMode.OnInput)
+      {
+        Text = (string?)e.Value;
+        await TextChanged.InvokeAsync(Text);
+
+        if (EditContext is not null)
+          EditContext.NotifyFieldChanged(FieldIdentifier);
+      }
 
       if (OnInput.HasDelegate)
         await OnInput.InvokeAsync();
@@ -59,8 +65,14 @@ namespace ZenBoxUI.Blazor
 
     public async Task HandleChange(ChangeEventArgs e)
     {
-      if (EditContext is not null)
-        EditContext.NotifyFieldChanged(FieldIdentifier);
+      if (InputBindMode == ZbInputBindMode.OnChange)
+      {
+        Text = (string?)e.Value;
+        await TextChanged.InvokeAsync(Text);
+
+        if (EditContext is not null)
+          EditContext.NotifyFieldChanged(FieldIdentifier);
+      }
 
       if (OnChange.HasDelegate)
         await OnChange.InvokeAsync();
