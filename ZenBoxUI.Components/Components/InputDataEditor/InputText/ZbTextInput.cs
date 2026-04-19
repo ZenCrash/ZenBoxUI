@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Rendering;
-using Microsoft.AspNetCore.Components.Web;
-using System.ComponentModel;
 using System.Linq.Expressions;
-using System.Security.Cryptography.X509Certificates;
 using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor
@@ -15,14 +11,24 @@ namespace ZenBoxUI.Blazor
     /// <summary>
     /// Gets or sets the text to display.
     /// </summary>
-    [Parameter] public string? Text { get; set; }
+    [Parameter]
+    public string? Text
+    {
+      get => base.Value;
+      set => base.Value = value;
+    }
 
     /// <summary>
     /// Gets or sets the callback that is invoked when the text value changes.
     /// </summary>
     /// <remarks>The callback receives the new text value as a parameter. Use this event to respond to user
     /// input or programmatic changes to the text.</remarks>
-    [Parameter] public EventCallback<string?> TextChanged { get; set; }
+    [Parameter]
+    public EventCallback<string?> TextChanged
+    {
+      get => base.ValueChanged;
+      set => base.ValueChanged = value;
+    }
 
     /// <summary>
     /// Gets or sets the expression used to bind the text value for this component.
@@ -30,116 +36,26 @@ namespace ZenBoxUI.Blazor
     /// <remarks>This property enables two-way binding scenarios by allowing the component to read and update
     /// the bound value. The expression is typically used for validation and change tracking in data binding
     /// frameworks.</remarks>
-    [Parameter] public Expression<Func<string?>>? TextExpression { get; set; }
+    [Parameter]
+    public Expression<Func<string?>>? TextExpression
+    {
+      get => base.ValueExpression;
+      set => base.ValueExpression = value;
+    }
 
     /// <summary>
     /// Should field be a password field.
     /// </summary>
-
     [Parameter] public bool Password { get; set; }
 
-    protected override void OnParametersSet()
-    {
-      if (TextExpression is not null)
-      {
-        FieldIdentifier = FieldIdentifier.Create(TextExpression);
-      }
-    }
-
-    internal async Task HandleInput(ChangeEventArgs e)
-    {
-      if (InputBindMode == ZbInputBindMode.OnInput)
-      {
-        Text = (string?)e.Value;
-        await TextChanged.InvokeAsync(Text);
-
-        if (EditContext is not null)
-          EditContext.NotifyFieldChanged(FieldIdentifier);
-      }
-      else if (InputBindMode == ZbInputBindMode.InputDelay)
-      {
-        PendingValue = (string?)e.Value;
-
-        DebounceCts?.Cancel();
-        DebounceCts = new CancellationTokenSource();
-        var token = DebounceCts.Token;
-
-        var delay = InputDelay ?? 0;
-
-        try
-        {
-          await Task.Delay(delay, token);
-
-          if (token.IsCancellationRequested)
-            return;
-
-          Text = PendingValue;
-
-          await TextChanged.InvokeAsync(Text);
-
-          if (EditContext is not null)
-            EditContext.NotifyFieldChanged(FieldIdentifier);
-        }
-        catch (TaskCanceledException)
-        {
-
-        }
-      }
-
-      if (OnInput.HasDelegate)
-        await OnInput.InvokeAsync();
-    }
-
-    internal async Task HandleChange(ChangeEventArgs e)
-    {
-      if (InputBindMode == ZbInputBindMode.OnChange)
-      {
-        Text = (string?)e.Value;
-        await TextChanged.InvokeAsync(Text);
-
-        if (EditContext is not null)
-          EditContext.NotifyFieldChanged(FieldIdentifier);
-      }
-
-      if (OnChange.HasDelegate)
-        await OnChange.InvokeAsync();
-    }
-
-    internal async Task HandleFocus(FocusEventArgs e)
-    {
-      if (OnFocus.HasDelegate)
-        await OnFocus.InvokeAsync();
-    }
-
-    internal async Task HandleBlur(FocusEventArgs e)
-    {
-      if (OnBlur.HasDelegate)
-        await OnBlur.InvokeAsync();
-    }
-
-
-    internal void HandleClearButton()
-    {
-      var newValue = (ClearBehavior == ZbClearButtonValueBehavior.Default) ? string.Empty : null;
-      TextChanged.InvokeAsync(newValue);
-
-      if (EditContext is not null)
-        EditContext.NotifyFieldChanged(FieldIdentifier);
-
-      if (OnInput.HasDelegate)
-        OnInput.InvokeAsync();
-
-      if (OnChange.HasDelegate)
-        OnChange.InvokeAsync();
-    }
-
-    //======================================//
-    // Component Builder                    //
-    //======================================//
-
+    /// <summary>
+    /// Builds the render tree for the component.
+    /// </summary>
+    /// <param name="builder">The render tree builder used to construct the component's UI.</param>
     protected override void BuildRenderTree(RenderTreeBuilder builder)
     {
-      new InputTextBuilder(this).BuildRenderTree(builder);
+      var inputType = !Password ? InputType.Text : InputType.Password;
+      new InputBuilder<string?>(this, inputType).BuildRenderTree(builder);
     }
   }
 }

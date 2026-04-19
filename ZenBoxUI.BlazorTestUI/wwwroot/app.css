@@ -3,6 +3,10 @@ html, body {
   margin: 0;
 }
 
+.zb-demo-width{
+  max-width: 25rem;
+}
+
 .validation-message {
   display: list-item;
   list-style-type: disc;
@@ -13,6 +17,15 @@ html, body {
   font-size: 0.875rem;
   color: #DC3545;
 }
+
+.zb-code {
+  background-color: lightgray;
+  border-radius: 4px;
+  padding-inline-start: .25rem;
+  padding-inline-end: .25rem;
+  font-family: Consolas, monospace;
+}
+
 
 /* Default html types */
 ul {

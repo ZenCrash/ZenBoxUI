@@ -9,7 +9,7 @@
 
   <ZbSnippet>
     <ZbSnippetContent>
-      <ZbTextInput @bind-Text="@_text" />
+      <ZbTextInput CssClass="zb-demo-width" @bind-Text="@_text"/>
       <p class="pt-1 pb-2">Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
     
       <ul>

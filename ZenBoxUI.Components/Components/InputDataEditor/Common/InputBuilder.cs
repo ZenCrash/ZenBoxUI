@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 
 namespace ZenBoxUI.Blazor.Common
 {
-  public class InputTextBuilder(ZbTextInput component)
+  internal class InputBuilder<T>(InputBaseComponent<T> component, InputType inputType)
   {
     // =====================================================
     // <Div> => [<TextLabel>] <TextInput> [<ClearButton>] [<PasswordToggleButton>]
@@ -15,39 +15,21 @@ namespace ZenBoxUI.Blazor.Common
       builder.OpenElement(0, "div");
       builder.AddAttribute(1, "id", component.Id);
       builder.AddAttribute(2, "class", BuildWrapperClass());
-
-      //BuildLabel(builder, component);
       BuildInput(builder, component);
       BuildClearButton(builder, component);
-
-      builder.CloseElement();
-    }
-
-    // =====================================================
-    // <Label> - OPTIONAL
-    // =====================================================
-
-    private void BuildLabel(RenderTreeBuilder builder, ZbTextInput component)
-    {
-      if (!string.IsNullOrWhiteSpace(component.Label))
-
-      builder.OpenElement(10, "label");
-      builder.AddAttribute(11, "for", component.InputId);
-      builder.AddAttribute(12, "class", "zb-input-label");
-      builder.AddContent(13, component.Label);
       builder.CloseElement();
     }
 
     // =====================================================
     // INPUT RENDERING - <Input>
     // =====================================================
-    private async Task BuildInput(RenderTreeBuilder builder, ZbTextInput component)
+    private void BuildInput(RenderTreeBuilder builder, InputBaseComponent<T> component)
     {
       builder.OpenElement(20, "input");
       builder.AddAttribute(21, "id", component.InputId);
       builder.AddAttribute(22, "class", BuildInputClass());
-      builder.AddAttribute(23, "value", component.Text?.ToString() ?? string.Empty);
-      builder.AddAttribute(24, "type", !component.Password ? "text" : "password");
+      builder.AddAttribute(23, "value", component.Value?.ToString() ?? string.Empty);
+      builder.AddAttribute(24, "type", Enum.GetName(inputType)!.ToLower());
       builder.AddAttribute(25, "placeholder", component.NullText);
 
       //Disable input
@@ -65,16 +47,20 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     // <ClearButton> - Optional
     // =====================================================
-    private void BuildClearButton(RenderTreeBuilder builder, ZbTextInput component)
+    private void BuildClearButton(RenderTreeBuilder builder, InputBaseComponent<T> component)
     {
       if (!component.ClearButton || component.Disabled)
         return;
 
       builder.OpenElement(40, "button");
       builder.AddAttribute(41, "type", "button");
-      builder.AddAttribute(42, "class", $"zb-clear-btn {(string.IsNullOrEmpty(component.Text) ? "zb-clear-btn-hidden" : "")}");
+      builder.AddAttribute(42, "class", $"zb-clear-btn {(component.Value == null ? "zb-clear-btn-hidden" : "")}");
       builder.AddAttribute(43, "onclick", EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleClearButton));
-      builder.AddContent(44, "✖");
+
+      builder.OpenElement(44, "i");
+      builder.AddAttribute(45, "class", "zbi zb-x3 zb-clear-icon");
+      builder.CloseElement();
+
       builder.CloseElement();
     }
 
@@ -111,9 +97,9 @@ namespace ZenBoxUI.Blazor.Common
     {
       if (component.EditContext is null)
         return false;
-      if (component.TextExpression is null)
+      if (component.ValueExpression is null)
         return false;
-      var field = FieldIdentifier.Create(component.TextExpression);
+      var field = FieldIdentifier.Create(component.ValueExpression);
       return component.EditContext.GetValidationMessages(field).Any();
     }
   }
