@@ -35,10 +35,9 @@ namespace ZenBoxUI.Blazor.Common
     [Parameter] public EventCallback OnFocus { get; set; }
 
     [Parameter] public EventCallback OnBlur { get; set; }
-
-    [Parameter] public Expression<Func<T?>>? ValueExpression { get; set; }
-
     [CascadingParameter] public EditContext? EditContext { get; set; }
+
+    internal Expression<Func<T?>>? ValueExpression { get; set; }
 
     internal T? Value { get; set; }
     public EventCallback<T?> ValueChanged { get; set; }

@@ -1,0 +1,51 @@
+﻿@using System.ComponentModel.DataAnnotations
+@using ZenBoxUI.Blazor.Components.Snippet
+
+<div>
+  <h1>Validation</h1>
+
+  <p class="my-4">
+    The <span class="zb-code">@("<")ZbInputValue@(">")</span>, can be bound to a variable by using <span class="zb-code">@@bind-Value</span>
+  </p>
+
+  <ZbSnippet>
+    <ZbSnippetContent>
+      <EditForm Model="@model">
+        <DataAnnotationsValidator/>
+        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.NumberInput" ClearButton="true" />
+        <p class="pt-1 pb-2">Number value: @(model.NumberInput != null ? model.NumberInput : "Null")</p>
+        <ValidationMessage For="@(() => model.NumberInput)" />
+      </EditForm>
+
+
+      <ul>
+        <li><span class="zb-code">@@bind-Value</span> - Binds Value to a variable</li>
+      </ul>
+    </ZbSnippetContent>
+    <ZbSnippetFile Name="Example.razor">
+      <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
+    </ZbSnippetFile>
+    <ZbSnippetFile Name="UserModel.cs">
+      <CodeHighlight Code="@_codeExampleUserModel" CodeLanguage="cs" />
+    </ZbSnippetFile>
+  </ZbSnippet>
+</div>
+
+@code {
+  private string _codeExample;
+  private string _codeExampleUserModel;
+
+  private InputNumberValidationUserModel model { get; set; } = new();
+
+  protected override void OnInitialized()
+  {
+    var path = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextBind.razor.txt"
+      );
+    _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
+    var pathUserModel = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextValidationUserModel.cs.txt"
+    );
+    _codeExampleUserModel = File.ReadAllText(pathUserModel).Replace("\r\n", "\n");
+  }
+}

@@ -1,0 +1,36 @@
+﻿@using ZenBoxUI.Blazor.Components.Snippet
+
+<div>
+  <h1>Null Text</h1>
+
+  <p class="my-4">
+    When Value is null, the <span class="zb-code">NullText</span> will be displayed.
+  </p>
+
+  <ZbSnippet>
+    <ZbSnippetContent>
+      <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@_value" NullText="Age of person..." />
+      <p class="pt-1 pb-2">Number value: @_value</p>
+    
+      <ul>
+        <li><span class="zb-code">NullText</span> - Sets display text, when field is null or empty</li>
+      </ul>
+    </ZbSnippetContent>
+    <ZbSnippetFile Name="Example.razor">
+      <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
+    </ZbSnippetFile>
+  </ZbSnippet>
+</div>
+
+@code {
+  private int? _value { get; set; }
+  private string _codeExample;
+
+  protected override void OnInitialized()
+  {
+    var path = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputNullText.razor.txt"
+    );
+    _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
+  }
+}

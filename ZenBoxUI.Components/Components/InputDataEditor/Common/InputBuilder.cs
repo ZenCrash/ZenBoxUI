@@ -58,7 +58,7 @@ namespace ZenBoxUI.Blazor.Common
       builder.AddAttribute(43, "onclick", EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleClearButton));
 
       builder.OpenElement(44, "i");
-      builder.AddAttribute(45, "class", "zbi zb-x3 zb-clear-icon");
+      builder.AddAttribute(45, "class", "zbi zbi-x zb-clear-icon");
       builder.CloseElement();
 
       builder.CloseElement();

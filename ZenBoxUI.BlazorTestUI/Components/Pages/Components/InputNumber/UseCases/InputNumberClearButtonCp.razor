@@ -1,0 +1,38 @@
+﻿@using ZenBoxUI.Blazor.Components.Snippet
+
+<div>
+  <h1>Clear Button</h1>
+
+  <p class="my-4">
+    The Input field can easily be cleared using the Clear Button <br/>
+    Simply set <span class="zb-code">ClearButton</span> to true.
+  </p>
+
+  <ZbSnippet>
+    <ZbSnippetContent>
+      <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@_value" ClearButton="true" />
+      <p class="pt-1 pb-2">Number value: @(_value != null ? _value : "Null")</p>
+    
+      <ul>
+        <li><span class="zb-code">ClearButton</span> - Adds a clear button to quickly remove the Value</li>
+        <li><span class="zb-code">ClearBehavior</span> - Determines the default value when the Clear Button is clicked</li>
+      </ul>
+    </ZbSnippetContent>
+    <ZbSnippetFile Name="Example.razor">
+      <CodeHighlight Code="@_codeExample" CodeLanguage="razor" />
+    </ZbSnippetFile>
+  </ZbSnippet>
+</div>
+
+@code {
+  private int? _value { get; set; } = 0;
+  private string _codeExample;
+
+  protected override void OnInitialized()
+  {
+    var path = Path.Combine(Directory.GetCurrentDirectory(),
+      "Components", "CodeSnippets", "InputTextClearButton.razor.txt"
+    );
+    _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
+  }
+}

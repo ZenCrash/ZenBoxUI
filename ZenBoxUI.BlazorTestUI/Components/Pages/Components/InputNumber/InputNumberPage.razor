@@ -1,7 +1,7 @@
-﻿@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
+﻿@using ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputNumber.UseCases
 @inject IZBoxToastService ToastService
 @rendermode @(new InteractiveServerRenderMode(prerender:false))
-@page "/InputText"
+@page "/InputNumber"
 
 <ZBoxToastProvider MaxToastCount="5"
                    Alignment="ToastAlignment.BottomRight"
@@ -15,12 +15,11 @@
 
   @* Input Triggers *@
   <div class="p-2 pt-4 d-flex flex-column gap-5 overflow-y-auto">
-    <InputTextBindCp/>
-    <InputTextEventsCp ToastService="@ToastService"/>
-    <InputTextDisabledCp/>
-    <InputTextPasswordCp/>
-    <InputTextNullTextCp/>
-    <InputTextClearButtonCp/>
-    <InputTextValidationCp/>
+    <InputNumberBindCp />
+    <InputNumberEventsCp ToastService="@ToastService" />
+    <InputNumberDisabledCp />
+    <InputNumberNullTextCp/>
+    <InputNumberClearButtonCp />
+    <InputNumberValidationCp />
   </div>
 </div>

@@ -1,8 +1,8 @@
 ﻿using ZenBoxUI.Blazor;
 
-namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
+namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputNumber.UseCases
 {
-  public class InputTextEventsToasts(IZBoxToastService ToastService)
+  public class InputNumberEventsToasts(IZBoxToastService ToastService)
   {
     public void TriggerOnTextChange()
     {

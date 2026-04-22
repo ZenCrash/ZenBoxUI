@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.Usecases
+namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
 {
   public class InputTextValidationUserModel
   {
