@@ -10,8 +10,14 @@
   outline: none;
   border: 1px solid #d1d1d1;
   border-radius: 0.2rem 0.2rem 0.2rem 0.2rem;
-  transition: box-shadow 0.2s ease;
 }
+
+/* Validation - Error Color */
+
+  .zb-input.zb-input-invalid {
+    border-color: #dc3545 !important;
+  }
+
   .zb-input::after {
     content: "";
     position: absolute;
@@ -36,6 +42,7 @@
     flex: 1;
     width: auto;
     height: 2rem;
+    line-height: 2rem;
     padding: 0 .5rem;
     font-size: inherit;
     overflow: hidden;
@@ -74,57 +81,61 @@
   }
 
 
-    /* Password Toggle Button */
+/* Password Toggle Button */
 
-    .zb-password-toggle-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      height: 2rem;
-      box-sizing: border-box;
-      border: none;
-      border-radius: 0 0.2rem 0.2rem 0;
-      border-left: 1px solid #d1d1d1;
-      background: transparent;
-      cursor: pointer;
-      border-radius: 0 0.2rem 0.2rem 0;
-      color: #666;
-      box-sizing: border-box;
-    }
+.zb-password-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 0 0.2rem 0.2rem 0;
+  border-left: 1px solid #d1d1d1;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 0 0.2rem 0.2rem 0;
+  color: #666;
+  box-sizing: border-box;
+}
 
-      .zb-password-toggle-btn:hover {
-        color: #000;
-      }
-    /* Validation - Error Color */
+  .zb-password-toggle-btn:hover {
+    color: #000;
+  }
 
-    .zb-input-element.zb-input-invalid {
-      border: 1px solid #dc3545 !important;
-      border-radius: 0.2rem 0.2rem 0.2rem 0.2rem
-    }
-    /* Svgs */
-    .zbi {
-      display: inline-block;
-      position: relative;
-      width: 1.25rem;
-      height: 1.25rem;
-      top: -1px;
-      background-size: cover;
-    }
+/* Disable browser password toggle btn overlay */
 
-    .zbi-x {
-      -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-x.svg") no-repeat center;
-      mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-x.svg") no-repeat center;
-      background-color: currentColor;
-    }
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
 
-    .zbi-eye-fill {
-      -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-fill.svg") no-repeat center;
-      mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-fill.svg") no-repeat center;
-      background-color: currentColor;
-    }
+input::-webkit-credentials-auto-fill-button {
+  visibility: hidden;
+  display: none !important;
+}
 
-    .zbi-eye-slash-fill {
-      -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-slash-fill.svg") no-repeat center;
-      mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-slash-fill.svg") no-repeat center;
-      background-color: currentColor;
-    }
+/* Svgs */
+.zbi {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+}
+
+.zbi-x {
+  -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-x.svg") no-repeat center;
+  mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-x.svg") no-repeat center;
+  background-color: currentColor;
+}
+
+.zbi-eye-fill {
+  -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-fill.svg") no-repeat center;
+  mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-fill.svg") no-repeat center;
+  background-color: currentColor;
+}
+
+.zbi-eye-slash-fill {
+  -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-slash-fill.svg") no-repeat center;
+  mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-slash-fill.svg") no-repeat center;
+  background-color: currentColor;
+}

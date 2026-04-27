@@ -77,17 +77,17 @@ namespace ZenBoxUI.Blazor.Common
         classes.Add("zb-disabled");
       if (!string.IsNullOrWhiteSpace(component.CssClass))
         classes.Add(component.CssClass);
+      if (IsInvalid())
+        classes.Add("zb-input-invalid");
 
       return string.Join(" ", classes);
     }
 
     private string BuildInputClass()
     {
-      var classes = new List<string> { "zb-input-element" };
+      var classes = new List<string>();
       if (!string.IsNullOrWhiteSpace(component.InputCssClass))
         classes.Add(component.InputCssClass);
-      if (IsInvalid())
-        classes.Add("zb-input-invalid");
       return string.Join(" ", classes);
     }
 
