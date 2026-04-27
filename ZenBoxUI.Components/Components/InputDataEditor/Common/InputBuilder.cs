@@ -8,7 +8,8 @@ namespace ZenBoxUI.Blazor.Common
   internal class InputBuilder<T>(InputBaseComponent<T> component, InputType inputType)
   {
     // =====================================================
-    // <Div> => [<TextLabel>] <TextInput> [<ClearButton>] [<PasswordToggleButton>]
+    // <Div> => <input>     [<button>]      [<button>]
+    // <Div> => <InputType> [<ClearButton>] [<FeatureSpesificButtons>]
     // =====================================================
     public void BuildRenderTree(RenderTreeBuilder builder)
     {
@@ -17,6 +18,7 @@ namespace ZenBoxUI.Blazor.Common
       builder.AddAttribute(2, "class", BuildWrapperClass());
       BuildInput(builder, component);
       BuildClearButton(builder, component);
+      InputSpecificBuilder.InputOptionsBuilder(builder, component, inputType);
       builder.CloseElement();
     }
 
@@ -31,12 +33,10 @@ namespace ZenBoxUI.Blazor.Common
       builder.AddAttribute(23, "value", component.Value?.ToString() ?? string.Empty);
       builder.AddAttribute(24, "type", Enum.GetName(inputType)!.ToLower());
       builder.AddAttribute(25, "placeholder", component.NullText);
-
       //Disable input
       if (component.Disabled)
         builder.AddAttribute(30, "disabled", component.Disabled);
-
-      // EVENTS
+      //Events
       builder.AddAttribute(31, "oninput", EventCallback.Factory.Create<ChangeEventArgs>(component, component.HandleInput));
       builder.AddAttribute(32, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(component, component.HandleChange));
       builder.AddAttribute(33, "onfocus", EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleFocus));
@@ -47,20 +47,18 @@ namespace ZenBoxUI.Blazor.Common
     // =====================================================
     // <ClearButton> - Optional
     // =====================================================
-    private void BuildClearButton(RenderTreeBuilder builder, InputBaseComponent<T> component)
+    private static void BuildClearButton(RenderTreeBuilder builder, InputBaseComponent<T> component)
     {
-      if (!component.ClearButton || component.Disabled)
+      if (!component.ClearButton || component.Disabled || component.Value == null)
         return;
 
       builder.OpenElement(40, "button");
       builder.AddAttribute(41, "type", "button");
-      builder.AddAttribute(42, "class", $"zb-clear-btn {(component.Value == null ? "zb-clear-btn-hidden" : "")}");
+      builder.AddAttribute(42, "class", "zb-clear-btn");
       builder.AddAttribute(43, "onclick", EventCallback.Factory.Create<FocusEventArgs>(component, component.HandleClearButton));
-
       builder.OpenElement(44, "i");
-      builder.AddAttribute(45, "class", "zbi zbi-x zb-clear-icon");
+      builder.AddAttribute(45, "class", "zbi zbi-x");
       builder.CloseElement();
-
       builder.CloseElement();
     }
 
@@ -71,8 +69,10 @@ namespace ZenBoxUI.Blazor.Common
     {
       var classes = new List<string> { "zb-input" };
 
-      if (component.ClearButton && !component.Disabled)
+      if (component is { ClearButton: true, Disabled: false })
         classes.Add("zb-has-clear");
+      if (component is ZbTextInput textInput && textInput.PasswordToggleButton && !component.Disabled)
+        classes.Add("zb-has-password-toggle");
       if (component.Disabled)
         classes.Add("zb-disabled");
       if (!string.IsNullOrWhiteSpace(component.CssClass))
@@ -84,12 +84,10 @@ namespace ZenBoxUI.Blazor.Common
     private string BuildInputClass()
     {
       var classes = new List<string> { "zb-input-element" };
-
       if (!string.IsNullOrWhiteSpace(component.InputCssClass))
         classes.Add(component.InputCssClass);
       if (IsInvalid())
         classes.Add("zb-input-invalid");
-
       return string.Join(" ", classes);
     }
 

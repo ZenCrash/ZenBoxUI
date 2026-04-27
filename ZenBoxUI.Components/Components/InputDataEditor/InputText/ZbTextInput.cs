@@ -48,6 +48,13 @@ namespace ZenBoxUI.Blazor
     /// </summary>
     [Parameter] public bool Password { get; set; }
 
+    [Parameter] public bool PasswordToggleButton { get; set; }
+
+    internal void HandlePasswordToggleButton()
+    {
+      Password = !Password;
+    }
+
     /// <summary>
     /// Builds the render tree for the component.
     /// </summary>
