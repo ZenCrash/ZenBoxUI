@@ -6,14 +6,14 @@ using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor;
 
-public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : struct, INumber<TValue>
+public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : INumber<TValue>
 {
   [Parameter] public TValue? MinValue { get; set; }
   [Parameter] public TValue? MaxValue { get; set; }
   [Parameter] public TValue? Increment { get; set; } = TValue.One;
 
   /// <summary>
-  /// disable the increment and decrement buttons.
+  /// Disable the increment and decrement buttons.
   /// </summary>
   [Parameter] public bool DisableIncrementButtons { get; set; }
   [Parameter] public bool DisabledIncrementHotKeys { get; set; }
