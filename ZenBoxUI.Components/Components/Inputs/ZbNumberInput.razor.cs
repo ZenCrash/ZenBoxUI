@@ -20,6 +20,10 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
   [Parameter] public bool DisableIncrementButtons { get; set; }
   [Parameter] public bool DisabledIncrementHotKeys { get; set; }
 
+  // =========================
+  // Parsing & Conversion
+  // =========================
+
   private decimal? Parse(string? value)
     => decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d)
       ? d
@@ -38,6 +42,65 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
     var converted = Convert.ChangeType(value, underlyingType);
 
     return (TValue)converted!;
+  }
+
+  private TValue? SafeConvert(decimal value)
+  {
+    try
+    {
+      var type = GetUnderlyingType();
+      var converted = Convert.ChangeType(value, type);
+      return (TValue)converted!;
+    }
+    catch
+    {
+      return default;
+    }
+  }
+
+  private static decimal ClampToTypeRange(decimal value)
+  {
+    var type = GetUnderlyingType();
+
+    if (type == typeof(int))
+      return Math.Min(Math.Max(value, int.MinValue), int.MaxValue);
+
+    if (type == typeof(long))
+      return Math.Min(Math.Max(value, long.MinValue), long.MaxValue);
+
+    if (type == typeof(short))
+      return Math.Min(Math.Max(value, short.MinValue), short.MaxValue);
+
+    if (type == typeof(byte))
+      return Math.Min(Math.Max(value, byte.MinValue), byte.MaxValue);
+
+    return value;
+  }
+  private static Type GetUnderlyingType()
+    => Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+
+  private decimal ClampToMinMax(decimal value)
+  {
+    if (MinValue is not null)
+    {
+      var min = ToDecimal(MinValue);
+      if (value < min) value = min;
+    }
+
+    if (MaxValue is not null)
+    {
+      var max = ToDecimal(MaxValue);
+      if (value > max) value = max;
+    }
+
+    return value;
+  }
+
+  private TValue? Normalize(decimal value)
+  {
+    var clamped = ClampToTypeRange(value);
+    clamped = ClampToMinMax(clamped);
+    return SafeConvert(clamped);
   }
 
   // =========================
@@ -76,12 +139,8 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
   private async Task HandleInput(ChangeEventArgs e)
   {
     var parsedValue = Parse(e.Value?.ToString());
-
     _displayClearButton = ClearButton && parsedValue.HasValue && !Disabled;
-
-    _value = parsedValue.HasValue
-      ? FromDecimal(parsedValue.Value)
-      : default;
+    _value = parsedValue.HasValue ? Normalize(parsedValue.Value) : default;
 
     switch (InputBindMode)
     {
@@ -109,9 +168,8 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
   private async Task HandleChange(ChangeEventArgs e)
   {
     var parsedValue = Parse(e.Value?.ToString());
-    _value = parsedValue.HasValue
-      ? FromDecimal(parsedValue.Value)
-      : default;
+    _value = parsedValue.HasValue ? Normalize(parsedValue.Value) : default;
+
 
 
     if (InputBindMode == ZbInputBindMode.OnChange)
@@ -136,31 +194,19 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
   public async Task IncrementValue()
   {
-    var currentValue = Parse(_value?.ToString());
+    var current = Parse(_value?.ToString()) ?? 0m;
     var increment = Increment is not null ? ToDecimal(Increment) : 1;
-    var result = currentValue.Value + increment;
-    if (MaxValue is not null)
-    {
-      var max = ToDecimal(MaxValue);
-      if (result > max)
-        result = max;
-    }
-    _value = FromDecimal(result);
+    var result = current + increment;
+    _value = Normalize(result);
     await CommitValueAsync(_value);
   }
 
   public async Task DecrementValue()
   {
-    var currentValue = Parse(_value?.ToString());
+    var current = Parse(_value?.ToString()) ?? 0m;
     var increment = Increment is not null ? ToDecimal(Increment) : 1;
-    var result = currentValue.Value - increment;
-    if (MinValue is not null)
-    {
-      var min = ToDecimal(MinValue);
-      if (result < min)
-        result = min;
-    }
-    _value = FromDecimal(result);
+    var result = current - increment;
+    _value = Normalize(result);
     await CommitValueAsync(_value);
   }
 
