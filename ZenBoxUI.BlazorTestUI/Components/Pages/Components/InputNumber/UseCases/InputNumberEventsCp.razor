@@ -10,16 +10,16 @@
 
   <ZbSnippet>
     <ZbSnippetContent>
-      <ZbNumberInput CssClass="zb-demo-width"
+@*       <ZbNumberInput CssClass="zb-demo-width"
                    OnInput="() => ToastCaller.TriggerOnInput()"
                    OnChange="() => ToastCaller.TriggerOnChange()"
-                   OnBlur="() => ToastCaller.TriggerOnBlur()"
+                   OnDeselect="() => ToastCaller.TriggerOnBlur()"
                    OnFocus="() => ToastCaller.TriggerOnFocus()"
-                   @bind-Value="@_value" />
-      <p class="pt-1 pb-2">Number value: @_value</p>
+                   @bind-Value="@Value" /> *@
+      <p class="pt-1 pb-2">Number value: @Value</p>
     
       <ul>
-        <li><span class="zb-code">@@bind-Value</span> - Binds Value to a variable</li>
+        <li><span class="zb-code">@@bind-Text</span> - Binds Text to a variable</li>
       </ul>
     </ZbSnippetContent>
     <ZbSnippetFile Name="Example.razor">
@@ -33,8 +33,8 @@
 
 @code {
   [Parameter] public IZBoxToastService ToastService { get; set; } = null!;
-  private InputNumberEventsToasts ToastCaller { get; set; }
-  private int? _value { get; set; } = 0;
+  private InputNumberEventsToasts ToastCaller { get; set; } = null!;
+  private int? Value { get; set; } = 0;
   private string? _codeExample;
   private string? _codeExampleToast;
 

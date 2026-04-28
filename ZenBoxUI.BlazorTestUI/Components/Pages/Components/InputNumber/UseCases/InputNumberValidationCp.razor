@@ -5,21 +5,21 @@
   <h1>Validation</h1>
 
   <p class="my-4">
-    The <span class="zb-code">@("<")ZbInputValue@(">")</span>, can be bound to a variable by using <span class="zb-code">@@bind-Value</span>
+    The <span class="zb-code">@("<")ZbInputText@(">")</span>, can be bound to a variable by using <span class="zb-code">@@bind-Text</span>
   </p>
 
   <ZbSnippet>
     <ZbSnippetContent>
       <EditForm Model="@model">
         <DataAnnotationsValidator/>
-        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.NumberInput" ClearButton="true" />
-        <p class="pt-1 pb-2">Number value: @(model.NumberInput != null ? model.NumberInput : "Null")</p>
+@*         <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.NumberInput" ClearButton="true" />
+ *@        <p class="pt-1 pb-2">Number value: @(model.NumberInput != null ? model.NumberInput : "Null")</p>
         <ValidationMessage For="@(() => model.NumberInput)" />
       </EditForm>
 
 
       <ul>
-        <li><span class="zb-code">@@bind-Value</span> - Binds Value to a variable</li>
+        <li><span class="zb-code">@@bind-Text</span> - Binds Text to a variable</li>
       </ul>
     </ZbSnippetContent>
     <ZbSnippetFile Name="Example.razor">

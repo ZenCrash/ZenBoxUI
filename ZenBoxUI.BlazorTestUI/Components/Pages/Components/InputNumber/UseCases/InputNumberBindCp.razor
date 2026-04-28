@@ -1,19 +1,19 @@
 ﻿@using ZenBoxUI.Blazor.Components.Snippet
 
 <div>
-  <h1>Bind Value</h1>
+  <h1>Bind Text</h1>
 
   <p class="my-4">
-    The <span class="zb-code">@("<")ZbInputValue@(">")</span>, can be bound to a variable by using <span class="zb-code">@@bind-Value</span>
+    The <span class="zb-code">@("<")ZbInputText@(">")</span>, can be bound to a variable by using <span class="zb-code">@@bind-Text</span>
   </p>
 
   <ZbSnippet>
     <ZbSnippetContent>
-      <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@_value"/>
-      <p class="pt-1 pb-2">Number value: @_value</p>
+@*       <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@_value"/>
+ *@      <p class="pt-1 pb-2">Number value: @_value</p>
     
       <ul>
-        <li><span class="zb-code">@@bind-Value</span> - Binds Value to a variable</li>
+        <li><span class="zb-code">@@bind-Text</span> - Binds Text to a variable</li>
       </ul>
     </ZbSnippetContent>
     <ZbSnippetFile Name="Example.razor">
@@ -25,7 +25,7 @@
 @code {
 
   private int? _value { get; set; } = 1;
-  private string _codeExample;
+  private string _codeExample = null!;
 
   protected override void OnInitialized()
   {

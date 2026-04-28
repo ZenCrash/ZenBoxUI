@@ -15,12 +15,12 @@ namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
         DisplayTime = 2000
       });
     }
-    public void TriggerOnInput()
+    public void TriggerOnInput(string value)
     {
       ToastService.ShowToast(new ToastOptions
       {
         Title = "Text - OnInput" + " " + Guid.NewGuid(),
-        Text = "I got trigger On Input",
+        Text = $"{value} | I got trigger On Input",
         RenderTheme = ToastRenderTheme.Basic,
         RenderStyle = ToastRenderStyle.Info,
         DisplayTime = 2000

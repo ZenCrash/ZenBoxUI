@@ -54,9 +54,7 @@
     outline: none;
   }
 
-
   .zb-input.zb-has-clear input {
-    padding-left: 0.5rem;
     padding-right: 0;
   }
 
@@ -83,7 +81,7 @@
 
 /* Password Toggle Button */
 
-.zb-password-toggle-btn {
+.zb-input-action-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -99,7 +97,7 @@
   box-sizing: border-box;
 }
 
-  .zb-password-toggle-btn:hover {
+  .zb-input-action-btn:hover {
     color: #000;
   }
 

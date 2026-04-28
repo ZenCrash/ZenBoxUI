@@ -11,11 +11,13 @@
   <ZbSnippet>
     <ZbSnippetContent>
       <ZbTextInput CssClass="zb-demo-width"
-                   OnInput="() => ToastCaller.TriggerOnInput()"
+                   OnInput="(value) => ToastCaller.TriggerOnInput(value)"
                    OnChange="() => ToastCaller.TriggerOnChange()"
-                   OnBlur="() => ToastCaller.TriggerOnBlur()"
+                   OnDeselect="() => ToastCaller.TriggerOnBlur()"
                    OnFocus="() => ToastCaller.TriggerOnFocus()"
-                   @bind-Text="@_text" />
+                   Value="@_text" 
+                   ValueChanged="(value) => _text = value"
+                   ValueExpression="() => _text" />
       <p class="pt-1 pb-2">Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
     
       <ul>
@@ -33,7 +35,7 @@
 
 @code {
   [Parameter] public IZBoxToastService ToastService { get; set; } = null!;
-  private InputTextEventsToasts ToastCaller { get; set; }
+  private InputTextEventsToasts ToastCaller { get; set; } = null!;
   private string? _text { get; set; } = "John Doe";
   private string? _codeExample;
   private string? _codeExampleToast;

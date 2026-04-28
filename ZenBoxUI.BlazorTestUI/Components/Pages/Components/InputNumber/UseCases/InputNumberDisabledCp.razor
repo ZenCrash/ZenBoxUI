@@ -4,13 +4,13 @@
   <h1>Disabled</h1>
 
   <p class="my-4">
-    The Value field can be masked by using the <span class="zb-code">Password</span> field.
+    The Text field can be masked by using the <span class="zb-code">Password</span> field.
   </p>
 
   <ZbSnippet>
     <ZbSnippetContent>
-      <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@_value" Disabled="@_isDisabled" ClearButton="true" />
-      <div class="pt-1 pb-2">
+@*       <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@_value" Disabled="@_isDisabled" ClearButton="true" />
+ *@      <div class="pt-1 pb-2">
         <button @onclick="() => _isDisabled = !_isDisabled">Disabled toggle: (@_isDisabled)</button>
       </div>
       <ul>
@@ -26,7 +26,7 @@
 @code {
   private int? _value { get; set; } = 0;
   private bool _isDisabled { get; set; } = true;
-  private string _codeExample;
+  private string _codeExample = null!;
 
   protected override void OnInitialized()
   {

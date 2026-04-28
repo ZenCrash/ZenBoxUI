@@ -7,7 +7,7 @@ namespace ZenBoxUI.Blazor
   {
     /// <summary>
     /// Unique identifier for the toast.
-    /// Default Value: Guid.NewGuid().ToString()
+    /// Default Text: Guid.NewGuid().ToString()
     /// </summary>
     public string Id { get; set; } = Guid.NewGuid().ToString();
 
