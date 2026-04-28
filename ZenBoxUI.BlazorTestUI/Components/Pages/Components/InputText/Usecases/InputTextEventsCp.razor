@@ -15,6 +15,7 @@
                    OnChange="() => ToastCaller.TriggerOnChange()"
                    OnDeselect="() => ToastCaller.TriggerOnBlur()"
                    OnFocus="() => ToastCaller.TriggerOnFocus()"
+                   ClearButton="true"
                    Value="@_text" 
                    ValueChanged="(value) => _text = value"
                    ValueExpression="() => _text" />
