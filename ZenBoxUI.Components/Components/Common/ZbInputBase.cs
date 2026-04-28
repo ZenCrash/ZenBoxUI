@@ -42,6 +42,11 @@ namespace ZenBoxUI.Blazor.Common
     [Parameter] public bool Disabled { get; set; }
 
     /// <summary>
+    /// Gets or sets a value indicating whether the component is in read-only mode.
+    /// </summary>
+    [Parameter] public bool ReadOnly { get; set; }
+
+    /// <summary>
     /// Enables a clear button that allows users to quickly clear the input field.
     /// </summary>
     [Parameter] public bool ClearButton { get; set; }

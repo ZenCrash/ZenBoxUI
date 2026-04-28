@@ -1,16 +1,22 @@
 ﻿using System.Globalization;
+using System.Numerics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor;
 
-public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
+public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : struct, INumber<TValue>
 {
+  [Parameter] public TValue? MinValue { get; set; }
+  [Parameter] public TValue? MaxValue { get; set; }
+  [Parameter] public TValue? Increment { get; set; } = TValue.One;
+
   /// <summary>
   /// disable the increment and decrement buttons.
   /// </summary>
-  [Parameter] public bool DisabledIncrementButtons { get; set; }
+  [Parameter] public bool DisableIncrementButtons { get; set; }
+  [Parameter] public bool DisabledIncrementHotKeys { get; set; }
 
   // =========================
   // CSS
@@ -50,21 +56,25 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
     var value = BindConverter.TryConvertTo<TValue>(e.Value, CultureInfo.CurrentCulture, out var result)
       ? result
       : default!;
-
-    //TODO: fix 
-    if (ClearButton && (InputBindMode != ZbInputBindMode.OnChange || (InputBindMode == ZbInputBindMode.OnChange && !OnInput.HasDelegate)))
-      _value = value;
-
+    _value = value;
     _displayClearButton = ClearButton && value != null && !Disabled;
 
     switch (InputBindMode)
     {
       case ZbInputBindMode.OnInput:
-        await SetValueAsync(value);
-        await OnInput.InvokeAsync(value);
+        await SetValueAsync(_value);
+        await OnInput.InvokeAsync(_value);
         break;
       case ZbInputBindMode.InputDelay:
-        await DebounceAsync(async () => await SetValueAsync(value));
+        await DebounceAsync(async () =>
+        {
+          await SetValueAsync(_value);
+          await OnInput.InvokeAsync(_value);
+        });
+        break;
+      case ZbInputBindMode.OnChange:
+        if (OnInput.HasDelegate)
+          await SetValueAsync(value);
         break;
     }
   }
@@ -88,10 +98,44 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
   // ACTIONS
   // =========================
 
-  private async Task ClearInputBtn()
+  public async Task ClearInput()
   {
     _value = default;
     _displayClearButton = false;
     await SetValueAsync(default!);
+    if (OnChange.HasDelegate)
+      await OnChange.InvokeAsync();
   }
+
+  public async Task IncrementValue()
+  {
+    var x = _value + Increment;
+    await CommitValueAsync(_value);
+  }
+
+  public async Task DecrementValue()
+  {
+    var x = _value - Increment;
+    await CommitValueAsync(_value);
+  }
+
+  private async Task CommitValueAsync(TValue value)
+  {
+    switch (InputBindMode)
+    {
+      case ZbInputBindMode.OnInput:
+        await SetValueAsync(value);
+        await OnInput.InvokeAsync(value);
+        break;
+
+      case ZbInputBindMode.InputDelay:
+        await DebounceAsync(async () =>
+        {
+          await SetValueAsync(value);
+          await OnInput.InvokeAsync(value);
+        });
+        break;
+    }
+  }
+
 }

@@ -78,7 +78,12 @@
   }
 
 
-/* Password Toggle Button */
+/* Action Toggle Button(s) */
+
+.zb-input-actions {
+  display: flex;
+  flex-direction: column;
+}
 
 .zb-input-action-btn {
   display: inline-flex;
@@ -100,8 +105,13 @@
     color: #000;
   }
 
-/* Disable browser password toggle btn overlay */
 
+
+
+
+/* Disable browser button overlay */
+
+/* password toggle btn */
 input::-ms-reveal,
 input::-ms-clear {
   display: none;
@@ -110,6 +120,22 @@ input::-ms-clear {
 input::-webkit-credentials-auto-fill-button {
   visibility: hidden;
   display: none !important;
+}
+
+/* NumberInpuut Increment btns */
+/* Chrome, Edge, Safari (WebKit/Chromium) */
+.zb-input input[type="number"]::-webkit-outer-spin-button,
+.zb-input input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Firefox */
+.zb-input input[type="number"] {
+  -moz-appearance: textfield;
+}
+/* General */
+.zb-input input[type="number"] {
+  appearance: textfield;
 }
 
 /* Svgs */
@@ -134,5 +160,17 @@ input::-webkit-credentials-auto-fill-button {
 .zbi-eye-slash-fill {
   -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-slash-fill.svg") no-repeat center;
   mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-eye-slash-fill.svg") no-repeat center;
+  background-color: currentColor;
+}
+
+.zbi-chevron-up {
+  -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-chevron-up.svg") no-repeat center;
+  mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-chevron-up.svg") no-repeat center;
+  background-color: currentColor;
+}
+
+.zbi-chevron-down {
+  -webkit-mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-chevron-down.svg") no-repeat center;
+  mask: url("/_content/ZenBoxUI.Blazor/svg/zbi-chevron-down.svg") no-repeat center;
   background-color: currentColor;
 }

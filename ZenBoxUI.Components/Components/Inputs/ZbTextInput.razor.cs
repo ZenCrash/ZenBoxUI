@@ -54,29 +54,26 @@ public partial class ZbTextInput : ZbInputBase<string?>
   {
     var value = e.Value?.ToString();
     _value = value;
-
     _displayClearButton = ClearButton && value != null && !Disabled;
 
     switch (InputBindMode)
     {
       case ZbInputBindMode.OnInput:
-        await SetValueAsync(value);
-        await OnInput.InvokeAsync(value);
+        await SetValueAsync(_value);
+        await OnInput.InvokeAsync(_value);
         break;
+
       case ZbInputBindMode.InputDelay:
-        await DebounceAsync(async () => await SetValueAsync(value));
+        await DebounceAsync(async () =>
+        {
+          await SetValueAsync(_value);
+          await OnInput.InvokeAsync(_value);
+        });
         break;
       case ZbInputBindMode.OnChange:
-        if(OnInput.HasDelegate)
+        if (OnInput.HasDelegate)
           await SetValueAsync(value);
         break;
-      default:
-        throw new ArgumentOutOfRangeException();
-    }
-
-    if (OnInput.HasDelegate)
-    {
-      await OnInput.InvokeAsync();
     }
   }
 

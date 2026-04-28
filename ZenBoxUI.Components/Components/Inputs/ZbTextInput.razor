@@ -10,6 +10,7 @@
          value="@_value"
          placeholder="@NullText"
          disabled="@Disabled"
+         readonly="@ReadOnly"
          @oninput="@HandleInput"
          @onchange="@HandleChange"
          @onfocus="@HandleFocus"
@@ -19,6 +20,7 @@
   {
     <button type="button"
             class="zb-clear-btn"
+            disabled="@(Disabled || ReadOnly)"
             @onmousedown:preventDefault
             @onclick="@ClearInput">
       <i class="zbi zbi-x"></i>
@@ -29,6 +31,7 @@
   {
     <button type="button"
             class="zb-input-action-btn"
+            disabled="@(Disabled || ReadOnly)"
             @onmousedown:preventDefault
             @onclick="@TogglePassword">
       <i class="@(IsPassword ? "zbi zbi-eye-fill" : "zbi zbi-eye-slash-fill")"></i>

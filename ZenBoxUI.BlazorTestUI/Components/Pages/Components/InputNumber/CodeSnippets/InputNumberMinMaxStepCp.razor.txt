@@ -1,0 +1,9 @@
+﻿&lt;ZbNumberInput CssClass="zb-demo-width" 
+             @bind-Value="@_value"
+             MinValue="0"
+             MaxValue="100"
+             Increment="5"/&gt;
+             
+@code {
+  private int? _value { get; set; } = 1;
+}

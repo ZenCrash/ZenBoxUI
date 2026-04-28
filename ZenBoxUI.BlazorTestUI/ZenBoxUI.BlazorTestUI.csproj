@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberMinMaxStepCp.razor.txt" />
     <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberNullText.razor.txt" />
     <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberBind.razor.txt" />
     <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberClearButton.razor.txt" />
