@@ -1,0 +1,10 @@
+﻿&lt;ZbNumberInput CssClass="zb-demo-width" 
+             @bind-Value="@_value" 
+             Disabled="@_isDisabled"/&gt;
+
+&lt;button @onclick="() => _isDisabled = !_isDisabled"&gt;Disabled toggle: (@_isDisabled)&lt;/ button&gt;
+
+@code {
+  private int? _value { get; set; } = 1;
+  private bool _isDisabled { get; set; } = true;
+}

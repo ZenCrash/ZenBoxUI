@@ -35,16 +35,18 @@
   private string _codeExample = null!;
   private string _codeExampleUserModel = null!;
 
-  private InputTextValidationUserModel model { get; set; } = new();
+  private InputNumberValidationUserModel model { get; set; } = new();
 
   protected override void OnInitialized()
   {
     var path = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextBind.razor.txt"
+      "Components", "Pages", "Components",
+      "InputText", "CodeSnippets", "InputTextValidationCp.razor.txt"
       );
     _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
     var pathUserModel = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextValidationUserModel.cs.txt"
+      "Components", "Pages", "Components",
+      "InputText", "CodeSnippets", "InputTextValidationUserModel.cs.txt"
     );
     _codeExampleUserModel = File.ReadAllText(pathUserModel).Replace("\r\n", "\n");
   }

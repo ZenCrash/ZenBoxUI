@@ -1,0 +1,10 @@
+﻿&lt;ZbTextInput CssClass="zb-demo-width" 
+             @bind-Value="@_text" 
+             Disabled="@_isDisabled"/&gt;
+
+&lt;button @onclick="() => _isDisabled = !_isDisabled"&gt;Disabled toggle: (@_isDisabled)&lt;/ button&gt;
+
+@code {
+  private string? _text { get; set; } = "John Doe";
+  private bool _isDisabled { get; set; } = true;
+}

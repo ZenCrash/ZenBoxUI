@@ -1,0 +1,7 @@
+﻿&lt;ZbNumberInput CssClass="zb-demo-width" 
+             @bind-Value="@_value" 
+             ClearButton="true"/&gt;
+
+@code {
+  private int _value { get; set; } = 1;
+}

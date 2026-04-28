@@ -1,0 +1,12 @@
+﻿&lt;EditForm Model="@model" &gt;
+  &lt;DataAnnotationsValidator /&gt;
+
+  &lt;ZbTextInput CssClass="zb-demo-width" @bind-Value="@model.Password" ClearButton="true" /&gt;
+
+  &lt;p class="pt-1">Text value: @(model.Password == null ? "Null" : model.Password == string.Empty ? "String.Empty" : model.Password) &lt;/p&gt;
+  &lt;ValidationMessage For="@(() => model.Password)" /&gt;
+&lt;/EditForm &gt;
+
+@code {
+  private UserModel model { get; set; } = new();
+}

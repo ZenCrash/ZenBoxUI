@@ -8,14 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="Components\CodeSnippets\InputNullText.razor.txt" />
-    <Content Include="Components\CodeSnippets\InputTextBind.razor.txt" />
-    <Content Include="Components\CodeSnippets\InputTextClearButton.razor.txt" />
-    <Content Include="Components\CodeSnippets\InputTextDisabled.razor.txt" />
-    <Content Include="Components\CodeSnippets\InputTextEvents.razor.txt" />
-    <Content Include="Components\CodeSnippets\InputTextEventsToasts.cs.txt" />
-    <Content Include="Components\CodeSnippets\InputTextPassword.razor.txt" />
-    <Content Include="Components\CodeSnippets\InputTextValidationCp.razor.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberNullText.razor.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberBind.razor.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberClearButton.razor.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberDisabled.razor.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberEvents.razor.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberEventsToasts.cs.txt" />
+    <Content Include="Components\Pages\Components\InputNumber\CodeSnippets\InputNumberValidationCp.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextNullText.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextBind.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextClearButton.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextDisabled.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextEvents.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextEventsToasts.cs.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextPassword.razor.txt" />
+    <Content Include="Components\Pages\Components\InputText\CodeSnippets\InputTextValidationCp.razor.txt" />
   </ItemGroup>
 
   <ItemGroup>

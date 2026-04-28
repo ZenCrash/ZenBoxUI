@@ -2,7 +2,7 @@
 
 namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
 {
-  public class InputTextValidationUserModel
+  public class InputNumberValidationUserModel
   {
     [Required(ErrorMessage = "Password is required.")]
     [MinLength(8, ErrorMessage = "Password must be minimum 8 characters long.")]

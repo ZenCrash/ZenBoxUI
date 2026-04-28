@@ -53,9 +53,7 @@ public partial class ZbTextInput : ZbInputBase<string?>
   private async Task HandleInput(ChangeEventArgs e)
   {
     var value = e.Value?.ToString();
-    //TODO: fix 
-    if (ClearButton && (InputBindMode != ZbInputBindMode.OnChange || (InputBindMode == ZbInputBindMode.OnChange && !OnInput.HasDelegate)))
-      _value = value;
+    _value = value;
 
     _displayClearButton = ClearButton && value != null && !Disabled;
 
@@ -68,6 +66,17 @@ public partial class ZbTextInput : ZbInputBase<string?>
       case ZbInputBindMode.InputDelay:
         await DebounceAsync(async () => await SetValueAsync(value));
         break;
+      case ZbInputBindMode.OnChange:
+        if(OnInput.HasDelegate)
+          await SetValueAsync(value);
+        break;
+      default:
+        throw new ArgumentOutOfRangeException();
+    }
+
+    if (OnInput.HasDelegate)
+    {
+      await OnInput.InvokeAsync();
     }
   }
 
@@ -88,16 +97,17 @@ public partial class ZbTextInput : ZbInputBase<string?>
   // ACTIONS
   // =========================
 
-  private async Task ClearInputBtn()
+  public async Task ClearInput()
   {
     _value = null;
     _displayClearButton = false;
     await SetValueAsync(null);
+    if (OnChange.HasDelegate)
+      await OnChange.InvokeAsync();
   }
 
-  private void TogglePasswordBtn()
+  public void TogglePassword()
   {
     IsPassword = !IsPassword;
   }
-
 }

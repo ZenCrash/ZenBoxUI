@@ -11,14 +11,12 @@
   <ZbSnippet>
     <ZbSnippetContent>
       <ZbTextInput CssClass="zb-demo-width"
-                   OnInput="(value) => ToastCaller.TriggerOnInput(value)"
+                   OnInput="() => ToastCaller.TriggerOnInput()"
                    OnChange="() => ToastCaller.TriggerOnChange()"
                    OnDeselect="() => ToastCaller.TriggerOnBlur()"
                    OnFocus="() => ToastCaller.TriggerOnFocus()"
                    ClearButton="true"
-                   Value="@_text" 
-                   ValueChanged="(value) => _text = value"
-                   ValueExpression="() => _text" />
+                   @bind-Value="@_text" />
       <p class="pt-1 pb-2">Text value: @(_text == null ? "Null" : _text == string.Empty ? "String.Empty" : _text)</p>
     
       <ul>
@@ -36,20 +34,22 @@
 
 @code {
   [Parameter] public IZBoxToastService ToastService { get; set; } = null!;
-  private InputTextEventsToasts ToastCaller { get; set; } = null!;
+  private InputNumberEventsToasts ToastCaller { get; set; } = null!;
   private string? _text { get; set; } = "John Doe";
   private string? _codeExample;
   private string? _codeExampleToast;
 
   protected override void OnInitialized()
   {
-    ToastCaller = new InputTextEventsToasts(ToastService);
+    ToastCaller = new InputNumberEventsToasts(ToastService);
 
     var path = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextEvents.razor.txt"
+      "Components", "Pages", "Components",
+      "InputText", "CodeSnippets", "InputTextEvents.razor.txt"
     );
     var pathToast = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextEventsToasts.cs.txt"
+      "Components", "Pages", "Components",
+      "InputText", "CodeSnippets", "InputTextEventsToasts.cs.txt"
     );
     _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
     _codeExampleToast = File.ReadAllText(pathToast).Replace("\r\n", "\n");

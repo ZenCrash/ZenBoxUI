@@ -42,10 +42,9 @@
     flex: 1;
     width: auto;
     height: 2rem;
-    line-height: 2rem;
+    line-height: normal;
     padding: 0 .5rem;
     font-size: inherit;
-    overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     border: none;

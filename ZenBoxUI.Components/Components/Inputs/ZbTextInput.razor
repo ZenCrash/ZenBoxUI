@@ -20,7 +20,7 @@
     <button type="button"
             class="zb-clear-btn"
             @onmousedown:preventDefault
-            @onclick="@ClearInputBtn">
+            @onclick="@ClearInput">
       <i class="zbi zbi-x"></i>
     </button>
   }
@@ -30,7 +30,7 @@
     <button type="button"
             class="zb-input-action-btn"
             @onmousedown:preventDefault
-            @onclick="@TogglePasswordBtn">
+            @onclick="@TogglePassword">
       <i class="@(IsPassword ? "zbi zbi-eye-fill" : "zbi zbi-eye-slash-fill")"></i>
     </button>
   }

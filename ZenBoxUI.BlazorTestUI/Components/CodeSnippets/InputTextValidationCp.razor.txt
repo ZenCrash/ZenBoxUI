@@ -1,9 +1,0 @@
-﻿&lt;EditForm Model="@model"&gt;
-  &lt;DataAnnotationsValidator/&gt;
-  &lt;ZbTextInput @bind-Text="@model.Password" ClearButton="true" /&gt;
-  &lt;ValidationMessage For="@(() => model.Password)" /&gt;
-&lt;/EditForm&gt;
-
-@code {
-  private UserModel model { get; set; } = new();
-}

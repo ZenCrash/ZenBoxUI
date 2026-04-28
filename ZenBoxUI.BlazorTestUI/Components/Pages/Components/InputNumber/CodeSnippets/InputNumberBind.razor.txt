@@ -1,0 +1,6 @@
+﻿&lt;ZbNumberInput CssClass="zb-demo-width" 
+             @bind-Value="@_value"/&gt;
+             
+@code {
+  private int? _value { get; set; } = 1;
+}

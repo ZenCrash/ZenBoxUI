@@ -125,7 +125,6 @@ namespace ZenBoxUI.Blazor.Common
 
     internal async Task SetValueAsync(TValue value)
     {
-      //Value = value;
       await ValueChanged.InvokeAsync(value);
       EditContext?.NotifyFieldChanged(FieldIdentifier);
     }

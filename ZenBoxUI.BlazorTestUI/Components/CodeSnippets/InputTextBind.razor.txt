@@ -1,5 +1,0 @@
-﻿&lt;ZbTextInput @bind-Text="@_text"/&gt;
-             
-@code {
-  private string? _text { get; set; } = "John Doe";
-}

@@ -1,0 +1,21 @@
+﻿&lt;ZbNumberInput CssClass="zb-demo-width"
+             ClearButton="true"
+             OnInput="() => ToastCaller.TriggerOnInput()"
+             OnChange="() => ToastCaller.TriggerOnChange()"
+             OnBlur="() => ToastCaller.TriggerOnBlur()"
+             OnFocus="() => ToastCaller.TriggerOnFocus()"
+             @bind-Value="@_value"/&gt;
+
+&lt;ZBoxToastProvider MaxToastCount="5"
+                   Alignment="ToastAlignment.BottomRight"
+                   MaxWidth="300px"/&gt;
+@code {
+  [inject] IZBoxToastService ToastService { get; set; }
+  private ToastCaller ToastCaller { get; set; }
+  private int? _value { get; set; } = 1;
+
+  protected override void OnInitialized()
+  {
+    ToastCaller = new(ToastService);
+  }
+}

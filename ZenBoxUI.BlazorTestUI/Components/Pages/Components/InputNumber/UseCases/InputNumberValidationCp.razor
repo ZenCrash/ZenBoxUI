@@ -12,14 +12,14 @@
     <ZbSnippetContent>
       <EditForm Model="@model">
         <DataAnnotationsValidator/>
-        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.NumberInput" ClearButton="true" />
-        <p class="pt-1 pb-2">Number value: @(model.NumberInput != null ? model.NumberInput : "Null")</p>
-        <ValidationMessage For="@(() => model.NumberInput)" />
+        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.Password" ClearButton="true" />
+        <p class="pt-1">Text value: @(model.Password == null ? "Null" : model.Password == string.Empty ? "String.Empty" : model.Password)</p>
+        <ValidationMessage For="@(() => model.Password)" />
       </EditForm>
 
 
       <ul>
-        <li><span class="zb-code">@@bind-Text</span> - Binds Text to a variable</li>
+        <li><span class="zb-code">@@bind-Text</span> - Binds text to a variable</li>
       </ul>
     </ZbSnippetContent>
     <ZbSnippetFile Name="Example.razor">
@@ -32,19 +32,21 @@
 </div>
 
 @code {
-  private string _codeExample;
-  private string _codeExampleUserModel;
+  private string _codeExample = null!;
+  private string _codeExampleUserModel = null!;
 
   private InputNumberValidationUserModel model { get; set; } = new();
 
   protected override void OnInitialized()
   {
     var path = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextBind.razor.txt"
+      "Components", "Pages", "Components",
+      "InputNumber", "CodeSnippets", "InputNumberValidationCp.razor.txt"
       );
     _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
     var pathUserModel = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextValidationUserModel.cs.txt"
+      "Components", "Pages", "Components",
+      "InputNumber", "CodeSnippets", "InputNumberValidationUserModel.cs.txt"
     );
     _codeExampleUserModel = File.ReadAllText(pathUserModel).Replace("\r\n", "\n");
   }

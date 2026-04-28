@@ -1,8 +1,10 @@
-﻿&lt;ZbTextInput OnInput="() => ToastCaller.TriggerOnInput()"
+﻿&lt;ZbTextInput CssClass="zb-demo-width"
+             ClearButton="true"
+             OnInput="() => ToastCaller.TriggerOnInput()"
              OnChange="() => ToastCaller.TriggerOnChange()"
              OnBlur="() => ToastCaller.TriggerOnBlur()"
              OnFocus="() => ToastCaller.TriggerOnFocus()"
-             @bind-Text="@_text"/&gt;
+             @bind-Value="@_text"/&gt;
 
 &lt;ZBoxToastProvider MaxToastCount="5"
                    Alignment="ToastAlignment.BottomRight"

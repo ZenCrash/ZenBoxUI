@@ -1,0 +1,7 @@
+﻿&lt;ZbTextInput CssClass="zb-demo-width" 
+             @bind-Value="@_text" 
+             NullText="Name of person..."/&gt;
+             
+@code {
+  private string? _text { get; set; } = "John Doe";
+}

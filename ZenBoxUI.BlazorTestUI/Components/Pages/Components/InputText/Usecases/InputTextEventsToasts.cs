@@ -2,7 +2,7 @@
 
 namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
 {
-  public class InputTextEventsToasts(IZBoxToastService ToastService)
+  public class InputNumberEventsToasts(IZBoxToastService ToastService)
   {
     public void TriggerOnTextChange()
     {
@@ -15,12 +15,12 @@ namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputText.UseCases
         DisplayTime = 2000
       });
     }
-    public void TriggerOnInput(string value)
+    public void TriggerOnInput()
     {
       ToastService.ShowToast(new ToastOptions
       {
         Title = "Text - OnInput" + " " + Guid.NewGuid(),
-        Text = $"{value} | I got trigger On Input",
+        Text = "I got trigger On Input",
         RenderTheme = ToastRenderTheme.Basic,
         RenderStyle = ToastRenderStyle.Info,
         DisplayTime = 2000

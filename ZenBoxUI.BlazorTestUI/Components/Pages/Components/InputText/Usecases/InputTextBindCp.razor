@@ -31,7 +31,8 @@
   protected override void OnInitialized()
   {
     var path = Path.Combine(Directory.GetCurrentDirectory(),
-      "Components", "CodeSnippets", "InputTextBind.razor.txt"
+      "Components", "Pages", "Components", 
+      "InputText", "CodeSnippets", "InputTextBind.razor.txt"
       );
     _codeExample = File.ReadAllText(path).Replace("\r\n", "\n");
   }

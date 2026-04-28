@@ -92,6 +92,6 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
   {
     _value = default;
     _displayClearButton = false;
-    await SetValueAsync(default);
+    await SetValueAsync(default!);
   }
 }
