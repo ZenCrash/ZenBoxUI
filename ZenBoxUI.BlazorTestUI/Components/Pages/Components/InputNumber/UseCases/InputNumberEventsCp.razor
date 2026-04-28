@@ -10,12 +10,12 @@
 
   <ZbSnippet>
     <ZbSnippetContent>
-@*       <ZbNumberInput CssClass="zb-demo-width"
-                   OnInput="() => ToastCaller.TriggerOnInput()"
-                   OnChange="() => ToastCaller.TriggerOnChange()"
-                   OnDeselect="() => ToastCaller.TriggerOnBlur()"
-                   OnFocus="() => ToastCaller.TriggerOnFocus()"
-                   @bind-Value="@Value" /> *@
+      <ZbNumberInput CssClass="zb-demo-width"
+                     OnInput="(int? v) => ToastCaller.TriggerOnInput()"
+                     OnChange="(int? v) => ToastCaller.TriggerOnChange()"
+                     OnDeselect="(int? v) => ToastCaller.TriggerOnBlur()"
+                     OnFocus="(int? v) => ToastCaller.TriggerOnFocus()"
+                   @bind-Value="@Value" />
       <p class="pt-1 pb-2">Number value: @Value</p>
     
       <ul>

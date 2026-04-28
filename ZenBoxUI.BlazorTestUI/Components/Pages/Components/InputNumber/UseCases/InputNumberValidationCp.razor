@@ -12,8 +12,8 @@
     <ZbSnippetContent>
       <EditForm Model="@model">
         <DataAnnotationsValidator/>
-@*         <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.NumberInput" ClearButton="true" />
- *@        <p class="pt-1 pb-2">Number value: @(model.NumberInput != null ? model.NumberInput : "Null")</p>
+        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.NumberInput" ClearButton="true" />
+        <p class="pt-1 pb-2">Number value: @(model.NumberInput != null ? model.NumberInput : "Null")</p>
         <ValidationMessage For="@(() => model.NumberInput)" />
       </EditForm>
 

@@ -1,21 +1,16 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Globalization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor;
 
-public partial class ZbTextInput : ZbInputBase<string?>
+public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 {
-
   /// <summary>
-  /// Should field be a password field.
+  /// disable the increment and decrement buttons.
   /// </summary>
-  [Parameter] public bool IsPassword { get; set; }
-
-  /// <summary>
-  /// enable a button to toggle password visibility.
-  /// </summary>
-  [Parameter] public bool PasswordToggleButton { get; set; }
+  [Parameter] public bool DisabledIncrementButtons { get; set; }
 
   // =========================
   // CSS
@@ -52,7 +47,10 @@ public partial class ZbTextInput : ZbInputBase<string?>
 
   private async Task HandleInput(ChangeEventArgs e)
   {
-    var value = e.Value?.ToString();
+    var value = BindConverter.TryConvertTo<TValue>(e.Value, CultureInfo.CurrentCulture, out var result)
+      ? result
+      : default!;
+
     //TODO: fix 
     if (ClearButton && (InputBindMode != ZbInputBindMode.OnChange || (InputBindMode == ZbInputBindMode.OnChange && !OnInput.HasDelegate)))
       _value = value;
@@ -73,7 +71,9 @@ public partial class ZbTextInput : ZbInputBase<string?>
 
   private async Task HandleChange(ChangeEventArgs e)
   {
-    var value = e.Value?.ToString();
+    var value = BindConverter.TryConvertTo<TValue>(e.Value, CultureInfo.CurrentCulture, out var result)
+      ? result
+      : default!;
     if (InputBindMode == ZbInputBindMode.OnChange)
     {
       _value = value;
@@ -90,14 +90,8 @@ public partial class ZbTextInput : ZbInputBase<string?>
 
   private async Task ClearInputBtn()
   {
-    _value = null;
+    _value = default;
     _displayClearButton = false;
-    await SetValueAsync(null);
+    await SetValueAsync(default);
   }
-
-  private void TogglePasswordBtn()
-  {
-    IsPassword = !IsPassword;
-  }
-
 }

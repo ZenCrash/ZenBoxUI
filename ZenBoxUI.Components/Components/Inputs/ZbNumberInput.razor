@@ -1,11 +1,11 @@
 ﻿@using ZenBoxUI.Blazor.Common;
 @namespace ZenBoxUI.Blazor
-
-@inherits ZbInputBase<string?>
+@typeparam TValue
+@inherits ZbInputBase<TValue>
 
 <div id="@Id" class="@WrapperClass">
   <input id="@InputId"
-         type="@(IsPassword ? "password" : "text")"
+         type="number"
          class="@InputClass"
          value="@_value"
          placeholder="@NullText"
@@ -22,16 +22,6 @@
             @onmousedown:preventDefault
             @onclick="@ClearInputBtn">
       <i class="zbi zbi-x"></i>
-    </button>
-  }
-  
-  @if (PasswordToggleButton && !Disabled)
-  {
-    <button type="button"
-            class="zb-input-action-btn"
-            @onmousedown:preventDefault
-            @onclick="@TogglePasswordBtn">
-      <i class="@(IsPassword ? "zbi zbi-eye-fill" : "zbi zbi-eye-slash-fill")"></i>
     </button>
   }
 </div>
