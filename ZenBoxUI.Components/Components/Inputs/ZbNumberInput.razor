@@ -1,7 +1,7 @@
 ﻿@using ZenBoxUI.Blazor.Common;
 @using System.Numerics;
 @namespace ZenBoxUI.Blazor
-@typeparam TValue where TValue : INumber<TValue>
+@typeparam TValue
 @inherits ZbInputBase<TValue> 
 
 <div id="@Id" class="@WrapperClass">
@@ -14,7 +14,7 @@
          readonly="@ReadOnly"
          min="@(MinValue is null ? null : MinValue.ToString())"
          max="@(MaxValue is null ? null : MaxValue.ToString())"
-         step="@(Increment is null ? 1 : Increment.ToString())"
+         step="@IncrementDisplayValue"
          @onkeydown:preventDefault="@DisabledIncrementHotKeys"
          @onwheel:preventDefault="@DisabledIncrementHotKeys"
          @oninput="@HandleInput"

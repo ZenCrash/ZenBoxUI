@@ -12,9 +12,9 @@
     <ZbSnippetContent>
       <EditForm Model="@model">
         <DataAnnotationsValidator/>
-        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.Password" ClearButton="true" />
-        <p class="pt-1">Text value: @(model.Password == null ? "Null" : model.Password == string.Empty ? "String.Empty" : model.Password)</p>
-        <ValidationMessage For="@(() => model.Password)" />
+        <ZbNumberInput CssClass="zb-demo-width" @bind-Value="@model.Number" ClearButton="true" />
+        <p class="pt-1">Number value: @(model.Number == null ? "Null" : model.Number.ToString())</p>
+        <ValidationMessage For="@(() => model.Number)" />
       </EditForm>
 
 

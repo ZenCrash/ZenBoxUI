@@ -4,10 +4,8 @@ namespace ZenBoxUI.BlazorTestUI.Components.Pages.Components.InputNumber.UseCases
 {
   public class InputNumberValidationUserModel
   {
-    [Required(ErrorMessage = "Password is required.")]
-    [MinLength(8, ErrorMessage = "Password must be minimum 8 characters long.")]
-    [MaxLength(20, ErrorMessage = "Password must be maximum 20 characters long.")]
-    [RegularExpression(@".*[\W_].*", ErrorMessage = "Must contain at least 1 special character.")]
-    public string? Password { get; set; } = "Password1!";
+    [Required(ErrorMessage = "Number is required.")]
+    [Range(0, 101, ErrorMessage = "Number must be between 0 and 100")]
+    public int? Number { get; set; } = 0;
   }
 }

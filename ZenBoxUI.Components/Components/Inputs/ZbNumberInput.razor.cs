@@ -6,17 +6,39 @@ using ZenBoxUI.Blazor.Common;
 
 namespace ZenBoxUI.Blazor;
 
-public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : INumber<TValue>
+public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 {
   [Parameter] public TValue? MinValue { get; set; }
   [Parameter] public TValue? MaxValue { get; set; }
-  [Parameter] public TValue? Increment { get; set; } = TValue.One;
+  [Parameter] public TValue? Increment { get; set; }
+
+  private string IncrementDisplayValue => Increment?.ToString() ?? "1";
 
   /// <summary>
   /// Disable the increment and decrement buttons.
   /// </summary>
   [Parameter] public bool DisableIncrementButtons { get; set; }
   [Parameter] public bool DisabledIncrementHotKeys { get; set; }
+
+  private decimal? Parse(string? value)
+    => decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d)
+      ? d
+      : null;
+
+  private static decimal ToDecimal(object value)
+    => Convert.ToDecimal(value);
+
+  private static TValue FromDecimal(decimal value)
+  {
+    var targetType = typeof(TValue);
+
+    // unwrap Nullable<T>
+    var underlyingType = Nullable.GetUnderlyingType(targetType) ?? targetType;
+
+    var converted = Convert.ChangeType(value, underlyingType);
+
+    return (TValue)converted!;
+  }
 
   // =========================
   // CSS
@@ -53,45 +75,50 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : 
 
   private async Task HandleInput(ChangeEventArgs e)
   {
-    var value = BindConverter.TryConvertTo<TValue>(e.Value, CultureInfo.CurrentCulture, out var result)
-      ? result
-      : default!;
-    _value = value;
-    _displayClearButton = ClearButton && value != null && !Disabled;
+    var parsedValue = Parse(e.Value?.ToString());
+
+    _displayClearButton = ClearButton && parsedValue.HasValue && !Disabled;
+
+    _value = parsedValue.HasValue
+      ? FromDecimal(parsedValue.Value)
+      : default;
 
     switch (InputBindMode)
     {
       case ZbInputBindMode.OnInput:
-        await SetValueAsync(_value);
-        await OnInput.InvokeAsync(_value);
+        await ApplyValueAsync();
         break;
+
       case ZbInputBindMode.InputDelay:
-        await DebounceAsync(async () =>
-        {
-          await SetValueAsync(_value);
-          await OnInput.InvokeAsync(_value);
-        });
+        await DebounceAsync(ApplyValueAsync);
         break;
+
       case ZbInputBindMode.OnChange:
         if (OnInput.HasDelegate)
-          await SetValueAsync(value);
+          await ApplyValueAsync();
         break;
+    }
+
+    async Task ApplyValueAsync()
+    {
+      await SetValueAsync(_value);
+      await OnInput.InvokeAsync(_value);
     }
   }
 
   private async Task HandleChange(ChangeEventArgs e)
   {
-    var value = BindConverter.TryConvertTo<TValue>(e.Value, CultureInfo.CurrentCulture, out var result)
-      ? result
-      : default!;
+    var parsedValue = Parse(e.Value?.ToString());
+    _value = parsedValue.HasValue
+      ? FromDecimal(parsedValue.Value)
+      : default;
+
+
     if (InputBindMode == ZbInputBindMode.OnChange)
-    {
-      _value = value;
-      await SetValueAsync(value);
-    }
+      await SetValueAsync(_value);
 
     if (OnChange.HasDelegate)
-      await OnChange.InvokeAsync(value);
+      await OnChange.InvokeAsync(_value);
   }
 
   // =========================
@@ -109,13 +136,31 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : 
 
   public async Task IncrementValue()
   {
-    var x = _value + Increment;
+    var currentValue = Parse(_value?.ToString());
+    var increment = Increment is not null ? ToDecimal(Increment) : 1;
+    var result = currentValue.Value + increment;
+    if (MaxValue is not null)
+    {
+      var max = ToDecimal(MaxValue);
+      if (result > max)
+        result = max;
+    }
+    _value = FromDecimal(result);
     await CommitValueAsync(_value);
   }
 
   public async Task DecrementValue()
   {
-    var x = _value - Increment;
+    var currentValue = Parse(_value?.ToString());
+    var increment = Increment is not null ? ToDecimal(Increment) : 1;
+    var result = currentValue.Value - increment;
+    if (MinValue is not null)
+    {
+      var min = ToDecimal(MinValue);
+      if (result < min)
+        result = min;
+    }
+    _value = FromDecimal(result);
     await CommitValueAsync(_value);
   }
 
@@ -134,6 +179,10 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue> where TValue : 
           await SetValueAsync(value);
           await OnInput.InvokeAsync(value);
         });
+        break;
+      case ZbInputBindMode.OnChange:
+        await SetValueAsync(value);
+        await OnChange.InvokeAsync(value);
         break;
     }
   }
