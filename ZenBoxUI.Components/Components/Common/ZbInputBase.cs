@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using System.Globalization;
 using System.Linq.Expressions;
 
 namespace ZenBoxUI.Blazor.Common
@@ -11,6 +12,18 @@ namespace ZenBoxUI.Blazor.Common
   /// <typeparam name="TValue">The type of the input value.</typeparam>
   public abstract class ZbInputBase<TValue> : ComponentBase
   {
+    [Parameter]
+    public CultureInfo Culture
+    {
+      get => culture ?? DefaultCulture ?? CultureInfo.CurrentCulture;
+      set => culture = value;
+    }
+
+    [CascadingParameter(Name = nameof(DefaultCulture))]
+    public CultureInfo? DefaultCulture { get; set; }
+
+    private CultureInfo? culture;
+
     /// <summary>
     /// Id for the wrapper element.
     /// </summary>

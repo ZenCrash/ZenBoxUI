@@ -1,24 +1,24 @@
 ﻿@using ZenBoxUI.Blazor.Common;
-@using System.Numerics;
 @namespace ZenBoxUI.Blazor
 @typeparam TValue
-@inherits ZbInputBase<TValue> 
+@inherits ZbInputBase<TValue>
 
 <div id="@Id" class="@WrapperClass">
   <input id="@InputId"
          type="number"
          class="@InputClass"
-         value="@_value"
+         @bind:get="@_displayValue"
+         @bind:set="@SetValue"
+
          placeholder="@NullText"
          disabled="@Disabled"
          readonly="@ReadOnly"
          min="@(MinValue is null ? null : MinValue.ToString())"
          max="@(MaxValue is null ? null : MaxValue.ToString())"
-         step="@IncrementDisplayValue"
+         step="@Increment"
          @onkeydown:preventDefault="@DisabledIncrementHotKeys"
          @onwheel:preventDefault="@DisabledIncrementHotKeys"
          @oninput="@HandleInput"
-         @onchange="@HandleChange"
          @onfocus="@HandleFocus"
          @onblur="@HandleDeselect" />
 
@@ -53,3 +53,11 @@
     </div>
   }
 </div>
+
+@code{
+
+
+
+
+
+}
