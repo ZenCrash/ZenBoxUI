@@ -16,6 +16,7 @@
          min="@(MinValue is null ? null : MinValue.ToString())"
          max="@(MaxValue is null ? null : MaxValue.ToString())"
          step="@Increment"
+         @onkeydown="HandleKeyDown"
          @onkeydown:preventDefault="@DisabledIncrementHotKeys"
          @onwheel:preventDefault="@DisabledIncrementHotKeys"
          @oninput="@HandleInput"

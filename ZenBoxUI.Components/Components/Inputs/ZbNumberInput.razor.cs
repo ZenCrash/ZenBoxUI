@@ -187,7 +187,7 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
   private async Task IncrementValue()
   {
-    if (Value is null || Disabled || ReadOnly)
+    if (Disabled || ReadOnly)
       return;
 
     var current = Convert.ToDecimal(Value ?? default(TValue));
@@ -204,7 +204,7 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
   private async Task DecrementValue()
   {
-    if (Value is null || Disabled || ReadOnly)
+    if (Disabled || ReadOnly)
       return;
 
     var current = Convert.ToDecimal(Value ?? default(TValue));
@@ -217,6 +217,24 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
     if (OnChange.HasDelegate)
       await OnChange.InvokeAsync();
+  }
+
+  private async Task HandleKeyDown(KeyboardEventArgs e)
+  {
+    if (Disabled || ReadOnly || DisabledIncrementHotKeys)
+      return;
+
+    if (e.Key == "ArrowUp")
+    {
+      await IncrementValue();
+      return;
+    }
+
+    if (e.Key == "ArrowDown")
+    {
+      await DecrementValue();
+      return;
+    }
   }
 
   private TValue ConvertFromDecimal(decimal value)
