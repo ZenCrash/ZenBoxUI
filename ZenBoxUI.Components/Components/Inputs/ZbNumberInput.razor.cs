@@ -1,22 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.Extensions.Primitives;
-using Microsoft.Extensions.Primitives;
-using Microsoft.JSInterop;
-using Microsoft.JSInterop;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
-using System.Globalization;
-using System.Linq;
-using System.Net.Mime;
-using System.Text.RegularExpressions;
-using System.Threading.Channels;
-using System.Threading.Tasks;
 using ZenBoxUI.Blazor.Common;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ZenBoxUI.Blazor;
 
@@ -69,167 +55,107 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
     if (string.IsNullOrWhiteSpace(value))
     {
-      var zero = targetType switch
+      object zero = newValue switch
       {
-        _ when targetType == typeof(int) => 0,
-        _ when targetType == typeof(long) => 0L,
-        _ when targetType == typeof(short) => (short)0,
-        _ when targetType == typeof(byte) => (byte)0,
-        _ when targetType == typeof(uint) => 0u,
-        _ when targetType == typeof(ulong) => 0ul,
-        _ when targetType == typeof(float) => 0f,
-        _ when targetType == typeof(double) => 0d,
-        _ when targetType == typeof(decimal) => 0m,
-        _ when targetType == typeof(sbyte) => (sbyte)0,
-        _ when targetType == typeof(ushort) => (ushort)0,
-        _ when targetType == typeof(Half) => (Half)0,
-        _ when targetType == typeof(System.Numerics.BigInteger) => new System.Numerics.BigInteger(0),
-        _ => Activator.CreateInstance(targetType)!
+        int i => 0,
+        long l => 0L,
+        short s => (short)0,
+        byte b => (byte)0,
+        uint u => 0u,
+        ulong ul => 0ul,
+        float f => 0f,
+        double d => 0d,
+        decimal m => 0m,
+        sbyte sb => (sbyte)0,
+        ushort us => (ushort)0,
+        Half h => (Half)0,
+        System.Numerics.BigInteger bi => new System.Numerics.BigInteger(0)
       };
 
       newValue = (TValue)zero;
     }
     else
     {
-      object? parsed = null;
-
-      //Signed Integers
-      if (targetType == typeof(int))
+      if (!decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
       {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > int.MaxValue) parsed = int.MaxValue;
-          else if (d < int.MinValue) parsed = int.MinValue;
-          else parsed = (int)d;
-        }
+        newValue = default!;
       }
-      else if (targetType == typeof(long))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > long.MaxValue) parsed = long.MaxValue;
-          else if (d < long.MinValue) parsed = long.MinValue;
-          else parsed = (long)d;
-        }
-      }
-      else if (targetType == typeof(short))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > short.MaxValue) parsed = short.MaxValue;
-          else if (d < short.MinValue) parsed = short.MinValue;
-          else parsed = (short)d;
-        }
-      }
-      else if (targetType == typeof(sbyte))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > sbyte.MaxValue) parsed = sbyte.MaxValue;
-          else if (d < sbyte.MinValue) parsed = sbyte.MinValue;
-          else parsed = (sbyte)d;
-        }
-      }
-
-      //Unsigned Integers
-      else if (targetType == typeof(byte))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > byte.MaxValue) parsed = byte.MaxValue;
-          else if (d < byte.MinValue) parsed = byte.MinValue; // always 0
-          else parsed = (byte)d;
-        }
-      }
-      else if (targetType == typeof(ushort))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > ushort.MaxValue) parsed = ushort.MaxValue;
-          else if (d < ushort.MinValue) parsed = ushort.MinValue;
-          else parsed = (ushort)d;
-        }
-      }
-      else if (targetType == typeof(uint))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > uint.MaxValue) parsed = uint.MaxValue;
-          else if (d < uint.MinValue) parsed = uint.MinValue;
-          else parsed = (uint)d;
-        }
-      }
-      else if (targetType == typeof(ulong))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d < 0) parsed = 0;
-          else if (d > ulong.MaxValue) parsed = ulong.MaxValue;
-          else parsed = (ulong)d;
-        }
-      }
-
-      //Floating Point
-      else if (targetType == typeof(float))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > float.MaxValue) parsed = float.MaxValue;
-          else if (d < float.MinValue) parsed = float.MinValue;
-          else parsed = (float)d;
-        }
-      }
-      else if (targetType == typeof(double))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          parsed = d;
-        }
-      }
-      else if (targetType == typeof(decimal))
-      {
-        if (decimal.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var m))
-        {
-          parsed = m;
-        }
-        else if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > (double)decimal.MaxValue) parsed = decimal.MaxValue;
-          else if (d < (double)decimal.MinValue) parsed = decimal.MinValue;
-          else parsed = (decimal)d;
-        }
-      }
-      else if (targetType == typeof(Half))
-      {
-        if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          if (d > (double)Half.MaxValue) parsed = Half.MaxValue;
-          else if (d < (double)Half.MinValue) parsed = Half.MinValue;
-          else parsed = (Half)d;
-        }
-      }
-
-      //Big Integer
-      else if (targetType == typeof(System.Numerics.BigInteger))
-      {
-        if (System.Numerics.BigInteger.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var big))
-        {
-          parsed = big;
-        }
-        else if (double.TryParse(value, NumberStyles.Any, CultureInfo.InvariantCulture, out var d))
-        {
-          parsed = new System.Numerics.BigInteger(d);
-        }
-      }
-
       else
       {
-        parsed = default(TValue);
-      }
+        d = Clamp(d);
 
-      if (parsed != null)
-      {
-        newValue = (TValue)Convert.ChangeType(parsed, targetType, CultureInfo.InvariantCulture);
+        object? parsed = targetType switch
+        {
+          // Signed ints
+          _ when targetType == typeof(int) => 
+            d > int.MaxValue ? int.MaxValue :
+               d < int.MinValue ? int.MinValue :
+               (int)d,
+
+          _ when targetType == typeof(long)
+            => d > long.MaxValue ? long.MaxValue :
+               d < long.MinValue ? long.MinValue :
+               (long)d,
+
+          _ when targetType == typeof(short)
+            => d > short.MaxValue ? short.MaxValue :
+               d < short.MinValue ? short.MinValue :
+               (short)d,
+
+          _ when targetType == typeof(sbyte)
+            => d > sbyte.MaxValue ? sbyte.MaxValue :
+               d < sbyte.MinValue ? sbyte.MinValue :
+               (sbyte)d,
+
+          // Unsigned
+          _ when targetType == typeof(byte)
+            => d > byte.MaxValue ? byte.MaxValue :
+               d < byte.MinValue ? byte.MinValue :
+               (byte)d,
+
+          _ when targetType == typeof(ushort)
+            => d > ushort.MaxValue ? ushort.MaxValue :
+               d < ushort.MinValue ? ushort.MinValue :
+               (ushort)d,
+
+          _ when targetType == typeof(uint)
+            => d > uint.MaxValue ? uint.MaxValue :
+               d < uint.MinValue ? uint.MinValue :
+               (uint)d,
+
+          _ when targetType == typeof(ulong)
+            => d < 0 ? 0 :
+               d > ulong.MaxValue ? ulong.MaxValue :
+               (ulong)d,
+
+          // Floating
+          _ when targetType == typeof(float)
+          => (float)d > float.MaxValue ? float.MaxValue : 
+             (float)d < float.MinValue ? float.MinValue : 
+             (float)d,
+
+          _ when targetType == typeof(double)
+            => (double)d > double.MaxValue ? double.MaxValue :
+               (double)d < double.MinValue ? double.MinValue :
+               (double)d,
+
+          _ when targetType == typeof(decimal)
+            => d > decimal.MaxValue ? decimal.MaxValue :
+               d < decimal.MinValue ? decimal.MinValue :
+               d,
+
+          _ when targetType == typeof(Half)
+            => d > (decimal)Half.MaxValue ? Half.MaxValue :
+               d < (decimal)Half.MinValue ? Half.MinValue :
+               (Half)d,
+
+          _ when targetType == typeof(System.Numerics.BigInteger)
+            => new System.Numerics.BigInteger(d),
+
+          _ => Convert.ChangeType(d, targetType, CultureInfo.InvariantCulture)
+        };
+
+        newValue = (TValue)parsed!;
       }
     }
 
@@ -237,6 +163,17 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
     if (OnInput.HasDelegate)
       await OnInput.InvokeAsync();
+  }
+
+  private decimal Clamp(decimal value)
+  {
+    if (MinValue.HasValue && value < MinValue.Value)
+      value = MinValue.Value;
+
+    if (MaxValue.HasValue && value > MaxValue.Value)
+      value = MaxValue.Value;
+
+    return value;
   }
 
   // =========================
@@ -266,12 +203,66 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
   private async Task IncrementValue()
   {
-    //throw new NotImplementedException("IncrementValue is not implemented yet.");
+    if (Value is null || Disabled || ReadOnly)
+      return;
+
+    var current = Convert.ToDecimal(Value ?? default(TValue));
+    var newValue = current + (Increment ?? 1m);
+    if (newValue > MaxValue)
+      newValue = MaxValue.Value;
+
+    var resultValue = ConvertFromDecimal(newValue);
+    await SetValueAsync(resultValue);
+
+    if (OnChange.HasDelegate)
+      await OnChange.InvokeAsync();
   }
 
   private async Task DecrementValue()
   {
-    //throw new NotImplementedException("DecrementValue is not implemented yet.");
+    if (Value is null || Disabled || ReadOnly)
+      return;
+
+    var current = Convert.ToDecimal(Value ?? default(TValue));
+    var newValue = current - (Increment ?? 1m);
+    if (newValue < MinValue)
+      newValue = MinValue.Value;
+
+    var resultValue = ConvertFromDecimal(newValue);
+    await SetValueAsync(resultValue);
+
+    if (OnChange.HasDelegate)
+      await OnChange.InvokeAsync();
+  }
+
+  private TValue ConvertFromDecimal(decimal value)
+  {
+    var targetType = Nullable.GetUnderlyingType(typeof(TValue)) ?? typeof(TValue);
+
+    object result = targetType switch
+    {
+      _ when targetType == typeof(int) => (int)value,
+      _ when targetType == typeof(long) => (long)value,
+      _ when targetType == typeof(short) => (short)value,
+      _ when targetType == typeof(sbyte) => (sbyte)value,
+
+      _ when targetType == typeof(byte) => (byte)value,
+      _ when targetType == typeof(ushort) => (ushort)value,
+      _ when targetType == typeof(uint) => (uint)value,
+      _ when targetType == typeof(ulong) => value < 0 ? 0ul : (ulong)value,
+
+      _ when targetType == typeof(float) => (float)value,
+      _ when targetType == typeof(double) => (double)value,
+      _ when targetType == typeof(decimal) => value,
+      _ when targetType == typeof(Half) => (Half)value,
+
+      _ when targetType == typeof(System.Numerics.BigInteger)
+        => new System.Numerics.BigInteger(value),
+
+      _ => Convert.ChangeType(value, targetType, CultureInfo.InvariantCulture)
+    };
+
+    return (TValue)result;
   }
 
   private async Task ClearInput()

@@ -1,7 +1,7 @@
 ﻿&lt;ZbNumberInput CssClass="zb-demo-width" 
              @bind-Value="@_value"
-             MinValue="0"
-             MaxValue="100"
+             MinValue="-1"
+             MaxValue="101"
              Increment="5"/&gt;
              
 @code {
