@@ -55,24 +55,8 @@ public partial class ZbNumberInput<TValue> : ZbInputBase<TValue>
 
     if (string.IsNullOrWhiteSpace(value))
     {
-      object zero = newValue switch
-      {
-        int i => 0,
-        long l => 0L,
-        short s => (short)0,
-        byte b => (byte)0,
-        uint u => 0u,
-        ulong ul => 0ul,
-        float f => 0f,
-        double d => 0d,
-        decimal m => 0m,
-        sbyte sb => (sbyte)0,
-        ushort us => (ushort)0,
-        Half h => (Half)0,
-        System.Numerics.BigInteger bi => new System.Numerics.BigInteger(0)
-      };
-
-      newValue = (TValue)zero;
+      decimal fallback = MinValue ?? 0m;
+      newValue = ConvertFromDecimal(fallback);
     }
     else
     {
